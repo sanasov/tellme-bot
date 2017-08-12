@@ -28,4 +28,7 @@ public class TelegramUserService {
         return result;
     }
 
+    public void save(TelegramUser telegramUser) {
+        telegramUserRepository.save(telegramUser);
+    }
 }

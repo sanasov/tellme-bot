@@ -5,6 +5,7 @@ import org.telegram.telegrambots.api.objects.User;
 import ru.igrey.dev.entity.TelegramUserEntity;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 
 @ToString
@@ -14,11 +15,11 @@ public class TelegramUser {
     private String lastName;
     private String userName;
     private Boolean isActive;
-    private String status;
+    private UserStatus status;
     private LocalDateTime createDate;
     private List<Category> categories;
 
-    public TelegramUser(Long userId, String firstName, String lastName, String userName, Boolean isActive, String status, LocalDateTime createDate, List<Category> categories) {
+    public TelegramUser(Long userId, String firstName, String lastName, String userName, Boolean isActive, UserStatus status, LocalDateTime createDate, List<Category> categories) {
         this.userId = userId;
         this.firstName = firstName;
         this.lastName = lastName;
@@ -35,7 +36,7 @@ public class TelegramUser {
                 user.getLastName(),
                 user.getUserName(),
                 null,
-                "NEW",
+                UserStatus.NEW,
                 null,
                 null);
     }
@@ -46,7 +47,7 @@ public class TelegramUser {
         this.firstName = userEntity.getFirstName();
         this.lastName = userEntity.getLastName();
         this.userName = userEntity.getUserName();
-        this.status = userEntity.getStatus();
+        this.status = UserStatus.valueOf(userEntity.getStatus());
         this.createDate = userEntity.getCreateDate();
         this.categories = categories;
     }
@@ -57,7 +58,7 @@ public class TelegramUser {
                 firstName,
                 lastName,
                 userName,
-                status,
+                status.name(),
                 createDate,
                 null
         );
@@ -104,11 +105,11 @@ public class TelegramUser {
         isActive = active;
     }
 
-    public String getStatus() {
+    public UserStatus getStatus() {
         return status;
     }
 
-    public void setStatus(String status) {
+    public void setStatus(UserStatus status) {
         this.status = status;
     }
 
@@ -121,7 +122,7 @@ public class TelegramUser {
     }
 
     public List<Category> getCategories() {
-        return categories;
+        return categories == null ? new ArrayList<>() : categories;
     }
 
     public void setCategories(List<Category> categories) {

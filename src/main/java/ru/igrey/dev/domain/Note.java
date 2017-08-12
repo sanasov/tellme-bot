@@ -26,8 +26,12 @@ public class Note {
         this.text = entity.getText();
     }
 
+    public static Note createNewNote(String text, Long categoryId, Long userId) {
+        return new Note(null, categoryId, userId, null, text);
+    }
 
-    public NoteEntity toEntity(Long categoryId) {
+
+    public NoteEntity toEntity() {
         return new NoteEntity(id, createDate, text, categoryId, userId);
     }
 

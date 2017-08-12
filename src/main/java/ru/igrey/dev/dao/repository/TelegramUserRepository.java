@@ -2,6 +2,7 @@ package ru.igrey.dev.dao.repository;
 
 import ru.igrey.dev.dao.TelegramUserDao;
 import ru.igrey.dev.domain.TelegramUser;
+import ru.igrey.dev.entity.TelegramUserEntity;
 
 public class TelegramUserRepository {
 
@@ -14,6 +15,10 @@ public class TelegramUserRepository {
     }
 
     public TelegramUser findById(Long userId) {
+        TelegramUserEntity userEntity = userDao.findById(userId);
+        if (userEntity == null) {
+            return null;
+        }
         return new TelegramUser(
                 userDao.findById(userId),
                 categoryRepository.findCategoryByUserId(userId)

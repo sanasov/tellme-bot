@@ -76,4 +76,11 @@ public class NoteDao {
                 sql, new Object[]{categoryId}, new NoteMapper());
         return entities;
     }
+
+    public NoteEntity findLastInsertedNoteWithoutCategory(Long userId) {
+        String sql = "SELECT * FROM note WHERE ID = (SELECT MAX(ID) FROM note WHERE USER_ID = ? AND category_id is null)";
+        List<NoteEntity> entities = jdbcTemplate.query(
+                sql, new Object[]{userId}, new NoteMapper());
+        return entities.isEmpty() ? null : entities.get(0);
+    }
 }

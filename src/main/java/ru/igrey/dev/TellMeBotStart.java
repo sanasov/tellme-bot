@@ -27,7 +27,8 @@ public class TellMeBotStart {
     private static TellMe createTellMeBot() {
         return new TellMe(
                 BeanConfig.telegramUserService(),
-                BeanConfig.noteRepository()
+                BeanConfig.noteRepository(),
+                BeanConfig.categoryRepository()
         );
     }
 

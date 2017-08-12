@@ -20,6 +20,9 @@ public class CategoryRepository {
 
     public List<Category> findCategoryByUserId(Long userId) {
         List<CategoryEntity> categoryEntities = categoryDao.findByUserId(userId);
+        if (categoryEntities == null) {
+            return null;
+        }
         List<Category> categories = new ArrayList<>();
         for (CategoryEntity categoryEntity : categoryEntities) {
             categories.add(
@@ -39,8 +42,8 @@ public class CategoryRepository {
                 noteRepository.findByCategoryId(categoryEntity.getId()));
     }
 
-    public void saveCategory(Category category, Long userId) {
-        categoryDao.save(category.toEntity(userId));
+    public Category saveCategory(Category category) {
+        return new Category(categoryDao.save(category.toEntity()), null);
     }
 
 }

@@ -9,6 +9,7 @@ import ru.igrey.dev.dao.repository.TelegramUserRepository;
 import ru.igrey.dev.domain.Category;
 import ru.igrey.dev.domain.Note;
 import ru.igrey.dev.domain.TelegramUser;
+import ru.igrey.dev.domain.UserStatus;
 
 /**
  * Created by sanasov on 26.04.2017.
@@ -47,8 +48,8 @@ public class JdbcTemplateFactory {
         NoteRepository noteRepository = new NoteRepository(new NoteDao(jdbcTemplate));
         TelegramUser telegramUser = createTelegramUser();
         repository.save(telegramUser);
-        categoryRepository.saveCategory(createCategory(), 11L);
-        noteRepository.saveNote(new Note(null, null, 11L, null, "Terminator"), 3L);
+        categoryRepository.saveCategory(createCategory());
+        noteRepository.saveNote(new Note(null, null, 11L, null, "Terminator"));
         repository.findById(11L);
     }
 
@@ -59,7 +60,7 @@ public class JdbcTemplateFactory {
                 "Anasov",
                 "Saidovich",
                 null,
-                "OK",
+                UserStatus.NEW,
                 null,
                 null);
         return telegramUser;

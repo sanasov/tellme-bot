@@ -4,6 +4,7 @@ import lombok.ToString;
 import ru.igrey.dev.entity.CategoryEntity;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 
 @ToString
@@ -11,6 +12,7 @@ public class Category {
     private Long id;
     private LocalDateTime createDate;
     private String title;
+    private Long userId;
     private List<Note> notes;
 
     public Category(Long id, Long userId, LocalDateTime createDate, String title, List<Note> notes) {
@@ -18,6 +20,7 @@ public class Category {
         this.createDate = createDate;
         this.title = title;
         this.notes = notes;
+        this.userId = userId;
     }
 
 
@@ -25,11 +28,15 @@ public class Category {
         this.id = categoryEntity.getId();
         this.createDate = categoryEntity.getCreateDate();
         this.title = categoryEntity.getTitle();
-        this.notes = notes;
+        this.userId = categoryEntity.getUserId();
+    }
+
+    public static Category createNewCategory(Long userId, String title) {
+        return new Category(null, userId, null, title, null);
     }
 
 
-    public CategoryEntity toEntity(Long userId) {
+    public CategoryEntity toEntity() {
         return new CategoryEntity(id, userId, createDate, title);
     }
 
@@ -58,7 +65,7 @@ public class Category {
     }
 
     public List<Note> getNotes() {
-        return notes;
+        return notes == null ? new ArrayList<>() : notes;
     }
 
     public void setNotes(List<Note> notes) {

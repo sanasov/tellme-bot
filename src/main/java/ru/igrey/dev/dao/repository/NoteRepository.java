@@ -3,7 +3,9 @@ package ru.igrey.dev.dao.repository;
 import ru.igrey.dev.dao.NoteDao;
 import ru.igrey.dev.domain.Note;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 public class NoteRepository {
@@ -15,13 +17,22 @@ public class NoteRepository {
     }
 
 
-    public Note saveNote(Note note, Long categoryId) {
-        return new Note(noteDao.save(note.toEntity(categoryId)));
+    public Note saveNote(Note note) {
+        return new Note(noteDao.save(note.toEntity()));
     }
 
     public List<Note> findByCategoryId(Long categoryId) {
-        return noteDao.findByCategoryId(categoryId).stream()
+        return Optional.ofNullable(noteDao.findByCategoryId(categoryId)).orElse(new ArrayList<>())
+                .stream()
                 .map(entity -> new Note(entity))
                 .collect(Collectors.toList());
+    }
+
+    public Note findById(Long id) {
+        return new Note(noteDao.findById(id));
+    }
+
+    public Note findLastInsertedNoteWithoutCategory(Long userId) {
+        return new Note(noteDao.findLastInsertedNoteWithoutCategory(userId));
     }
 }
