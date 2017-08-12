@@ -32,11 +32,23 @@ public class TelegramUser {
         this.firstName = userEntity.getFirstName();
         this.lastName = userEntity.getLastName();
         this.userName = userEntity.getUserName();
-        this.isActive = userEntity.getActive();
         this.status = userEntity.getStatus();
         this.createDate = userEntity.getCreateDate();
         this.categories = categories;
     }
+
+    public TelegramUserEntity toEntity() {
+        return new TelegramUserEntity(
+                userId,
+                firstName,
+                lastName,
+                userName,
+                status,
+                createDate,
+         null
+        );
+    }
+
 
     public Long getUserId() {
         return userId;

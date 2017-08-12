@@ -1,7 +1,7 @@
 package ru.igrey.dev.dao;
 
 import org.springframework.jdbc.core.JdbcTemplate;
-import ru.igrey.dev.dao.mapper.NoteMapper;
+import ru.igrey.dev.dao.mapper.CategoryMapper;
 import ru.igrey.dev.entity.CategoryEntity;
 
 import java.util.List;
@@ -26,7 +26,7 @@ public class CategoryDao {
 
     public void insert(CategoryEntity entity) {
         String sqlInsert = "INSERT INTO category (user_id, title)"
-                + " VALUES (?, ?, ?)";
+                + " VALUES (?, ?)";
         jdbcTemplate.update(sqlInsert, new Object[]{
                 entity.getUserId(),
                 entity.getTitle()
@@ -53,21 +53,21 @@ public class CategoryDao {
     public CategoryEntity findById(Long id) {
         String sql = "SELECT * FROM category WHERE ID = ?";
         List<CategoryEntity> entities = jdbcTemplate.query(
-                sql, new Object[]{id}, new NoteMapper());
+                sql, new Object[]{id}, new CategoryMapper());
         return entities.isEmpty() ? null : entities.get(0);
     }
 
     public List<CategoryEntity> findByUserId(Long userId) {
         String sql = "SELECT * FROM category WHERE user_id = ?";
         List<CategoryEntity> entities = jdbcTemplate.query(
-                sql, new Object[]{userId}, new NoteMapper());
+                sql, new Object[]{userId}, new CategoryMapper());
         return entities;
     }
 
     public CategoryEntity findByUserIdAndTitle(Long userId, String title) {
         String sql = "SELECT * FROM category WHERE user_id = ? and title = ?";
         List<CategoryEntity> entities = jdbcTemplate.query(
-                sql, new Object[]{userId, title}, new NoteMapper());
+                sql, new Object[]{userId, title}, new CategoryMapper());
         return entities.isEmpty() ? null : entities.get(0);
     }
 }

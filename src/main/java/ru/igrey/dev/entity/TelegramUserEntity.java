@@ -15,11 +15,11 @@ public class TelegramUserEntity {
     private String firstName;
     private String lastName;
     private String userName;
-    private Boolean isActive;
+    private Integer isActive;
     private String status;
     private LocalDateTime createDate;
 
-    public TelegramUserEntity(Long userId, String firstName, String lastName, String userName, String status, LocalDateTime createDate, Boolean isActive) {
+    public TelegramUserEntity(Long userId, String firstName, String lastName, String userName, String status, LocalDateTime createDate, Integer isActive) {
         this.userId = userId;
         this.firstName = firstName;
         this.lastName = lastName;
@@ -72,11 +72,11 @@ public class TelegramUserEntity {
         this.status = status;
     }
 
-    public Boolean getActive() {
+    public Integer getActive() {
         return isActive;
     }
 
-    public void setActive(Boolean active) {
+    public void setActive(Integer active) {
         isActive = active;
     }
 

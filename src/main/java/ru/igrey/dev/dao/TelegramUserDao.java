@@ -25,14 +25,13 @@ public class TelegramUserDao {
     }
 
     public void insert(TelegramUserEntity user) {
-        String sqlInsert = "INSERT INTO user (id, user_name, first_name, last_name, is_active, status)"
-                + " VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
+        String sqlInsert = "INSERT INTO user (id, user_name, first_name, last_name, status)"
+                + " VALUES (?, ?, ?, ?, ?)";
         jdbcTemplate.update(sqlInsert, new Object[]{
                 user.getUserId(),
                 user.getUserName(),
                 user.getFirstName(),
                 user.getLastName(),
-                user.getActive(),
                 user.getStatus()
         });
     }
@@ -42,14 +41,12 @@ public class TelegramUserDao {
                 " user_name = ?," +
                 " first_name = ?," +
                 " last_name = ?," +
-                " is_active = ?," +
                 " status = ?" +
                 " where id = ?";
         jdbcTemplate.update(sqlUpdate, new Object[]{
                 user.getUserName(),
                 user.getFirstName(),
                 user.getLastName(),
-                user.getActive(),
                 user.getStatus(),
                 user.getUserId(),
         });

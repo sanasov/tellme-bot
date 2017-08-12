@@ -20,4 +20,7 @@ public class TelegramUserRepository {
         );
     }
 
+    public void save(TelegramUser telegramUser) {
+        userDao.save(telegramUser.toEntity());
+    }
 }

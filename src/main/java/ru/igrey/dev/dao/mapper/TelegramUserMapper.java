@@ -5,6 +5,8 @@ import ru.igrey.dev.entity.TelegramUserEntity;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 
 /**
  * Created by sanasov on 26.04.2017.
@@ -17,8 +19,8 @@ public class TelegramUserMapper implements RowMapper {
         user.setLastName(rs.getString("LAST_NAME"));
         user.setUserName(rs.getString("USER_NAME"));
         user.setStatus(rs.getString("STATUS"));
-        user.setActive(rs.getBoolean("IS_ACTIVE"));
-        user.setCreateDate(rs.getTimestamp("CREATE_DATE").toLocalDateTime());
+        user.setActive(rs.getInt("IS_ACTIVE"));
+        user.setCreateDate(LocalDateTime.parse(rs.getString("CREATE_DATE"), DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss")));
         return user;
     }
 
