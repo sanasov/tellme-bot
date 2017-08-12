@@ -16,15 +16,15 @@ public class NoteDao {
         this.jdbcTemplate = jdbcTemplate;
     }
 
-    public void save(NoteEntity entity) {
+    public NoteEntity save(NoteEntity entity) {
         if (findById(entity.getId()) == null) {
-            insert(entity);
+            return insert(entity);
         } else {
-            update(entity);
+            return update(entity);
         }
     }
 
-    public void insert(NoteEntity entity) {
+    public NoteEntity insert(NoteEntity entity) {
         String sqlInsert = "INSERT INTO note (category_id, user_id, txt)"
                 + " VALUES (?, ?, ?)";
         jdbcTemplate.update(sqlInsert, new Object[]{
@@ -32,9 +32,11 @@ public class NoteDao {
                 entity.getUserId(),
                 entity.getText()
         });
+        entity.setId(jdbcTemplate.queryForLong("SELECT seq from sqlite_sequence WHERE name = 'note'"));
+        return entity;
     }
 
-    public void update(NoteEntity entity) {
+    public NoteEntity update(NoteEntity entity) {
         String sqlUpdate = "update note set" +
                 " category_id = ?," +
                 " user_id = ?," +
@@ -46,6 +48,7 @@ public class NoteDao {
                 entity.getText(),
                 entity.getId()
         });
+        return entity;
     }
 
     public void delete(Long entityId) {

@@ -15,6 +15,13 @@ import ru.igrey.dev.domain.TelegramUser;
  */
 public class JdbcTemplateFactory {
 
+    private static JdbcTemplate jdbcTemplate;
+
+    public JdbcTemplateFactory() {
+
+    }
+
+
     public JdbcTemplate create() {
         String url = "jdbc:sqlite:/" + DirectoryInfo.getDirectoryTargetScripts() + "botdb.s3db";
         SQLiteDataSource sqLiteDataSource = new SQLiteDataSource();

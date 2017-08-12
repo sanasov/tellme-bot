@@ -16,24 +16,26 @@ public class CategoryDao {
         this.jdbcTemplate = jdbcTemplate;
     }
 
-    public void save(CategoryEntity entity) {
+    public CategoryEntity save(CategoryEntity entity) {
         if (findById(entity.getId()) == null) {
-            insert(entity);
+            return insert(entity);
         } else {
-            update(entity);
+            return update(entity);
         }
     }
 
-    public void insert(CategoryEntity entity) {
+    public CategoryEntity insert(CategoryEntity entity) {
         String sqlInsert = "INSERT INTO category (user_id, title)"
                 + " VALUES (?, ?)";
         jdbcTemplate.update(sqlInsert, new Object[]{
                 entity.getUserId(),
                 entity.getTitle()
         });
+        entity.setId(jdbcTemplate.queryForLong("SELECT seq from sqlite_sequence WHERE name = 'category'"));
+        return entity;
     }
 
-    public void update(CategoryEntity entity) {
+    public CategoryEntity update(CategoryEntity entity) {
         String sqlUpdate = "update category set" +
                 " user_id = ?," +
                 " title = ?" +
@@ -43,6 +45,7 @@ public class CategoryDao {
                 entity.getTitle(),
                 entity.getId()
         });
+        return entity;
     }
 
     public void delete(Long entityId) {

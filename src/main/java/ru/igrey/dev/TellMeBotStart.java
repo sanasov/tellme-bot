@@ -4,6 +4,7 @@ package ru.igrey.dev;
 import org.telegram.telegrambots.ApiContextInitializer;
 import org.telegram.telegrambots.TelegramBotsApi;
 import org.telegram.telegrambots.exceptions.TelegramApiException;
+import ru.igrey.dev.config.BeanConfig;
 
 /**
  * Created by sanasov on 01.04.2017.
@@ -25,6 +26,8 @@ public class TellMeBotStart {
 
     private static TellMe createTellMeBot() {
         return new TellMe(
+                BeanConfig.telegramUserService(),
+                BeanConfig.noteRepository()
         );
     }
 

@@ -15,13 +15,13 @@ public class NoteRepository {
     }
 
 
-    public void saveNote(Note note, Long categoryId) {
-        noteDao.save(note.toEntity(categoryId));
+    public Note saveNote(Note note, Long categoryId) {
+        return new Note(noteDao.save(note.toEntity(categoryId)));
     }
 
     public List<Note> findByCategoryId(Long categoryId) {
-       return noteDao.findByCategoryId(categoryId).stream()
-               .map(entity -> new Note(entity))
-               .collect(Collectors.toList());
+        return noteDao.findByCategoryId(categoryId).stream()
+                .map(entity -> new Note(entity))
+                .collect(Collectors.toList());
     }
 }

@@ -1,10 +1,12 @@
 package ru.igrey.dev.domain;
 
+import lombok.ToString;
 import ru.igrey.dev.entity.CategoryEntity;
 
 import java.time.LocalDateTime;
 import java.util.List;
 
+@ToString
 public class Category {
     private Long id;
     private LocalDateTime createDate;

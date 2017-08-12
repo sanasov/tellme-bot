@@ -1,10 +1,13 @@
 package ru.igrey.dev.domain;
 
+import lombok.ToString;
+import org.telegram.telegrambots.api.objects.User;
 import ru.igrey.dev.entity.TelegramUserEntity;
 
 import java.time.LocalDateTime;
 import java.util.List;
 
+@ToString
 public class TelegramUser {
     private Long userId;
     private String firstName;
@@ -26,6 +29,17 @@ public class TelegramUser {
         this.categories = categories;
     }
 
+    public static TelegramUser createNewUser(User user) {
+        return new TelegramUser(user.getId().longValue(),
+                user.getFirstName(),
+                user.getLastName(),
+                user.getUserName(),
+                null,
+                "NEW",
+                null,
+                null);
+    }
+
 
     public TelegramUser(TelegramUserEntity userEntity, List<Category> categories) {
         this.userId = userEntity.getUserId();
@@ -45,7 +59,7 @@ public class TelegramUser {
                 userName,
                 status,
                 createDate,
-         null
+                null
         );
     }
 

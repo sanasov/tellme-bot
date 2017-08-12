@@ -1,7 +1,6 @@
 package ru.igrey.dev.dao.repository;
 
 import ru.igrey.dev.dao.CategoryDao;
-import ru.igrey.dev.dao.TelegramUserDao;
 import ru.igrey.dev.domain.Category;
 import ru.igrey.dev.entity.CategoryEntity;
 
@@ -10,7 +9,6 @@ import java.util.List;
 
 public class CategoryRepository {
 
-    private TelegramUserDao userDao;
     private NoteRepository noteRepository;
     private CategoryDao categoryDao;
 
