@@ -42,7 +42,7 @@ public class ReplyKeyboard {
         List<InlineKeyboardButton> buttonRow = new ArrayList<>();
 
         for (Category category : categories) {
-            buttonRow.add(createInlineKeyboardButton(category.getId() + "#" + noteId, noteId.toString()));
+            buttonRow.add(createInlineKeyboardButton(category.getId() + "#" + noteId, category.getTitle()));
         }
         buttonRow.add(createInlineKeyboardButton(KeyboardText.CREATE_CATEGORY, KeyboardText.CREATE_CATEGORY));
         keyboard.add(buttonRow);
