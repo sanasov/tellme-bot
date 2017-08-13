@@ -55,7 +55,7 @@ public class Category {
             return "Записей нет";
         }
         for (Note note : notesList) {
-            result = toInlineFixedWidthCode(i + ") ") + note.getText();
+            result = result + "\n" + toInlineFixedWidthCode(i + ") ") + note.getText();
             i++;
         }
         return result;
