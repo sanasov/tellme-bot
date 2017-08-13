@@ -72,6 +72,10 @@ public class TellMe extends TelegramLongPollingBot {
                     ReplyKeyboard.buttonsForPickingCategoryForViewNote(categoryRepository.findCategoryByUserId(chatId))
             );
         } else if (incomingMessageText.equals(KeyboardText.SHOW_NOTES) || incomingMessageText.equals("/shownotes")) {
+            if (telegramUser.getCategories() == null || telegramUser.getCategories().isEmpty()) {
+                sendButtonMessage(chatId, "Нет категорий. Нет записей", null);
+                return;
+            }
             sendButtonMessage(chatId, "В какой категории?", ReplyKeyboard.buttonsForPickingCategoryForViewNote(telegramUser.getCategories()));
         } else {
             Note newNote = noteRepository.saveNote(Note.createNewNote(incomingMessageText, null, chatId));
