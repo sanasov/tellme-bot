@@ -107,7 +107,7 @@ public class TellMe extends TelegramLongPollingBot {
             List<Note> notes = noteRepository.findByCategoryId(categoryId);
             String answerMessage = "Выберите записи для удаления";
             if (notes == null || notes.isEmpty()) {
-                answerMessage = "Записей нет";
+                answerMessage = "Пусто";
             }
             sendButtonMessage(
                     chatId,
