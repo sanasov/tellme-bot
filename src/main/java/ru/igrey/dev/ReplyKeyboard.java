@@ -5,6 +5,7 @@ import org.telegram.telegrambots.api.objects.replykeyboard.ReplyKeyboardMarkup;
 import org.telegram.telegrambots.api.objects.replykeyboard.buttons.InlineKeyboardButton;
 import org.telegram.telegrambots.api.objects.replykeyboard.buttons.KeyboardRow;
 import ru.igrey.dev.domain.Category;
+import ru.igrey.dev.domain.Note;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -27,7 +28,7 @@ public class ReplyKeyboard {
         KeyboardRow keyboardFirstRow = new KeyboardRow();
         // Добавляем кнопки в первую строчку клавиатуры
         keyboardFirstRow.add(KeyboardText.SHOW_NOTES);
-//        keyboardFirstRow.add(KeyboardText.CREATE_CATEGORY);
+        keyboardFirstRow.add(KeyboardText.REMOVE);
 
         // Добавляем все строчки клавиатуры в список
         keyboard.add(keyboardFirstRow);
@@ -64,6 +65,30 @@ public class ReplyKeyboard {
         return markup;
     }
 
+    public static InlineKeyboardMarkup buttonsForPickingCategoryForDeleteNotes(List<Category> categories) {
+        InlineKeyboardMarkup markup = new InlineKeyboardMarkup();
+        List<List<InlineKeyboardButton>> keyboard = new ArrayList<>();
+        for (Category category : categories) {
+            List<InlineKeyboardButton> buttonRow = new ArrayList<>();
+            buttonRow.add(createInlineKeyboardButton("CATEGORY_DELETE#" + category.getId().toString(), category.getTitle()));
+            keyboard.add(buttonRow);
+        }
+        markup.setKeyboard(keyboard);
+        return markup;
+    }
+
+
+    public static InlineKeyboardMarkup buttonsForPickingNotesForDelete(List<Note> notes, Long categoryId) {
+        InlineKeyboardMarkup markup = new InlineKeyboardMarkup();
+        List<List<InlineKeyboardButton>> keyboard = new ArrayList<>();
+        for (Note note : notes) {
+            List<InlineKeyboardButton> buttonRow = new ArrayList<>();
+            buttonRow.add(createInlineKeyboardButton("NOTE_DELETE#" + categoryId + "#" + note.getId().toString(), note.getText()));
+            keyboard.add(buttonRow);
+        }
+        markup.setKeyboard(keyboard);
+        return markup;
+    }
 
     private static InlineKeyboardButton createInlineKeyboardButton(String buttonId, String label) {
         InlineKeyboardButton btn = new InlineKeyboardButton();

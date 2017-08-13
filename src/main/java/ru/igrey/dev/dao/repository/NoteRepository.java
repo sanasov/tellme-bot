@@ -35,4 +35,8 @@ public class NoteRepository {
     public Note findLastInsertedNoteWithoutCategory(Long userId) {
         return new Note(noteDao.findLastInsertedNoteWithoutCategory(userId));
     }
+
+    public void delete(Long nodeId) {
+        noteDao.delete(nodeId);
+    }
 }

@@ -42,6 +42,13 @@ public class CategoryRepository {
                 noteRepository.findByCategoryId(categoryEntity.getId()));
     }
 
+    public Category findCategoryById(Long id) {
+        CategoryEntity categoryEntity = categoryDao.findById(id);
+        return new Category(
+                categoryEntity,
+                noteRepository.findByCategoryId(categoryEntity.getId()));
+    }
+
     public Category saveCategory(Category category) {
         return new Category(categoryDao.save(category.toEntity()), null);
     }

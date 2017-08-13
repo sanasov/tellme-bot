@@ -4,6 +4,7 @@ package ru.igrey.dev;
 import lombok.extern.slf4j.Slf4j;
 import org.telegram.telegrambots.api.methods.AnswerCallbackQuery;
 import org.telegram.telegrambots.api.methods.send.SendMessage;
+import org.telegram.telegrambots.api.methods.updatingmessages.EditMessageText;
 import org.telegram.telegrambots.api.objects.CallbackQuery;
 import org.telegram.telegrambots.api.objects.Message;
 import org.telegram.telegrambots.api.objects.Update;
@@ -18,6 +19,8 @@ import ru.igrey.dev.domain.Note;
 import ru.igrey.dev.domain.TelegramUser;
 import ru.igrey.dev.domain.UserStatus;
 import ru.igrey.dev.service.TelegramUserService;
+
+import java.util.List;
 
 /**
  * Created by sanasov on 01.04.2017.
@@ -71,6 +74,12 @@ public class TellMe extends TelegramLongPollingBot {
                     "Категория добавлена",
                     ReplyKeyboard.buttonsForPickingCategoryForViewNote(categoryRepository.findCategoryByUserId(chatId))
             );
+        } else if (incomingMessageText.equals(KeyboardText.REMOVE) || incomingMessageText.equals("/deletenotes")) {
+            sendButtonMessage(
+                    chatId,
+                    "В какой категории удалить записи?",
+                    ReplyKeyboard.buttonsForPickingCategoryForDeleteNotes(categoryRepository.findCategoryByUserId(chatId))
+            );
         } else if (incomingMessageText.equals(KeyboardText.SHOW_NOTES) || incomingMessageText.equals("/shownotes")) {
             if (telegramUser.getCategories() == null || telegramUser.getCategories().isEmpty()) {
                 sendButtonMessage(chatId, "Нет категорий. Нет записей", null);
@@ -87,11 +96,29 @@ public class TellMe extends TelegramLongPollingBot {
     private void handleButtonClick(CallbackQuery query) {
         TelegramUser telegramUser = telegramUserService.getOrCreateTelegramUserByUserId(query.getFrom());
         AnswerCallbackQuery answer = new AnswerCallbackQuery();
+        Long chatId = query.getMessage().getChatId();
         answer.setCallbackQueryId(query.getId());
         if (query.getData().equals(KeyboardText.CREATE_CATEGORY)) {
             telegramUser.setStatus(UserStatus.CREATE_CATEGORY);
             telegramUserService.save(telegramUser);
             answer.setText("Добавьте категорию");
+        } else if (query.getData().contains("CATEGORY_DELETE#")) {
+            Long categoryId = Long.valueOf(query.getData().split("#")[1]);
+            List<Note> notes = noteRepository.findByCategoryId(categoryId);
+            String answerMessage = "Выберите записи для удаления";
+            if (notes == null || notes.isEmpty()) {
+                answerMessage = "Записей нет";
+            }
+            sendButtonMessage(
+                    chatId,
+                    answerMessage,
+                    ReplyKeyboard.buttonsForPickingNotesForDelete(noteRepository.findByCategoryId(categoryId), categoryId)
+            );
+        } else if (query.getData().contains("NOTE_DELETE#")) {
+            Long categoryId = Long.valueOf(query.getData().split("#")[1]);
+            Long noteId = Long.valueOf(query.getData().split("#")[2]);
+            deleteNote(chatId, query.getMessage().getMessageId(), noteId, categoryId);
+            answer.setText("Запись удалена");
         } else if (query.getData().contains("#")) {
             Long categoryId = Long.valueOf(query.getData().split("#")[0]);
             Long noteId = Long.valueOf(query.getData().split("#")[1]);
@@ -115,6 +142,17 @@ public class TellMe extends TelegramLongPollingBot {
         }
     }
 
+
+    private void deleteNote(Long chatId, Integer messageId, Long noteId, Long categoryId) {
+        noteRepository.delete(noteId);
+        editMessage(chatId,
+                messageId,
+                "Выберите записи для удаления",
+                ReplyKeyboard.buttonsForPickingNotesForDelete(noteRepository.findByCategoryId(categoryId), categoryId)
+        );
+    }
+
+
     private void sendTextMessage(Long chatId, String responseMessage, ReplyKeyboardMarkup keyboardMarkup) {
         SendMessage sendMessage = new SendMessage();
         sendMessage.setChatId(chatId)
@@ -137,6 +175,20 @@ public class TellMe extends TelegramLongPollingBot {
 
         try {
             sendMessage(sendMessage);
+        } catch (TelegramApiException e) {
+            log.error(e.getMessage());
+        }
+    }
+
+    private void editMessage(Long chatId, Integer messageId, String responseText, InlineKeyboardMarkup markup) {
+        EditMessageText editMessageText = new EditMessageText();
+        editMessageText.setChatId(chatId);
+        editMessageText.setText(responseText);
+        editMessageText.setReplyMarkup(markup);
+        editMessageText.setMessageId(messageId);
+        editMessageText.enableMarkdown(true);
+        try {
+            editMessageText(editMessageText);
         } catch (TelegramApiException e) {
             log.error(e.getMessage());
         }
