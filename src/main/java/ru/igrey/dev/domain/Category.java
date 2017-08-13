@@ -49,10 +49,16 @@ public class Category {
     }
 
     private String notes(List<Note> notesList) {
-        return notesList.stream()
-                .map(note -> toInlineFixedWidthCode("1) ") + note.getText())
-                .reduce((result, currNote) -> result + "\n" + currNote)
-                .orElse("Записей нет");
+        String result = "";
+        Integer i = 1;
+        if (notesList == null || notesList.isEmpty()) {
+            return "Записей нет";
+        }
+        for (Note note : notesList) {
+            result = toInlineFixedWidthCode(i + ") ") + note.getText();
+            i++;
+        }
+        return result;
     }
 
 
