@@ -27,7 +27,7 @@ public class ReplyKeyboard {
         KeyboardRow keyboardFirstRow = new KeyboardRow();
         // Добавляем кнопки в первую строчку клавиатуры
         keyboardFirstRow.add(KeyboardText.SHOW_NOTES);
-        keyboardFirstRow.add(KeyboardText.CREATE_CATEGORY);
+//        keyboardFirstRow.add(KeyboardText.CREATE_CATEGORY);
 
         // Добавляем все строчки клавиатуры в список
         keyboard.add(keyboardFirstRow);
@@ -36,16 +36,30 @@ public class ReplyKeyboard {
         return replyKeyboardMarkup;
     }
 
-    public static InlineKeyboardMarkup buttonsForPickingCategoryForNote(List<Category> categories, Long noteId) {
+    public static InlineKeyboardMarkup buttonsForPickingCategoryAfterCreateNote(List<Category> categories, Long noteId) {
         InlineKeyboardMarkup markup = new InlineKeyboardMarkup();
         List<List<InlineKeyboardButton>> keyboard = new ArrayList<>();
-        List<InlineKeyboardButton> buttonRow = new ArrayList<>();
 
         for (Category category : categories) {
+            List<InlineKeyboardButton> buttonRow = new ArrayList<>();
             buttonRow.add(createInlineKeyboardButton(category.getId() + "#" + noteId, category.getTitle()));
+            keyboard.add(buttonRow);
         }
+        List<InlineKeyboardButton> buttonRow = new ArrayList<>();
         buttonRow.add(createInlineKeyboardButton(KeyboardText.CREATE_CATEGORY, KeyboardText.CREATE_CATEGORY));
         keyboard.add(buttonRow);
+        markup.setKeyboard(keyboard);
+        return markup;
+    }
+
+    public static InlineKeyboardMarkup buttonsForPickingCategoryForViewNote(List<Category> categories) {
+        InlineKeyboardMarkup markup = new InlineKeyboardMarkup();
+        List<List<InlineKeyboardButton>> keyboard = new ArrayList<>();
+        for (Category category : categories) {
+            List<InlineKeyboardButton> buttonRow = new ArrayList<>();
+            buttonRow.add(createInlineKeyboardButton(category.getId().toString(), category.getTitle()));
+            keyboard.add(buttonRow);
+        }
         markup.setKeyboard(keyboard);
         return markup;
     }

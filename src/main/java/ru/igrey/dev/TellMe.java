@@ -8,6 +8,7 @@ import org.telegram.telegrambots.api.objects.CallbackQuery;
 import org.telegram.telegrambots.api.objects.Message;
 import org.telegram.telegrambots.api.objects.Update;
 import org.telegram.telegrambots.api.objects.replykeyboard.InlineKeyboardMarkup;
+import org.telegram.telegrambots.api.objects.replykeyboard.ReplyKeyboardMarkup;
 import org.telegram.telegrambots.bots.TelegramLongPollingBot;
 import org.telegram.telegrambots.exceptions.TelegramApiException;
 import ru.igrey.dev.dao.repository.CategoryRepository;
@@ -56,7 +57,9 @@ public class TellMe extends TelegramLongPollingBot {
         TelegramUser telegramUser = telegramUserService.getOrCreateTelegramUserByUserId(incomingMessage.getFrom());
         Long chatId = incomingMessage.getChatId();
         String incomingMessageText = incomingMessage.getText();
-        if (telegramUser.getStatus().equals(UserStatus.CREATE_CATEGORY)) {
+        if (incomingMessageText.equals("/start")) {
+            sendTextMessage(chatId, "Создайте заметку и выберите для нее категорию", ReplyKeyboard.getKeyboardOnUserStart());
+        } else if (telegramUser.getStatus().equals(UserStatus.CREATE_CATEGORY)) {
             Category category = categoryRepository.saveCategory(Category.createNewCategory(chatId, incomingMessageText));
             Note note = noteRepository.findLastInsertedNoteWithoutCategory(chatId);
             note.setCategoryId(category.getId());
@@ -64,14 +67,12 @@ public class TellMe extends TelegramLongPollingBot {
             telegramUser.setStatus(UserStatus.NEW);
             telegramUserService.save(telegramUser);
         } else if (incomingMessageText.equals(KeyboardText.CREATE_CATEGORY)) {
-
-
-        } else if (incomingMessageText.equals(KeyboardText.SHOW_NOTES)) {
-
-
+//            sendButtonMessage(chatId, "Выберите категорию для вашей заметки", ReplyKeyboard.buttonsForPickingCategoryForViewNote(telegramUser.getCategories()));
+        } else if (incomingMessageText.equals(KeyboardText.SHOW_NOTES) || incomingMessageText.equals("/shownotes")) {
+            sendButtonMessage(chatId, "Выберите категорию для просмотра записей", ReplyKeyboard.buttonsForPickingCategoryForViewNote(telegramUser.getCategories()));
         } else {
             Note newNote = noteRepository.saveNote(Note.createNewNote(incomingMessageText, null, chatId));
-            sendButtonMessage(chatId, "Выберите категорию для вашей заметки", ReplyKeyboard.buttonsForPickingCategoryForNote(telegramUser.getCategories(), newNote.getId()));
+            sendButtonMessage(chatId, "Выберите категорию для вашей заметки", ReplyKeyboard.buttonsForPickingCategoryAfterCreateNote(telegramUser.getCategories(), newNote.getId()));
         }
 
     }
@@ -80,18 +81,20 @@ public class TellMe extends TelegramLongPollingBot {
         TelegramUser telegramUser = telegramUserService.getOrCreateTelegramUserByUserId(query.getFrom());
         AnswerCallbackQuery answer = new AnswerCallbackQuery();
         answer.setCallbackQueryId(query.getId());
-        Message message = query.getMessage();
         if (query.getData().equals(KeyboardText.CREATE_CATEGORY)) {
             telegramUser.setStatus(UserStatus.CREATE_CATEGORY);
             telegramUserService.save(telegramUser);
             answer.setText("Введите категорию");
-        }
-        if (query.getData().contains("#")) {
+        } else if (query.getData().contains("#")) {
             Long categoryId = Long.valueOf(query.getData().split("#")[0]);
             Long noteId = Long.valueOf(query.getData().split("#")[1]);
             Note note = noteRepository.findById(noteId);
             note.setCategoryId(categoryId);
             noteRepository.saveNote(note);
+            answer.setText("Запись добавлена в категорию");
+        } else {
+            noteRepository.findByCategoryId(Long.valueOf(query.getData())).stream()
+                    .forEach((note) -> sendTextMessage(query.getMessage().getChatId(), note.getText(), ReplyKeyboard.getKeyboardOnUserStart()));
         }
         try {
             answerCallbackQuery(answer);
@@ -100,9 +103,10 @@ public class TellMe extends TelegramLongPollingBot {
         }
     }
 
-    private void sendTextMessage(Long chatId, String responseMessage) {
+    private void sendTextMessage(Long chatId, String responseMessage, ReplyKeyboardMarkup keyboardMarkup) {
         SendMessage sendMessage = new SendMessage();
         sendMessage.setChatId(chatId)
+                .setReplyMarkup(keyboardMarkup)
                 .setText(responseMessage);
         try {
             sendMessage(sendMessage);
