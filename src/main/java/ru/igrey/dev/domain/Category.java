@@ -1,13 +1,11 @@
 package ru.igrey.dev.domain;
 
-import lombok.ToString;
 import ru.igrey.dev.entity.CategoryEntity;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
-@ToString
 public class Category {
     private Long id;
     private LocalDateTime createDate;
@@ -29,10 +27,32 @@ public class Category {
         this.createDate = categoryEntity.getCreateDate();
         this.title = categoryEntity.getTitle();
         this.userId = categoryEntity.getUserId();
+        this.notes = notes;
     }
 
     public static Category createNewCategory(Long userId, String title) {
         return new Category(null, userId, null, title, null);
+    }
+
+
+    public String toBold(String text) {
+        return "*" + text + "*";
+    }
+
+    public String toInlineFixedWidthCode(String text) {
+        return "`" + text + "`";
+    }
+
+    public String toString() {
+        return toBold(this.getTitle()) + "\n"
+                + notes(this.getNotes());
+    }
+
+    private String notes(List<Note> notesList) {
+        return notesList.stream()
+                .map(note -> toInlineFixedWidthCode("1) ") + note.getText())
+                .reduce((result, currNote) -> result + "\n" + currNote)
+                .orElse("Записей нет");
     }
 
 
