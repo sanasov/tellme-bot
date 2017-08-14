@@ -162,7 +162,7 @@ public class TellMe extends TelegramLongPollingBot {
         try {
             sendMessage(sendMessage);
         } catch (TelegramApiException e) {
-            log.error(e.getMessage());
+            log.error(e.getMessage(), e);
         }
     }
 
@@ -176,7 +176,7 @@ public class TellMe extends TelegramLongPollingBot {
         try {
             sendMessage(sendMessage);
         } catch (TelegramApiException e) {
-            log.error(e.getMessage());
+            log.error(e.getMessage(), e);
         }
     }
 
@@ -190,7 +190,7 @@ public class TellMe extends TelegramLongPollingBot {
         try {
             editMessageText(editMessageText);
         } catch (TelegramApiException e) {
-            log.error(e.getMessage());
+            log.error(e.getMessage(), e);
         }
     }
 
