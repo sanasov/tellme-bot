@@ -10,6 +10,7 @@ import org.telegram.telegrambots.api.objects.Message;
 import org.telegram.telegrambots.api.objects.Update;
 import org.telegram.telegrambots.api.objects.replykeyboard.InlineKeyboardMarkup;
 import org.telegram.telegrambots.api.objects.replykeyboard.ReplyKeyboardMarkup;
+import org.telegram.telegrambots.bots.DefaultBotOptions;
 import org.telegram.telegrambots.bots.TelegramLongPollingBot;
 import org.telegram.telegrambots.exceptions.TelegramApiException;
 import ru.igrey.dev.dao.repository.CategoryRepository;
@@ -32,7 +33,8 @@ public class TellMe extends TelegramLongPollingBot {
     private NoteRepository noteRepository;
     private CategoryRepository categoryRepository;
 
-    public TellMe(TelegramUserService telegramUserService, NoteRepository noteRepository, CategoryRepository categoryRepository) {
+    public TellMe(DefaultBotOptions defaultBotOptions, TelegramUserService telegramUserService, NoteRepository noteRepository, CategoryRepository categoryRepository) {
+        super(defaultBotOptions);
         this.telegramUserService = telegramUserService;
         this.noteRepository = noteRepository;
         this.categoryRepository = categoryRepository;
