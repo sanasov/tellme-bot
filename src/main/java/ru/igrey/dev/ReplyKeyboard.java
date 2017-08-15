@@ -27,8 +27,8 @@ public class ReplyKeyboard {
         // Первая строчка клавиатуры
         KeyboardRow keyboardFirstRow = new KeyboardRow();
         // Добавляем кнопки в первую строчку клавиатуры
-        keyboardFirstRow.add(KeyboardText.SHOW_NOTES);
-        keyboardFirstRow.add(KeyboardText.REMOVE);
+        keyboardFirstRow.add(KeyboardCommand.SHOW_NOTES);
+        keyboardFirstRow.add(KeyboardCommand.DELETE_NOTE);
 
         // Добавляем все строчки клавиатуры в список
         keyboard.add(keyboardFirstRow);
@@ -43,11 +43,11 @@ public class ReplyKeyboard {
 
         for (Category category : categories) {
             List<InlineKeyboardButton> buttonRow = new ArrayList<>();
-            buttonRow.add(createInlineKeyboardButton(category.getId() + "#" + noteId, category.getTitle()));
+            buttonRow.add(createInlineKeyboardButton(ButtonName.PICK_CATEGORY_FOR_NOTE + "#" + category.getId() + "#" + noteId, category.getTitle()));
             keyboard.add(buttonRow);
         }
         List<InlineKeyboardButton> buttonRow = new ArrayList<>();
-        buttonRow.add(createInlineKeyboardButton(KeyboardText.CREATE_CATEGORY, KeyboardText.CREATE_CATEGORY));
+        buttonRow.add(createInlineKeyboardButton(KeyboardCommand.CREATE_CATEGORY, KeyboardCommand.CREATE_CATEGORY));
         keyboard.add(buttonRow);
         markup.setKeyboard(keyboard);
         return markup;
@@ -70,7 +70,7 @@ public class ReplyKeyboard {
         List<List<InlineKeyboardButton>> keyboard = new ArrayList<>();
         for (Category category : categories) {
             List<InlineKeyboardButton> buttonRow = new ArrayList<>();
-            buttonRow.add(createInlineKeyboardButton("CATEGORY_DELETE#" + category.getId().toString(), category.getTitle()));
+            buttonRow.add(createInlineKeyboardButton(ButtonName.CATEGORY_DELETE + "#" + category.getId().toString(), category.getTitle()));
             keyboard.add(buttonRow);
         }
         markup.setKeyboard(keyboard);
@@ -83,7 +83,7 @@ public class ReplyKeyboard {
         List<List<InlineKeyboardButton>> keyboard = new ArrayList<>();
         for (Note note : notes) {
             List<InlineKeyboardButton> buttonRow = new ArrayList<>();
-            buttonRow.add(createInlineKeyboardButton("NOTE_DELETE#" + categoryId + "#" + note.getId().toString(), note.getText()));
+            buttonRow.add(createInlineKeyboardButton(ButtonName.NOTE_DELETE + "#" + categoryId + "#" + note.getId().toString(), note.getText()));
             keyboard.add(buttonRow);
         }
         markup.setKeyboard(keyboard);

@@ -62,7 +62,7 @@ public class TellMe extends TelegramLongPollingBot {
         TelegramUser telegramUser = telegramUserService.getOrCreateTelegramUserByUserId(incomingMessage.getFrom());
         Long chatId = incomingMessage.getChatId();
         String incomingMessageText = incomingMessage.getText();
-        if (incomingMessageText.equals("/start")) {
+        if (incomingMessageText.equals(KeyboardCommand.COMMAND_START)) {
             sendTextMessage(chatId, AnswerText.ADD_NOTE_AND_PICK_CATEGORY, ReplyKeyboard.getKeyboardOnUserStart());
         } else if (telegramUser.getStatus().equals(UserStatus.CREATE_CATEGORY)) {
             Category category = categoryRepository.saveCategory(Category.createNewCategory(chatId, incomingMessageText));
@@ -76,13 +76,13 @@ public class TellMe extends TelegramLongPollingBot {
                     AnswerText.CATEGORY_IS_ADDED,
                     ReplyKeyboard.buttonsForPickingCategoryForViewNote(categoryRepository.findCategoryByUserId(chatId))
             );
-        } else if (incomingMessageText.equals(KeyboardText.REMOVE) || incomingMessageText.equals("/deletenotes")) {
+        } else if (incomingMessageText.equals(KeyboardCommand.DELETE_NOTE) || incomingMessageText.equals(KeyboardCommand.COMMAND_DELETE_NOTE)) {
             sendButtonMessage(
                     chatId,
                     AnswerText.IN_WHICH_CATEGORY_REMOVE_NOTES,
                     ReplyKeyboard.buttonsForPickingCategoryForDeleteNotes(categoryRepository.findCategoryByUserId(chatId))
             );
-        } else if (incomingMessageText.equals(KeyboardText.SHOW_NOTES) || incomingMessageText.equals("/shownotes")) {
+        } else if (incomingMessageText.equals(KeyboardCommand.SHOW_NOTES) || incomingMessageText.equals(KeyboardCommand.COMMAND_SHOW_NOTES)) {
             if (telegramUser.getCategories() == null || telegramUser.getCategories().isEmpty()) {
                 sendButtonMessage(chatId, AnswerText.NO_CATEGORIES_NO_NOTES, null);
                 return;
@@ -100,11 +100,11 @@ public class TellMe extends TelegramLongPollingBot {
         AnswerCallbackQuery answer = new AnswerCallbackQuery();
         Long chatId = query.getMessage().getChatId();
         answer.setCallbackQueryId(query.getId());
-        if (query.getData().equals(KeyboardText.CREATE_CATEGORY)) {
+        if (query.getData().equals(KeyboardCommand.CREATE_CATEGORY)) {
             telegramUser.setStatus(UserStatus.CREATE_CATEGORY);
             telegramUserService.save(telegramUser);
             answer.setText(AnswerText.ADD_CATEGORY);
-        } else if (query.getData().contains("CATEGORY_DELETE#")) {
+        } else if (query.getData().contains(ButtonName.CATEGORY_DELETE)) {
             Long categoryId = Long.valueOf(query.getData().split("#")[1]);
             List<Note> notes = noteRepository.findByCategoryId(categoryId);
             String answerMessage = (notes == null || notes.isEmpty()) ? AnswerText.EMPTY : AnswerText.PICK_NOTES_FOR_DELETE;
@@ -113,14 +113,14 @@ public class TellMe extends TelegramLongPollingBot {
                     answerMessage,
                     ReplyKeyboard.buttonsForPickingNotesForDelete(noteRepository.findByCategoryId(categoryId), categoryId)
             );
-        } else if (query.getData().contains("NOTE_DELETE#")) {
+        } else if (query.getData().contains(ButtonName.NOTE_DELETE)) {
             Long categoryId = Long.valueOf(query.getData().split("#")[1]);
             Long noteId = Long.valueOf(query.getData().split("#")[2]);
             deleteNote(chatId, query.getMessage().getMessageId(), noteId, categoryId);
             answer.setText(AnswerText.NOTE_IS_DELETED);
-        } else if (query.getData().contains("#")) {
-            Long categoryId = Long.valueOf(query.getData().split("#")[0]);
-            Long noteId = Long.valueOf(query.getData().split("#")[1]);
+        } else if (query.getData().contains(ButtonName.PICK_CATEGORY_FOR_NOTE)) {
+            Long categoryId = Long.valueOf(query.getData().split("#")[1]);
+            Long noteId = Long.valueOf(query.getData().split("#")[2]);
             Note note = noteRepository.findById(noteId);
             note.setCategoryId(categoryId);
             noteRepository.saveNote(note);
