@@ -1,6 +1,6 @@
 package ru.igrey.dev;
 
-public class AnswerText {
+public class AnswerMessageText {
     public final static String ADD_NOTE_AND_PICK_CATEGORY = "Добавьте заметку и выберите для нее категорию";
     public final static String CATEGORY_IS_ADDED = "Категория добавлена";
     public final static String ADD_CATEGORY = "Добавьте категорию";
