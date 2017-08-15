@@ -63,7 +63,7 @@ public class TellMe extends TelegramLongPollingBot {
         Long chatId = incomingMessage.getChatId();
         String incomingMessageText = incomingMessage.getText();
         if (incomingMessageText.equals("/start")) {
-            sendTextMessage(chatId, "Добавьте заметку и выберите для нее категорию", ReplyKeyboard.getKeyboardOnUserStart());
+            sendTextMessage(chatId, AnswerText.ADD_NOTE_AND_PICK_CATEGORY, ReplyKeyboard.getKeyboardOnUserStart());
         } else if (telegramUser.getStatus().equals(UserStatus.CREATE_CATEGORY)) {
             Category category = categoryRepository.saveCategory(Category.createNewCategory(chatId, incomingMessageText));
             Note note = noteRepository.findLastInsertedNoteWithoutCategory(chatId);
@@ -73,24 +73,24 @@ public class TellMe extends TelegramLongPollingBot {
             telegramUserService.save(telegramUser);
             sendButtonMessage(
                     chatId,
-                    "Категория добавлена",
+                    AnswerText.CATEGORY_IS_ADDED,
                     ReplyKeyboard.buttonsForPickingCategoryForViewNote(categoryRepository.findCategoryByUserId(chatId))
             );
         } else if (incomingMessageText.equals(KeyboardText.REMOVE) || incomingMessageText.equals("/deletenotes")) {
             sendButtonMessage(
                     chatId,
-                    "В какой категории удалить записи?",
+                    AnswerText.IN_WHICH_CATEGORY_REMOVE_NOTES,
                     ReplyKeyboard.buttonsForPickingCategoryForDeleteNotes(categoryRepository.findCategoryByUserId(chatId))
             );
         } else if (incomingMessageText.equals(KeyboardText.SHOW_NOTES) || incomingMessageText.equals("/shownotes")) {
             if (telegramUser.getCategories() == null || telegramUser.getCategories().isEmpty()) {
-                sendButtonMessage(chatId, "Нет категорий. Нет записей", null);
+                sendButtonMessage(chatId, AnswerText.NO_CATEGORIES_NO_NOTES, null);
                 return;
             }
-            sendButtonMessage(chatId, "В какой категории?", ReplyKeyboard.buttonsForPickingCategoryForViewNote(telegramUser.getCategories()));
+            sendButtonMessage(chatId, AnswerText.IN_WHICH_CATEGORY, ReplyKeyboard.buttonsForPickingCategoryForViewNote(telegramUser.getCategories()));
         } else {
             Note newNote = noteRepository.saveNote(Note.createNewNote(incomingMessageText, null, chatId));
-            sendButtonMessage(chatId, "Выберите категорию для вашей заметки", ReplyKeyboard.buttonsForPickingCategoryAfterCreateNote(telegramUser.getCategories(), newNote.getId()));
+            sendButtonMessage(chatId, AnswerText.PICK_CATEGORY_FOR_YOUR_NOTE, ReplyKeyboard.buttonsForPickingCategoryAfterCreateNote(telegramUser.getCategories(), newNote.getId()));
         }
 
     }
@@ -103,14 +103,11 @@ public class TellMe extends TelegramLongPollingBot {
         if (query.getData().equals(KeyboardText.CREATE_CATEGORY)) {
             telegramUser.setStatus(UserStatus.CREATE_CATEGORY);
             telegramUserService.save(telegramUser);
-            answer.setText("Добавьте категорию");
+            answer.setText(AnswerText.ADD_CATEGORY);
         } else if (query.getData().contains("CATEGORY_DELETE#")) {
             Long categoryId = Long.valueOf(query.getData().split("#")[1]);
             List<Note> notes = noteRepository.findByCategoryId(categoryId);
-            String answerMessage = "Выберите записи для удаления";
-            if (notes == null || notes.isEmpty()) {
-                answerMessage = "Пусто";
-            }
+            String answerMessage = (notes == null || notes.isEmpty()) ? AnswerText.EMPTY : AnswerText.PICK_NOTES_FOR_DELETE;
             sendButtonMessage(
                     chatId,
                     answerMessage,
@@ -120,14 +117,14 @@ public class TellMe extends TelegramLongPollingBot {
             Long categoryId = Long.valueOf(query.getData().split("#")[1]);
             Long noteId = Long.valueOf(query.getData().split("#")[2]);
             deleteNote(chatId, query.getMessage().getMessageId(), noteId, categoryId);
-            answer.setText("Запись удалена");
+            answer.setText(AnswerText.NOTE_IS_DELETED);
         } else if (query.getData().contains("#")) {
             Long categoryId = Long.valueOf(query.getData().split("#")[0]);
             Long noteId = Long.valueOf(query.getData().split("#")[1]);
             Note note = noteRepository.findById(noteId);
             note.setCategoryId(categoryId);
             noteRepository.saveNote(note);
-            answer.setText("Запись добавлена в категорию");
+            answer.setText(AnswerText.NOTE_IS_ADDED_IN_CATEGORY);
         } else {
             Category category = telegramUser.getCategories().stream()
                     .filter(c -> c.getId().equals(Long.valueOf(query.getData())))
@@ -149,7 +146,7 @@ public class TellMe extends TelegramLongPollingBot {
         noteRepository.delete(noteId);
         editMessage(chatId,
                 messageId,
-                "Выберите записи для удаления",
+                AnswerText.PICK_NOTES_FOR_DELETE,
                 ReplyKeyboard.buttonsForPickingNotesForDelete(noteRepository.findByCategoryId(categoryId), categoryId)
         );
     }
