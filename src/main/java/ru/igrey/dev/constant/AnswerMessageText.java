@@ -1,4 +1,4 @@
-package ru.igrey.dev;
+package ru.igrey.dev.constant;
 
 public class AnswerMessageText {
     public final static String ADD_NOTE_AND_PICK_CATEGORY = "Добавьте заметку и выберите для нее категорию";

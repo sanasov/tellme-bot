@@ -1,4 +1,4 @@
-package ru.igrey.dev;
+package ru.igrey.dev.constant;
 
 /**
  * Created by sanasov on 04.04.2017.

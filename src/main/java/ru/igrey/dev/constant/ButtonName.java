@@ -1,4 +1,4 @@
-package ru.igrey.dev;
+package ru.igrey.dev.constant;
 
 public class ButtonName {
     public final static String PICK_CATEGORY_FOR_NOTE = "PICK_CATEGORY_FOR_NOTE";

@@ -4,6 +4,8 @@ import org.telegram.telegrambots.api.objects.replykeyboard.InlineKeyboardMarkup;
 import org.telegram.telegrambots.api.objects.replykeyboard.ReplyKeyboardMarkup;
 import org.telegram.telegrambots.api.objects.replykeyboard.buttons.InlineKeyboardButton;
 import org.telegram.telegrambots.api.objects.replykeyboard.buttons.KeyboardRow;
+import ru.igrey.dev.constant.ButtonName;
+import ru.igrey.dev.constant.KeyboardCommand;
 import ru.igrey.dev.domain.Category;
 import ru.igrey.dev.domain.Note;
 
