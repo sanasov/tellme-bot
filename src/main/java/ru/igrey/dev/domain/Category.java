@@ -44,7 +44,7 @@ public class Category {
     }
 
     public String toString() {
-        return toBold(this.getTitle()) + "\n"
+        return this.getTitle() + "\n"
                 + notes(this.getNotes());
     }
 
@@ -55,7 +55,7 @@ public class Category {
             return "Записей нет";
         }
         for (Note note : notesList) {
-            result = result + toInlineFixedWidthCode(i + ") ") + note.getText() + "\n";
+            result = result + i + ") " + note.getText() + "\n";
             i++;
         }
         return result;

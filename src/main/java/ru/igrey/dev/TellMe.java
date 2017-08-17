@@ -159,7 +159,7 @@ public class TellMe extends TelegramLongPollingBot {
         SendMessage sendMessage = new SendMessage();
         sendMessage.setChatId(chatId)
                 .setReplyMarkup(keyboardMarkup)
-                .enableMarkdown(true)
+                .enableMarkdown(false)
                 .setText(responseMessage);
         try {
             sendMessage(sendMessage);
