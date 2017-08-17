@@ -67,18 +67,6 @@ public class TellMe extends TelegramLongPollingBot {
         String incomingMessageText = incomingMessage.getText();
         if (incomingMessageText.equals(KeyboardCommand.COMMAND_START)) {
             sendTextMessage(chatId, AnswerMessageText.ADD_NOTE_AND_PICK_CATEGORY, ReplyKeyboard.getKeyboardOnUserStart());
-        } else if (telegramUser.getStatus().equals(UserStatus.CREATE_CATEGORY)) {
-            Category category = categoryRepository.saveCategory(Category.createNewCategory(chatId, incomingMessageText));
-            Note note = noteRepository.findLastInsertedNoteWithoutCategory(chatId);
-            note.setCategoryId(category.getId());
-            noteRepository.saveNote(note);
-            telegramUser.setStatus(UserStatus.NEW);
-            telegramUserService.save(telegramUser);
-            sendButtonMessage(
-                    chatId,
-                    AnswerMessageText.CATEGORY_IS_ADDED,
-                    ReplyKeyboard.buttonsForPickingCategoryForViewNote(categoryRepository.findCategoryByUserId(chatId))
-            );
         } else if (incomingMessageText.equals(KeyboardCommand.DELETE_NOTE) || incomingMessageText.equals(KeyboardCommand.COMMAND_DELETE_NOTE)) {
             sendButtonMessage(
                     chatId,
@@ -91,6 +79,20 @@ public class TellMe extends TelegramLongPollingBot {
                 return;
             }
             sendButtonMessage(chatId, AnswerMessageText.IN_WHICH_CATEGORY, ReplyKeyboard.buttonsForPickingCategoryForViewNote(telegramUser.getCategories()));
+        } else if (telegramUser.getStatus().equals(UserStatus.CREATE_CATEGORY)) {
+            Category category = categoryRepository.saveCategory(Category.createNewCategory(chatId, incomingMessageText));
+            telegramUser.setStatus(UserStatus.NEW);
+            telegramUserService.save(telegramUser);
+            Note note = noteRepository.findLastInsertedNoteWithoutCategory(chatId);
+            if (note != null) {
+                note.setCategoryId(category.getId());
+                noteRepository.saveNote(note);
+            }
+            sendButtonMessage(
+                    chatId,
+                    AnswerMessageText.CATEGORY_IS_ADDED,
+                    ReplyKeyboard.buttonsForPickingCategoryForViewNote(categoryRepository.findCategoryByUserId(chatId))
+            );
         } else {
             Note newNote = noteRepository.saveNote(Note.createNewNote(incomingMessageText, null, chatId));
             sendButtonMessage(chatId, AnswerMessageText.PICK_CATEGORY_FOR_YOUR_NOTE, ReplyKeyboard.buttonsForPickingCategoryAfterCreateNote(telegramUser.getCategories(), newNote.getId()));

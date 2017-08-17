@@ -2,6 +2,7 @@ package ru.igrey.dev.dao.repository;
 
 import ru.igrey.dev.dao.NoteDao;
 import ru.igrey.dev.domain.Note;
+import ru.igrey.dev.entity.NoteEntity;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -33,7 +34,8 @@ public class NoteRepository {
     }
 
     public Note findLastInsertedNoteWithoutCategory(Long userId) {
-        return new Note(noteDao.findLastInsertedNoteWithoutCategory(userId));
+        NoteEntity entity = noteDao.findLastInsertedNoteWithoutCategory(userId);
+        return entity != null ? new Note(noteDao.findLastInsertedNoteWithoutCategory(userId)) : null;
     }
 
     public void delete(Long nodeId) {
