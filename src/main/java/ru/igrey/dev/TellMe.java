@@ -15,7 +15,6 @@ import org.telegram.telegrambots.bots.TelegramLongPollingBot;
 import org.telegram.telegrambots.exceptions.TelegramApiException;
 import ru.igrey.dev.constant.AnswerMessageText;
 import ru.igrey.dev.constant.ButtonCommandName;
-import ru.igrey.dev.constant.Emoji;
 import ru.igrey.dev.constant.KeyboardCommand;
 import ru.igrey.dev.dao.repository.CategoryRepository;
 import ru.igrey.dev.dao.repository.NoteRepository;
@@ -24,6 +23,8 @@ import ru.igrey.dev.domain.Note;
 import ru.igrey.dev.domain.TelegramUser;
 import ru.igrey.dev.domain.UserStatus;
 import ru.igrey.dev.service.TelegramUserService;
+
+import static ru.igrey.dev.constant.Delimiter.DELIMITER;
 
 /**
  * Created by sanasov on 01.04.2017.
@@ -100,7 +101,7 @@ public class TellMe extends TelegramLongPollingBot {
         AnswerCallbackQuery answer = new AnswerCallbackQuery();
         Long chatId = query.getMessage().getChatId();
         answer.setCallbackQueryId(query.getId());
-        String buttonCommand = query.getData().split("#")[0];
+        String buttonCommand = query.getData().split(DELIMITER)[0];
         log.info("Button command: " + buttonCommand);
         switch (buttonCommand) {
             case ButtonCommandName.CREATE_CATEGORY:
@@ -127,7 +128,7 @@ public class TellMe extends TelegramLongPollingBot {
                 answer.setText(onCategoryDelete(query));
                 break;
             case ButtonCommandName.CANCEL:
-                answer.setText(backToViewCategories(query, telegramUser));
+                answer.setText(backToViewCategories(query));
                 break;
             case ButtonCommandName.PICK_CATEGORY_FOR_VIEW_NOTES:
                 onPickCategoryToViewNotes(query);
@@ -150,7 +151,8 @@ public class TellMe extends TelegramLongPollingBot {
         sendButtonMessage(chatId, AnswerMessageText.IN_WHICH_CATEGORY, ReplyKeyboard.buttonsForPickingCategoryForViewNotes(telegramUser.getCategories()));
     }
 
-    private String backToViewCategories(CallbackQuery query, TelegramUser telegramUser) {
+    private String backToViewCategories(CallbackQuery query) {
+        TelegramUser telegramUser = telegramUserService.getOrCreateTelegramUserByUserId(query.getFrom());
         Long chatId = query.getMessage().getChatId();
         Integer messageId = query.getMessage().getMessageId();
         if (telegramUser.getCategories() == null || telegramUser.getCategories().isEmpty()) {
@@ -169,9 +171,12 @@ public class TellMe extends TelegramLongPollingBot {
     }
 
     private void onPickCategoryToDeleteNotes(CallbackQuery query) {
-        Long categoryId = Long.valueOf(query.getData().split("#")[1]);
+        Long categoryId = Long.valueOf(query.getData().split(DELIMITER)[1]);
         Long chatId = query.getMessage().getChatId();
         Category category = categoryRepository.findCategoryById(categoryId);
+        if (category == null) {
+            return;
+        }
         String answerMessage = (category.getNotes() == null || category.getNotes().isEmpty()) ? AnswerMessageText.EMPTY : AnswerMessageText.PICK_NOTES_FOR_DELETE;
         editMessage(
                 chatId,
@@ -179,48 +184,46 @@ public class TellMe extends TelegramLongPollingBot {
                 answerMessage,
                 ReplyKeyboard.buttonsForPickingNotesForDelete(noteRepository.findByCategoryId(categoryId), categoryId, category.getTitle())
         );
+
     }
+
 
     private String onNoteDelete(CallbackQuery query) {
         Long chatId = query.getMessage().getChatId();
-        Long categoryId = Long.valueOf(query.getData().split("#")[1]);
-        Long noteId = Long.valueOf(query.getData().split("#")[2]);
+        Long categoryId = Long.valueOf(query.getData().split(DELIMITER)[1]);
+        Long noteId = Long.valueOf(query.getData().split(DELIMITER)[2]);
         deleteNote(chatId, query.getMessage().getMessageId(), noteId, categoryId);
         return AnswerMessageText.NOTE_IS_DELETED;
     }
 
     private String onPickCategoryForNewNote(CallbackQuery query) {
-        Long categoryId = Long.valueOf(query.getData().split("#")[1]);
-        Long noteId = Long.valueOf(query.getData().split("#")[2]);
+        Long categoryId = Long.valueOf(query.getData().split(DELIMITER)[1]);
+        Long noteId = Long.valueOf(query.getData().split(DELIMITER)[2]);
         Note note = noteRepository.findById(noteId);
         note.setCategoryId(categoryId);
         noteRepository.saveNote(note);
+        Category category = categoryRepository.findCategoryById(categoryId);
         editMessage(query.getMessage().getChatId(),
                 query.getMessage().getMessageId(),
-                categoryRepository.findCategoryById(categoryId).toString(),
+                category != null ? category.toString() : AnswerMessageText.CATEGORY_HAS_BEEN_DELETED,
                 ReplyKeyboard.buttonBackToCategoryView());
         return AnswerMessageText.NOTE_IS_ADDED_IN_CATEGORY;
     }
 
     private String onCategoryDelete(CallbackQuery query) {
-        Long chatId = query.getMessage().getChatId();
-        Long categoryId = Long.valueOf(query.getData().split("#")[1]);
+        Long categoryId = Long.valueOf(query.getData().split(DELIMITER)[1]);
         categoryRepository.deleteCategoryById(categoryId);
-        editMessage(
-                chatId,
-                query.getMessage().getMessageId(),
-                Emoji.HEAVY_MULTIPLICATION_X.toString(),
-                null
-        );
-        return AnswerMessageText.CATEGORY_IS_DELETED;
+        backToViewCategories(query);
+        return AnswerMessageText.CATEGORY_IS_DELETED + "\n" + AnswerMessageText.BACK_TO_CATEGORY_VIEW;
     }
 
     private void onPickCategoryToViewNotes(CallbackQuery query) {
         Long chatId = query.getMessage().getChatId();
-        Long categoryId = Long.valueOf(query.getData().split("#")[1]);
+        Long categoryId = Long.valueOf(query.getData().split(DELIMITER)[1]);
+        Category category = categoryRepository.findCategoryById(categoryId);
         editMessage(chatId,
                 query.getMessage().getMessageId(),
-                categoryRepository.findCategoryById(categoryId).toString(),
+                category == null ? AnswerMessageText.CATEGORY_HAS_BEEN_DELETED : category.toString(),
                 ReplyKeyboard.buttonBackToCategoryView());
     }
 

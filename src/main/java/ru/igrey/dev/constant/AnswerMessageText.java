@@ -14,4 +14,6 @@ public class AnswerMessageText {
     public final static String CATEGORY_IS_DELETED = "Категория удалена";
     public final static String NOTE_IS_ADDED_IN_CATEGORY = "Запись добавлена в категорию";
     public final static String BACK_TO_CATEGORY_VIEW = "Переход к просмотру записей";
+    public final static String COMPLETE_DELETING = "Завершить удаление";
+    public final static String CATEGORY_HAS_BEEN_DELETED = "Категория была удалена";
 }
