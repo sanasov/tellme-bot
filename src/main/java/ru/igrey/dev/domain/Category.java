@@ -36,15 +36,15 @@ public class Category {
 
 
     public String toBold(String text) {
-        return "*" + text + "*";
+        return "<b>" + text + "</b>";
     }
 
     public String toInlineFixedWidthCode(String text) {
-        return "`" + text + "`";
+        return "<code>" + text + "</code>";
     }
 
     public String toString() {
-        return this.getTitle() + "\n"
+        return toBold(this.getTitle() )+ "\n"
                 + notes(this.getNotes());
     }
 

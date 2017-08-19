@@ -85,12 +85,24 @@ public class ReplyKeyboard {
         List<List<InlineKeyboardButton>> keyboard = new ArrayList<>();
         for (Note note : notes) {
             List<InlineKeyboardButton> buttonRow = new ArrayList<>();
-            buttonRow.add(createInlineKeyboardButton(ButtonName.NOTE_DELETE + "#" + categoryId + "#" + note.getId().toString(), note.getText()));
+            buttonRow.add(createInlineKeyboardButton(ButtonName.NOTE_DELETE + "#" + categoryId + "#" + note.getId().toString(), "DELETE: " + note.getText()));
             keyboard.add(buttonRow);
         }
         markup.setKeyboard(keyboard);
         return markup;
     }
+
+
+    public static InlineKeyboardMarkup buttonBackToCategoryView() {
+        InlineKeyboardMarkup markup = new InlineKeyboardMarkup();
+        List<List<InlineKeyboardButton>> keyboard = new ArrayList<>();
+        List<InlineKeyboardButton> buttonRow = new ArrayList<>();
+        buttonRow.add(createInlineKeyboardButton(ButtonName.BACK_TO_CATEGORY_VIEW, "Назад к категориям"));
+        keyboard.add(buttonRow);
+        markup.setKeyboard(keyboard);
+        return markup;
+    }
+
 
     private static InlineKeyboardButton createInlineKeyboardButton(String buttonId, String label) {
         InlineKeyboardButton btn = new InlineKeyboardButton();
