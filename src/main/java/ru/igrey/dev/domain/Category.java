@@ -1,5 +1,6 @@
 package ru.igrey.dev.domain;
 
+import ru.igrey.dev.constant.AnswerMessageText;
 import ru.igrey.dev.entity.CategoryEntity;
 
 import java.time.LocalDateTime;
@@ -44,7 +45,7 @@ public class Category {
     }
 
     public String toString() {
-        return toBold(this.getTitle() )+ "\n"
+        return toBold(this.getTitle()) + "\n"
                 + notes(this.getNotes());
     }
 
@@ -52,10 +53,10 @@ public class Category {
         String result = "";
         Integer i = 1;
         if (notesList == null || notesList.isEmpty()) {
-            return "Записей нет";
+            return AnswerMessageText.EMPTY;
         }
         for (Note note : notesList) {
-            result = result + i + ") " + note.getText() + "\n";
+            result += toInlineFixedWidthCode(i + ") ") + note.getText() + "\n";
             i++;
         }
         return result;
