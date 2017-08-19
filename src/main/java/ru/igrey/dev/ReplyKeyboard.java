@@ -70,6 +70,9 @@ public class ReplyKeyboard {
     public static InlineKeyboardMarkup buttonsForPickingCategoryForDeleteNotes(List<Category> categories) {
         InlineKeyboardMarkup markup = new InlineKeyboardMarkup();
         List<List<InlineKeyboardButton>> keyboard = new ArrayList<>();
+        List<InlineKeyboardButton> firstButtonRow = new ArrayList<>();
+        firstButtonRow.add(createInlineKeyboardButton(ButtonName.CANCEL, "Завершить удаление"));
+        keyboard.add(firstButtonRow);
         for (Category category : categories) {
             List<InlineKeyboardButton> buttonRow = new ArrayList<>();
             buttonRow.add(createInlineKeyboardButton(ButtonName.CATEGORY_DELETE_NOTES + "#" + category.getId().toString(), category.getTitle()));
