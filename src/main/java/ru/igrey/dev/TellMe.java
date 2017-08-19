@@ -67,11 +67,7 @@ public class TellMe extends TelegramLongPollingBot {
         if (incomingMessageText.equals(KeyboardCommand.COMMAND_START)) {
             sendTextMessage(chatId, AnswerMessageText.ADD_NOTE_AND_PICK_CATEGORY, null);
         } else if (incomingMessageText.equals(KeyboardCommand.SHOW_NOTES) || incomingMessageText.equals(KeyboardCommand.COMMAND_SHOW_NOTES)) {
-            if (telegramUser.getCategories() == null || telegramUser.getCategories().isEmpty()) {
-                sendButtonMessage(chatId, AnswerMessageText.NO_CATEGORIES_NO_NOTES, null);
-                return;
-            }
-            sendButtonMessage(chatId, AnswerMessageText.IN_WHICH_CATEGORY, ReplyKeyboard.buttonsForPickingCategoryForViewNotes(telegramUser.getCategories()));
+            onShowCategories(telegramUser, chatId);
         } else if (telegramUser.getStatus().equals(UserStatus.CREATE_CATEGORY)) {
             Category category = categoryRepository.saveCategory(Category.createNewCategory(chatId, incomingMessageText));
             telegramUser.setStatus(UserStatus.NEW);
@@ -131,12 +127,7 @@ public class TellMe extends TelegramLongPollingBot {
                 answer.setText(onCategoryDelete(query));
                 break;
             case ButtonCommandName.CANCEL:
-                editMessage(
-                        chatId,
-                        query.getMessage().getMessageId(),
-                        Emoji.HEAVY_MULTIPLICATION_X.toString(),
-                        null
-                );
+                answer.setText(backToViewCategories(query, telegramUser));
                 break;
             case ButtonCommandName.PICK_CATEGORY_FOR_VIEW_NOTES:
                 onPickCategoryToViewNotes(query);
@@ -148,6 +139,26 @@ public class TellMe extends TelegramLongPollingBot {
         } catch (TelegramApiException e) {
             log.error("Could not send answer on button click", e);
         }
+    }
+
+
+    private void onShowCategories(TelegramUser telegramUser, Long chatId) {
+        if (telegramUser.getCategories() == null || telegramUser.getCategories().isEmpty()) {
+            sendButtonMessage(chatId, AnswerMessageText.NO_CATEGORIES_NO_NOTES, null);
+            return;
+        }
+        sendButtonMessage(chatId, AnswerMessageText.IN_WHICH_CATEGORY, ReplyKeyboard.buttonsForPickingCategoryForViewNotes(telegramUser.getCategories()));
+    }
+
+    private String backToViewCategories(CallbackQuery query, TelegramUser telegramUser) {
+        Long chatId = query.getMessage().getChatId();
+        Integer messageId = query.getMessage().getMessageId();
+        if (telegramUser.getCategories() == null || telegramUser.getCategories().isEmpty()) {
+            editMessage(chatId, messageId, AnswerMessageText.NO_CATEGORIES_NO_NOTES, null);
+        } else {
+            editMessage(chatId, messageId, AnswerMessageText.IN_WHICH_CATEGORY, ReplyKeyboard.buttonsForPickingCategoryForViewNotes(telegramUser.getCategories()));
+        }
+        return AnswerMessageText.BACK_TO_CATEGORY_VIEW;
     }
 
     private void onCreateCategory(CallbackQuery query, TelegramUser telegramUser, Long chatId) {
