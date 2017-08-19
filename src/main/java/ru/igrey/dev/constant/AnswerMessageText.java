@@ -11,5 +11,6 @@ public class AnswerMessageText {
     public final static String PICK_NOTES_FOR_DELETE = "Выберите записи для удаления";
     public final static String EMPTY = "Нет записей. Добавьте " + Emoji.SMILING_FACE_WITH_SMILING_EYES.toString();
     public final static String NOTE_IS_DELETED = "Запись удалена";
+    public final static String CATEGORY_IS_DELETED = "Категория удалена";
     public final static String NOTE_IS_ADDED_IN_CATEGORY = "Запись добавлена в категорию";
 }
