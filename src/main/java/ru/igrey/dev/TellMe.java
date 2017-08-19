@@ -65,13 +65,7 @@ public class TellMe extends TelegramLongPollingBot {
         Long chatId = incomingMessage.getChatId();
         String incomingMessageText = incomingMessage.getText();
         if (incomingMessageText.equals(KeyboardCommand.COMMAND_START)) {
-            sendTextMessage(chatId, AnswerMessageText.ADD_NOTE_AND_PICK_CATEGORY, ReplyKeyboard.getKeyboardOnUserStart());
-        } else if (incomingMessageText.equals(KeyboardCommand.DELETE_NOTE) || incomingMessageText.equals(KeyboardCommand.COMMAND_DELETE_NOTE)) {
-            sendButtonMessage(
-                    chatId,
-                    AnswerMessageText.IN_WHICH_CATEGORY_REMOVE_NOTES,
-                    ReplyKeyboard.buttonsForPickingCategoryForDeleteNotes(categoryRepository.findCategoryByUserId(chatId))
-            );
+            sendTextMessage(chatId, AnswerMessageText.ADD_NOTE_AND_PICK_CATEGORY, null);
         } else if (incomingMessageText.equals(KeyboardCommand.SHOW_NOTES) || incomingMessageText.equals(KeyboardCommand.COMMAND_SHOW_NOTES)) {
             if (telegramUser.getCategories() == null || telegramUser.getCategories().isEmpty()) {
                 sendButtonMessage(chatId, AnswerMessageText.NO_CATEGORIES_NO_NOTES, null);
@@ -79,6 +73,12 @@ public class TellMe extends TelegramLongPollingBot {
             }
             sendButtonMessage(chatId, AnswerMessageText.IN_WHICH_CATEGORY, ReplyKeyboard.buttonsForPickingCategoryForViewNote(telegramUser.getCategories()));
         } else if (telegramUser.getStatus().equals(UserStatus.CREATE_CATEGORY)) {
+        } else if (incomingMessageText.equals(KeyboardCommand.DELETE_NOTE) || incomingMessageText.equals(KeyboardCommand.COMMAND_DELETE_NOTE)) {
+            sendButtonMessage(
+                    chatId,
+                    AnswerMessageText.IN_WHICH_CATEGORY_REMOVE_NOTES,
+                    ReplyKeyboard.buttonsForPickingCategoryForDeleteNotes(categoryRepository.findCategoryByUserId(chatId))
+            );
             Category category = categoryRepository.saveCategory(Category.createNewCategory(chatId, incomingMessageText));
             telegramUser.setStatus(UserStatus.NEW);
             telegramUserService.save(telegramUser);
