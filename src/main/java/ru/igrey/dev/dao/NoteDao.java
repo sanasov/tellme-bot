@@ -56,6 +56,11 @@ public class NoteDao {
         jdbcTemplate.update(sqlDelete, new Object[]{entityId});
     }
 
+    public void deleteByCategoryId(Long categoryId) {
+        String sqlDelete = "delete from note where category_id = ?";
+        jdbcTemplate.update(sqlDelete, new Object[]{categoryId});
+    }
+
     public NoteEntity findById(Long id) {
         String sql = "SELECT * FROM note WHERE ID = ?";
         List<NoteEntity> entityEntities = jdbcTemplate.query(

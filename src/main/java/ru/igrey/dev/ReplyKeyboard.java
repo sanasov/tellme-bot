@@ -45,7 +45,7 @@ public class ReplyKeyboard {
 
         for (Category category : categories) {
             List<InlineKeyboardButton> buttonRow = new ArrayList<>();
-            buttonRow.add(createInlineKeyboardButton(ButtonName.PICK_CATEGORY_FOR_NOTE + "#" + category.getId() + "#" + noteId, category.getTitle()));
+            buttonRow.add(createInlineKeyboardButton(ButtonName.PICK_CATEGORY_FOR_ADDED_NOTE + "#" + category.getId() + "#" + noteId, category.getTitle()));
             keyboard.add(buttonRow);
         }
         List<InlineKeyboardButton> buttonRow = new ArrayList<>();
@@ -72,7 +72,7 @@ public class ReplyKeyboard {
         List<List<InlineKeyboardButton>> keyboard = new ArrayList<>();
         for (Category category : categories) {
             List<InlineKeyboardButton> buttonRow = new ArrayList<>();
-            buttonRow.add(createInlineKeyboardButton(ButtonName.CATEGORY_DELETE + "#" + category.getId().toString(), category.getTitle()));
+            buttonRow.add(createInlineKeyboardButton(ButtonName.CATEGORY_DELETE_NOTES + "#" + category.getId().toString(), category.getTitle()));
             keyboard.add(buttonRow);
         }
         markup.setKeyboard(keyboard);
@@ -80,9 +80,15 @@ public class ReplyKeyboard {
     }
 
 
-    public static InlineKeyboardMarkup buttonsForPickingNotesForDelete(List<Note> notes, Long categoryId) {
+    public static InlineKeyboardMarkup buttonsForPickingNotesForDelete(List<Note> notes, Long categoryId, String categoryName) {
         InlineKeyboardMarkup markup = new InlineKeyboardMarkup();
         List<List<InlineKeyboardButton>> keyboard = new ArrayList<>();
+        List<InlineKeyboardButton> firstButtonRow = new ArrayList<>();
+        firstButtonRow.add(createInlineKeyboardButton(ButtonName.CANCEL, "Завершить удаление"));
+        List<InlineKeyboardButton> secondButtonRow = new ArrayList<>();
+        secondButtonRow.add(createInlineKeyboardButton(ButtonName.CATEGORY_DELETE + "#" + categoryId, "DELETE CATEGORY: " + categoryName));
+        keyboard.add(firstButtonRow);
+        keyboard.add(secondButtonRow);
         for (Note note : notes) {
             List<InlineKeyboardButton> buttonRow = new ArrayList<>();
             buttonRow.add(createInlineKeyboardButton(ButtonName.NOTE_DELETE + "#" + categoryId + "#" + note.getId().toString(), "DELETE: " + note.getText()));

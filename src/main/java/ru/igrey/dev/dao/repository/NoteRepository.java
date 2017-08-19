@@ -41,4 +41,8 @@ public class NoteRepository {
     public void delete(Long nodeId) {
         noteDao.delete(nodeId);
     }
+
+    public void deleteByCategoryId(Long categoryId) {
+        noteDao.deleteByCategoryId(categoryId);
+    }
 }

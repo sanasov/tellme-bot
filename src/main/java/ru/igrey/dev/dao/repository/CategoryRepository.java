@@ -35,11 +35,9 @@ public class CategoryRepository {
         return categories;
     }
 
-    public Category findCategoryByUserIdAndTitle(Long userId, String title) {
-        CategoryEntity categoryEntity = categoryDao.findByUserIdAndTitle(userId, title);
-        return new Category(
-                categoryEntity,
-                noteRepository.findByCategoryId(categoryEntity.getId()));
+    public void deleteCategoryById(Long categoryId) {
+        categoryDao.delete(categoryId);
+        noteRepository.deleteByCategoryId(categoryId);
     }
 
     public Category findCategoryById(Long id) {
