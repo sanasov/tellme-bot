@@ -56,7 +56,7 @@ public class TellMe extends TelegramLongPollingBot {
         log.info("Incoming message: " + message.getText());
         log.info("From user: " + message.getFrom() + "; chatId: " + message.getChat().getId());
 
-        if (message.getChat().isUserChat()) {
+        if (message.getChat().isUserChat() && message.getText() != null) {
             handlePrivateIncomingMessage(message);
         }
     }
@@ -65,7 +65,7 @@ public class TellMe extends TelegramLongPollingBot {
         TelegramUser telegramUser = telegramUserService.getOrCreateTelegramUserByUserId(incomingMessage.getFrom());
         Long chatId = incomingMessage.getChatId();
         String incomingMessageText = incomingMessage.getText();
-        if (incomingMessageText != null && incomingMessageText.equals(KeyboardCommand.COMMAND_START)) {
+        if (incomingMessageText.equals(KeyboardCommand.COMMAND_START)) {
             sendTextMessage(chatId, AnswerMessageText.ADD_NOTE_AND_PICK_CATEGORY, null);
         } else if (incomingMessageText.equals(KeyboardCommand.SHOW_NOTES) || incomingMessageText.equals(KeyboardCommand.COMMAND_SHOW_NOTES)) {
             onShowCategories(telegramUser, chatId);
