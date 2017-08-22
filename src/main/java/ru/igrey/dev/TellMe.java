@@ -130,7 +130,7 @@ public class TellMe extends TelegramLongPollingBot {
             case ButtonCommandName.CANCEL:
                 answer.setText(backToViewCategories(query));
                 break;
-            case ButtonCommandName.PICK_CATEGORY_FOR_VIEW_NOTES:
+            case ButtonCommandName.PICK_CATEGORY_TO_VIEW_NOTES:
                 onPickCategoryToViewNotes(query);
                 break;
         }

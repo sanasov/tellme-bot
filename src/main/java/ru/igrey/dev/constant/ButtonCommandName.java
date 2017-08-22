@@ -2,7 +2,7 @@ package ru.igrey.dev.constant;
 
 public class ButtonCommandName {
     public final static String PICK_CATEGORY_FOR_ADDED_NOTE = "PICK_CATEGORY_FOR_ADDED_NOTE";
-    public final static String PICK_CATEGORY_FOR_VIEW_NOTES = "PICK_CATEGORY_FOR_VIEW_NOTES";
+    public final static String PICK_CATEGORY_TO_VIEW_NOTES = "PICK_CATEGORY_TO_VIEW_NOTES";
     public final static String CATEGORY_DELETE_NOTES = "CATEGORY_DELETE_NOTES";
     public final static String CATEGORY_DELETE = "CATEGORY_DELETE";
     public final static String NOTE_DELETE = "NOTE_DELETE";

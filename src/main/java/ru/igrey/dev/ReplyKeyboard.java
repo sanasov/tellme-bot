@@ -64,7 +64,7 @@ public class ReplyKeyboard {
         List<List<InlineKeyboardButton>> keyboard = new ArrayList<>();
         for (Category category : categories) {
             List<InlineKeyboardButton> buttonRow = new ArrayList<>();
-            buttonRow.add(createInlineKeyboardButton(ButtonCommandName.PICK_CATEGORY_FOR_VIEW_NOTES + DELIMITER + category.getId().toString(), category.getTitle()));
+            buttonRow.add(createInlineKeyboardButton(ButtonCommandName.PICK_CATEGORY_TO_VIEW_NOTES + DELIMITER + category.getId().toString(), category.getTitle()));
             keyboard.add(buttonRow);
         }
         markup.setKeyboard(keyboard);
