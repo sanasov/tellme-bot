@@ -56,12 +56,15 @@ public class Category {
             return AnswerMessageText.EMPTY;
         }
         for (Note note : notesList) {
-            result += toInlineFixedWidthCode(i + ") ") + note.getText() + "\n";
+            result += toInlineFixedWidthCode(i + ") ") + htmlSafe(note.getText()) + "\n";
             i++;
         }
         return result;
     }
 
+    private String htmlSafe(String text) {
+        return text.replace(">", "&gt;").replace("<", "&lt;");
+    }
 
     public CategoryEntity toEntity() {
         return new CategoryEntity(id, userId, createDate, title);

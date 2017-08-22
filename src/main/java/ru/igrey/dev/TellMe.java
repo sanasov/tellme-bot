@@ -255,6 +255,7 @@ public class TellMe extends TelegramLongPollingBot {
     private void sendButtonMessage(Long chatId, String text, InlineKeyboardMarkup markup) {
         SendMessage sendMessage = new SendMessage();
         sendMessage.enableHtml(true);
+        sendMessage.enableMarkdown(false);
         sendMessage.setChatId(chatId);
         sendMessage.setText(text);
         sendMessage.setReplyMarkup(markup);
@@ -272,7 +273,7 @@ public class TellMe extends TelegramLongPollingBot {
         editMessageText.setText(responseText);
         editMessageText.setReplyMarkup(markup);
         editMessageText.setMessageId(messageId);
-        editMessageText.enableMarkdown(true);
+        editMessageText.enableMarkdown(false);
         editMessageText.enableHtml(true);
         try {
             editMessageText(editMessageText);
