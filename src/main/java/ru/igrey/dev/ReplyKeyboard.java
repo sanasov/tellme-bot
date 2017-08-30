@@ -29,7 +29,7 @@ public class ReplyKeyboard {
             keyboard.add(buttonRow);
         }
         List<InlineKeyboardButton> buttonRow = new ArrayList<>();
-        buttonRow.add(createInlineKeyboardButton(ButtonCommandName.CREATE_CATEGORY, ButtonTitle.CREATE_CATEGORY));
+        buttonRow.add(createInlineKeyboardButton(ButtonCommandName.CREATE_CATEGORY, ButtonTitle.CREATE_CATEGORY.text()));
         keyboard.add(buttonRow);
         markup.setKeyboard(keyboard);
         return markup;
@@ -51,7 +51,7 @@ public class ReplyKeyboard {
         InlineKeyboardMarkup markup = new InlineKeyboardMarkup();
         List<List<InlineKeyboardButton>> keyboard = new ArrayList<>();
         List<InlineKeyboardButton> firstButtonRow = new ArrayList<>();
-        firstButtonRow.add(createInlineKeyboardButton(ButtonCommandName.CANCEL, ButtonTitle.BACK_TO_CATEGORY_VIEW));
+        firstButtonRow.add(createInlineKeyboardButton(ButtonCommandName.CANCEL, ButtonTitle.BACK_TO_CATEGORY_VIEW.text()));
         List<InlineKeyboardButton> lastButtonRow = new ArrayList<>();
         lastButtonRow.add(createInlineKeyboardButton(ButtonCommandName.CATEGORY_DELETE + DELIMITER + categoryId, Emoji.CROSS_MARK.toString(3) + " CATEGORY: \"" + categoryName + "\""));
         keyboard.add(firstButtonRow);
@@ -70,8 +70,8 @@ public class ReplyKeyboard {
         InlineKeyboardMarkup markup = new InlineKeyboardMarkup();
         List<List<InlineKeyboardButton>> keyboard = new ArrayList<>();
         List<InlineKeyboardButton> buttonRow = new ArrayList<>();
-        buttonRow.add(createInlineKeyboardButton(ButtonCommandName.BACK_TO_CATEGORY_VIEW, ButtonTitle.BACK_TO_CATEGORY_VIEW));
-        buttonRow.add(createInlineKeyboardButton(ButtonCommandName.REMOVE_MODE + DELIMITER + categoryId, ButtonTitle.REMOVE_MODE));
+        buttonRow.add(createInlineKeyboardButton(ButtonCommandName.BACK_TO_CATEGORY_VIEW, ButtonTitle.BACK_TO_CATEGORY_VIEW.text()));
+        buttonRow.add(createInlineKeyboardButton(ButtonCommandName.REMOVE_MODE + DELIMITER + categoryId, ButtonTitle.REMOVE_MODE.text()));
         keyboard.add(buttonRow);
         markup.setKeyboard(keyboard);
         return markup;

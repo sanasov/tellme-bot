@@ -53,7 +53,7 @@ public class Category {
         String result = "";
         Integer i = 1;
         if (notesList == null || notesList.isEmpty()) {
-            return AnswerMessageText.EMPTY;
+            return AnswerMessageText.EMPTY.text();
         }
         for (Note note : notesList) {
             result += toInlineFixedWidthCode(i + ") ") + htmlSafe(note.getText()) + "\n";

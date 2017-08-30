@@ -1,17 +1,62 @@
 package ru.igrey.dev.constant;
 
-public class AnswerMessageText {
-    public final static String ADD_NOTE_AND_PICK_CATEGORY = "Отправьте мне заметку и выберите для нее категорию";
-    public final static String CATEGORY_IS_ADDED = "Категория добавлена";
-    public final static String ADD_CATEGORY = "Добавьте категорию";
-    public final static String NO_CATEGORIES_NO_NOTES = "Нет категорий. Нет записей. \n Отправьте мне запись и выберите для нее категорию " + Emoji.SMILING_FACE_WITH_SMILING_EYES.toString();
-    public final static String IN_WHICH_CATEGORY = "Выберите категорию для просмотра записей";
-    public final static String PICK_CATEGORY_FOR_YOUR_NOTE = "Выберите категорию для вашей заметки";
-    public final static String PICK_NOTES_FOR_DELETE = "Выберите записи для удаления";
-    public final static String EMPTY = "Нет записей. Добавьте " + Emoji.SMILING_FACE_WITH_SMILING_EYES.toString();
-    public final static String NOTE_IS_DELETED = "Запись удалена";
-    public final static String CATEGORY_IS_DELETED = "Категория удалена";
-    public final static String NOTE_IS_ADDED_IN_CATEGORY = "Запись добавлена в категорию";
-    public final static String BACK_TO_CATEGORY_VIEW = "Переход к просмотру записей";
-    public final static String CATEGORY_HAS_BEEN_DELETED = "Категория была удалена";
+import ru.igrey.dev.Localization;
+
+public enum AnswerMessageText {
+
+    ADD_NOTE_AND_PICK_CATEGORY(
+            "Отправьте мне заметку и выберите для нее категорию",
+            "Send me a note and select a category for it"),
+
+    CATEGORY_IS_ADDED(
+            "Категория добавлена",
+            "Category added"),
+    ADD_CATEGORY(
+            "Добавьте категорию",
+            "Add a category"),
+    NO_CATEGORIES_NO_NOTES(
+            "Нет категорий. Нет записей. \n Отправьте мне запись и выберите для нее категорию " + Emoji.SMILING_FACE_WITH_SMILING_EYES,
+            "No categories. No records. Send me your note and pick category for it" + Emoji.SMILING_FACE_WITH_SMILING_EYES),
+    IN_WHICH_CATEGORY(
+            "Выберите категорию для просмотра записей",
+            "Select a category to view the notes"),
+    PICK_CATEGORY_FOR_YOUR_NOTE(
+            "Выберите категорию для вашей заметки",
+            ""),
+    PICK_NOTES_FOR_DELETE(
+            "Выберите записи для удаления",
+            "Select a category for your note"),
+    EMPTY(
+            "Нет записей. Добавьте " + Emoji.SMILING_FACE_WITH_SMILING_EYES.toString(),
+            "No records. Add" + Emoji.SMILING_FACE_WITH_SMILING_EYES.toString()),
+    NOTE_IS_DELETED(
+            "Запись удалена",
+            "Note deleted"),
+    CATEGORY_IS_DELETED(
+            "Категория удалена",
+            "Category deleted"),
+    NOTE_IS_ADDED_IN_CATEGORY(
+            "Запись добавлена в категорию",
+            "Note added to category"),
+    BACK_TO_CATEGORY_VIEW(
+            "Переход к просмотру записей",
+            "Go to the notes view"),
+    CATEGORY_HAS_BEEN_DELETED(
+            "Категория была удалена",
+            "Category has been deleted");
+
+    AnswerMessageText(String ru, String eng) {
+        this.ru = ru;
+        this.en = eng;
+    }
+
+    String ru;
+    String en;
+
+    public String text() {
+        if (Localization.get().startsWith("ru")) {
+            return ru;
+        }
+        return en;
+    }
 }

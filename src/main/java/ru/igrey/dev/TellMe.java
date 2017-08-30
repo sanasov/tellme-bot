@@ -66,10 +66,10 @@ public class TellMe extends TelegramLongPollingBot {
         Long chatId = incomingMessage.getChatId();
         String incomingMessageText = incomingMessage.getText();
         if (incomingMessageText.equals(KeyboardCommand.COMMAND_START)) {
-            sendTextMessage(chatId, AnswerMessageText.ADD_NOTE_AND_PICK_CATEGORY, null);
+            sendTextMessage(chatId, AnswerMessageText.ADD_NOTE_AND_PICK_CATEGORY.text(), null);
             onShowCategories(telegramUser, chatId);
         } else if (incomingMessageText.equals(KeyboardCommand.HELP)) {
-            sendTextMessage(chatId, AnswerMessageText.ADD_NOTE_AND_PICK_CATEGORY, null);
+            sendTextMessage(chatId, AnswerMessageText.ADD_NOTE_AND_PICK_CATEGORY.text(), null);
         } else if (telegramUser.getStatus().equals(UserStatus.CREATE_CATEGORY)) {
             Category category = categoryRepository.saveCategory(Category.createNewCategory(chatId, incomingMessageText));
             telegramUser.setStatus(UserStatus.NEW);
@@ -81,12 +81,12 @@ public class TellMe extends TelegramLongPollingBot {
             }
             sendButtonMessage(
                     chatId,
-                    AnswerMessageText.CATEGORY_IS_ADDED,
+                    AnswerMessageText.CATEGORY_IS_ADDED.text(),
                     ReplyKeyboard.buttonsForPickingCategoryForViewNotes(categoryRepository.findCategoryByUserId(chatId))
             );
         } else {
             Note newNote = noteRepository.saveNote(Note.createNewNote(incomingMessageText, null, chatId));
-            sendButtonMessage(chatId, AnswerMessageText.PICK_CATEGORY_FOR_YOUR_NOTE, ReplyKeyboard.buttonsForPickingCategoryAfterCreateNote(telegramUser.getCategories(), newNote.getId()));
+            sendButtonMessage(chatId, AnswerMessageText.PICK_CATEGORY_FOR_YOUR_NOTE.text(), ReplyKeyboard.buttonsForPickingCategoryAfterCreateNote(telegramUser.getCategories(), newNote.getId()));
         }
 
     }
@@ -112,7 +112,7 @@ public class TellMe extends TelegramLongPollingBot {
                 editMessage(
                         chatId,
                         query.getMessage().getMessageId(),
-                        AnswerMessageText.IN_WHICH_CATEGORY,
+                        AnswerMessageText.IN_WHICH_CATEGORY.text(),
                         ReplyKeyboard.buttonsForPickingCategoryForViewNotes(telegramUser.getCategories())
                 );
                 break;
@@ -139,10 +139,10 @@ public class TellMe extends TelegramLongPollingBot {
 
     private void onShowCategories(TelegramUser telegramUser, Long chatId) {
         if (telegramUser.getCategories() == null || telegramUser.getCategories().isEmpty()) {
-            sendButtonMessage(chatId, AnswerMessageText.NO_CATEGORIES_NO_NOTES, null);
+            sendButtonMessage(chatId, AnswerMessageText.NO_CATEGORIES_NO_NOTES.text(), null);
             return;
         }
-        sendButtonMessage(chatId, AnswerMessageText.IN_WHICH_CATEGORY, ReplyKeyboard.buttonsForPickingCategoryForViewNotes(telegramUser.getCategories()));
+        sendButtonMessage(chatId, AnswerMessageText.IN_WHICH_CATEGORY.text(), ReplyKeyboard.buttonsForPickingCategoryForViewNotes(telegramUser.getCategories()));
     }
 
     private String backToViewCategories(CallbackQuery query) {
@@ -150,18 +150,18 @@ public class TellMe extends TelegramLongPollingBot {
         Long chatId = query.getMessage().getChatId();
         Integer messageId = query.getMessage().getMessageId();
         if (telegramUser.getCategories() == null || telegramUser.getCategories().isEmpty()) {
-            editMessage(chatId, messageId, AnswerMessageText.NO_CATEGORIES_NO_NOTES, null);
+            editMessage(chatId, messageId, AnswerMessageText.NO_CATEGORIES_NO_NOTES.text(), null);
         } else {
-            editMessage(chatId, messageId, AnswerMessageText.IN_WHICH_CATEGORY, ReplyKeyboard.buttonsForPickingCategoryForViewNotes(telegramUser.getCategories()));
+            editMessage(chatId, messageId, AnswerMessageText.IN_WHICH_CATEGORY.text(), ReplyKeyboard.buttonsForPickingCategoryForViewNotes(telegramUser.getCategories()));
         }
-        return AnswerMessageText.BACK_TO_CATEGORY_VIEW;
+        return AnswerMessageText.BACK_TO_CATEGORY_VIEW.text();
     }
 
     private void onCreateCategory(CallbackQuery query, TelegramUser telegramUser, Long chatId) {
         Integer messageId = query.getMessage().getMessageId();
         telegramUser.setStatus(UserStatus.CREATE_CATEGORY);
         telegramUserService.save(telegramUser);
-        editMessage(chatId, messageId, AnswerMessageText.ADD_CATEGORY, null);
+        editMessage(chatId, messageId, AnswerMessageText.ADD_CATEGORY.text(), null);
     }
 
     private void onPickCategoryToDeleteNotes(CallbackQuery query) {
@@ -171,7 +171,7 @@ public class TellMe extends TelegramLongPollingBot {
         if (category == null) {
             return;
         }
-        String answerMessage = (category.getNotes() == null || category.getNotes().isEmpty()) ? AnswerMessageText.EMPTY : AnswerMessageText.PICK_NOTES_FOR_DELETE;
+        String answerMessage = (category.getNotes() == null || category.getNotes().isEmpty()) ? AnswerMessageText.EMPTY.text() : AnswerMessageText.PICK_NOTES_FOR_DELETE.text();
         editMessage(
                 chatId,
                 query.getMessage().getMessageId(),
@@ -187,7 +187,7 @@ public class TellMe extends TelegramLongPollingBot {
         Long categoryId = Long.valueOf(query.getData().split(DELIMITER)[1]);
         Long noteId = Long.valueOf(query.getData().split(DELIMITER)[2]);
         deleteNote(chatId, query.getMessage().getMessageId(), noteId, categoryId);
-        return AnswerMessageText.NOTE_IS_DELETED;
+        return AnswerMessageText.NOTE_IS_DELETED.text();
     }
 
     private String onPickCategoryForNewNote(CallbackQuery query) {
@@ -199,9 +199,9 @@ public class TellMe extends TelegramLongPollingBot {
         Category category = categoryRepository.findCategoryById(categoryId);
         editMessage(query.getMessage().getChatId(),
                 query.getMessage().getMessageId(),
-                category != null ? category.toString() : AnswerMessageText.CATEGORY_HAS_BEEN_DELETED,
+                category != null ? category.toString() : AnswerMessageText.CATEGORY_HAS_BEEN_DELETED.text(),
                 ReplyKeyboard.buttonBackToCategoryView(categoryId));
-        return AnswerMessageText.NOTE_IS_ADDED_IN_CATEGORY;
+        return AnswerMessageText.NOTE_IS_ADDED_IN_CATEGORY.text();
     }
 
     private String onCategoryDelete(CallbackQuery query) {
@@ -217,7 +217,7 @@ public class TellMe extends TelegramLongPollingBot {
         Category category = categoryRepository.findCategoryById(categoryId);
         editMessage(chatId,
                 query.getMessage().getMessageId(),
-                category == null ? AnswerMessageText.CATEGORY_HAS_BEEN_DELETED : category.toString(),
+                category == null ? AnswerMessageText.CATEGORY_HAS_BEEN_DELETED.text() : category.toString(),
                 ReplyKeyboard.buttonBackToCategoryView(categoryId));
     }
 
@@ -226,7 +226,7 @@ public class TellMe extends TelegramLongPollingBot {
         Category category = categoryRepository.findCategoryById(categoryId);
         editMessage(chatId,
                 messageId,
-                AnswerMessageText.PICK_NOTES_FOR_DELETE,
+                AnswerMessageText.PICK_NOTES_FOR_DELETE.text(),
                 ReplyKeyboard.buttonsForPickingNotesForDelete(category.getNotes(), categoryId, category.getTitle())
         );
     }

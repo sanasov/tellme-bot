@@ -1,9 +1,32 @@
 package ru.igrey.dev.constant;
 
-public class ButtonTitle {
+import ru.igrey.dev.Localization;
 
-    public final static String COMPLETE_DELETING = "Завершить удаление";
-    public final static String REMOVE_MODE = "Процесс удаления";
-    public final static String BACK_TO_CATEGORY_VIEW = Emoji.LEFT_ARROW + " Назад к категориям";
-    public static final String CREATE_CATEGORY = "Создать категорию";
+public enum ButtonTitle {
+
+    REMOVE_MODE(
+            "Процесс удаления",
+            "Delete mode"),
+
+    BACK_TO_CATEGORY_VIEW(
+            Emoji.LEFT_ARROW + " Назад к категориям",
+            Emoji.LEFT_ARROW + " Back to categories"),
+    CREATE_CATEGORY(
+            "Создать категорию",
+            "Create category");
+
+    ButtonTitle(String ru, String en) {
+        this.ru = ru;
+        this.en = en;
+    }
+
+    String ru;
+    String en;
+
+    public String text() {
+        if (Localization.get().startsWith("ru")) {
+            return ru;
+        }
+        return en;
+    }
 }
