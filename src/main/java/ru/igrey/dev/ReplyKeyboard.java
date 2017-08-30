@@ -1,12 +1,9 @@
 package ru.igrey.dev;
 
 import org.telegram.telegrambots.api.objects.replykeyboard.InlineKeyboardMarkup;
-import org.telegram.telegrambots.api.objects.replykeyboard.ReplyKeyboardMarkup;
 import org.telegram.telegrambots.api.objects.replykeyboard.buttons.InlineKeyboardButton;
-import org.telegram.telegrambots.api.objects.replykeyboard.buttons.KeyboardRow;
-import ru.igrey.dev.constant.AnswerMessageText;
 import ru.igrey.dev.constant.ButtonCommandName;
-import ru.igrey.dev.constant.KeyboardCommand;
+import ru.igrey.dev.constant.ButtonTitle;
 import ru.igrey.dev.domain.Category;
 import ru.igrey.dev.domain.Note;
 
@@ -19,29 +16,7 @@ import static ru.igrey.dev.constant.Delimiter.DELIMITER;
  * Created by sanasov on 04.04.2017.
  */
 public class ReplyKeyboard {
- 
 
-    public static ReplyKeyboardMarkup getKeyboardOnUserStart() {
-        // Создаем клавиуатуру
-        ReplyKeyboardMarkup replyKeyboardMarkup = new ReplyKeyboardMarkup();
-        replyKeyboardMarkup.setSelective(true);
-        replyKeyboardMarkup.setResizeKeyboard(true);
-        replyKeyboardMarkup.setOneTimeKeyboard(true);
-
-        // Создаем список строк клавиатуры
-        List<KeyboardRow> keyboard = new ArrayList<>();
-        // Первая строчка клавиатуры
-        KeyboardRow keyboardFirstRow = new KeyboardRow();
-        // Добавляем кнопки в первую строчку клавиатуры
-        keyboardFirstRow.add(KeyboardCommand.SHOW_NOTES);
-        keyboardFirstRow.add(KeyboardCommand.DELETE_NOTE);
-
-        // Добавляем все строчки клавиатуры в список
-        keyboard.add(keyboardFirstRow);
-        // и устанваливаем этот список нашей клавиатуре
-        replyKeyboardMarkup.setKeyboard(keyboard);
-        return replyKeyboardMarkup;
-    }
 
     public static InlineKeyboardMarkup buttonsForPickingCategoryAfterCreateNote(List<Category> categories, Long noteId) {
         InlineKeyboardMarkup markup = new InlineKeyboardMarkup();
@@ -53,7 +28,7 @@ public class ReplyKeyboard {
             keyboard.add(buttonRow);
         }
         List<InlineKeyboardButton> buttonRow = new ArrayList<>();
-        buttonRow.add(createInlineKeyboardButton(ButtonCommandName.CREATE_CATEGORY, KeyboardCommand.CREATE_CATEGORY));
+        buttonRow.add(createInlineKeyboardButton(ButtonCommandName.CREATE_CATEGORY, ButtonTitle.CREATE_CATEGORY));
         keyboard.add(buttonRow);
         markup.setKeyboard(keyboard);
         return markup;
@@ -71,46 +46,31 @@ public class ReplyKeyboard {
         return markup;
     }
 
-    public static InlineKeyboardMarkup buttonsForPickingCategoryForDeleteNotes(List<Category> categories) {
-        InlineKeyboardMarkup markup = new InlineKeyboardMarkup();
-        List<List<InlineKeyboardButton>> keyboard = new ArrayList<>();
-        List<InlineKeyboardButton> firstButtonRow = new ArrayList<>();
-        firstButtonRow.add(createInlineKeyboardButton(ButtonCommandName.CANCEL, AnswerMessageText.COMPLETE_DELETING));
-        keyboard.add(firstButtonRow);
-        for (Category category : categories) {
-            List<InlineKeyboardButton> buttonRow = new ArrayList<>();
-            buttonRow.add(createInlineKeyboardButton(ButtonCommandName.CATEGORY_DELETE_NOTES + DELIMITER + category.getId().toString(), category.getTitle()));
-            keyboard.add(buttonRow);
-        }
-        markup.setKeyboard(keyboard);
-        return markup;
-    }
-
-
     public static InlineKeyboardMarkup buttonsForPickingNotesForDelete(List<Note> notes, Long categoryId, String categoryName) {
         InlineKeyboardMarkup markup = new InlineKeyboardMarkup();
         List<List<InlineKeyboardButton>> keyboard = new ArrayList<>();
         List<InlineKeyboardButton> firstButtonRow = new ArrayList<>();
-        firstButtonRow.add(createInlineKeyboardButton(ButtonCommandName.CANCEL, AnswerMessageText.COMPLETE_DELETING));
-        List<InlineKeyboardButton> secondButtonRow = new ArrayList<>();
-        secondButtonRow.add(createInlineKeyboardButton(ButtonCommandName.CATEGORY_DELETE + DELIMITER + categoryId, "DELETE CATEGORY: " + categoryName));
+        firstButtonRow.add(createInlineKeyboardButton(ButtonCommandName.CANCEL, ButtonTitle.COMPLETE_DELETING));
+        List<InlineKeyboardButton> lastButtonRow = new ArrayList<>();
+        lastButtonRow.add(createInlineKeyboardButton(ButtonCommandName.CATEGORY_DELETE + DELIMITER + categoryId, "CATEGORY remove: \"" + categoryName + "\""));
         keyboard.add(firstButtonRow);
-        keyboard.add(secondButtonRow);
         for (Note note : notes) {
             List<InlineKeyboardButton> buttonRow = new ArrayList<>();
-            buttonRow.add(createInlineKeyboardButton(ButtonCommandName.NOTE_DELETE + DELIMITER + categoryId + DELIMITER + note.getId().toString(), "DELETE: " + note.getText()));
+            buttonRow.add(createInlineKeyboardButton(ButtonCommandName.NOTE_DELETE + DELIMITER + categoryId + DELIMITER + note.getId().toString(), "remove: \"" + note.getText() + "\""));
             keyboard.add(buttonRow);
         }
+        keyboard.add(lastButtonRow);
         markup.setKeyboard(keyboard);
         return markup;
     }
 
 
-    public static InlineKeyboardMarkup buttonBackToCategoryView() {
+    public static InlineKeyboardMarkup buttonBackToCategoryView(Long categoryId) {
         InlineKeyboardMarkup markup = new InlineKeyboardMarkup();
         List<List<InlineKeyboardButton>> keyboard = new ArrayList<>();
         List<InlineKeyboardButton> buttonRow = new ArrayList<>();
-        buttonRow.add(createInlineKeyboardButton(ButtonCommandName.BACK_TO_CATEGORY_VIEW, "Назад к категориям"));
+        buttonRow.add(createInlineKeyboardButton(ButtonCommandName.BACK_TO_CATEGORY_VIEW, ButtonTitle.BACK_TO_CATEGORY_VIEW));
+        buttonRow.add(createInlineKeyboardButton(ButtonCommandName.REMOVE_MODE + DELIMITER + categoryId, ButtonTitle.REMOVE_MODE));
         keyboard.add(buttonRow);
         markup.setKeyboard(keyboard);
         return markup;
