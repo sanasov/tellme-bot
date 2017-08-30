@@ -46,10 +46,44 @@ public class TellMe extends TelegramLongPollingBot {
     @Override
     public void onUpdateReceived(Update update) {
         if (update.hasMessage()) {
+            handleDocumentMessage(update.getMessage());
+            handlePhotoMessage(update.getMessage());
             handleIncomingMessage(update.getMessage());
         } else if (update.hasCallbackQuery()) {
             handleButtonClick(update.getCallbackQuery());
         }
+    }
+
+    private void handlePhotoMessage(Message message) {
+        if (message.getPhoto() == null) {
+            return;
+        }
+        Long chatId = message.getChatId();
+        Category photoCategory = categoryRepository.createCategoryIfNotExist(chatId, "Photo");
+        noteRepository.saveNote(
+                Note.createNewNote(
+                        message.getPhoto().get(0).getFileId(),
+                        photoCategory.getId(),
+                        chatId)
+        );
+        TelegramUser telegramUser = telegramUserService.getOrCreateTelegramUserByUserId(message.getFrom());
+        onShowCategories(telegramUser, chatId);
+    }
+
+    private void handleDocumentMessage(Message message) {
+        if (message.getDocument() == null) {
+            return;
+        }
+        Long chatId = message.getChatId();
+        Category photoCategory = categoryRepository.createCategoryIfNotExist(chatId, "File document");
+        noteRepository.saveNote(
+                Note.createNewNote(
+                        message.getDocument().getFileId(),
+                        photoCategory.getId(),
+                        chatId)
+        );
+        TelegramUser telegramUser = telegramUserService.getOrCreateTelegramUserByUserId(message.getFrom());
+        onShowCategories(telegramUser, chatId);
     }
 
     private void handleIncomingMessage(Message message) {

@@ -48,6 +48,22 @@ public class CategoryRepository {
                         noteRepository.findByCategoryId(categoryEntity.getId()));
     }
 
+    public Category findCategoryByUserIdAndCategoryName(Long userId, String title) {
+        CategoryEntity categoryEntity = categoryDao.findByUserIdAndTitle(userId, title);
+        return categoryEntity == null ? null :
+                new Category(
+                        categoryEntity,
+                        noteRepository.findByCategoryId(categoryEntity.getId()));
+    }
+
+    public Category createCategoryIfNotExist(Long userId, String title) {
+        Category category = findCategoryByUserIdAndCategoryName(userId, title);
+        if (category == null) {
+            category = Category.createNewCategory(userId, title);
+        }
+        return saveCategory(category);
+    }
+
     public Category saveCategory(Category category) {
         return new Category(categoryDao.save(category.toEntity()), null);
     }
