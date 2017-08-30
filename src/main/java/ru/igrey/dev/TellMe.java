@@ -48,6 +48,7 @@ public class TellMe extends TelegramLongPollingBot {
         if (update.hasMessage()) {
             handleDocumentMessage(update.getMessage());
             handlePhotoMessage(update.getMessage());
+            handleVoiceMessage(update.getMessage());
             handleIncomingMessage(update.getMessage());
         } else if (update.hasCallbackQuery()) {
             handleButtonClick(update.getCallbackQuery());
@@ -63,6 +64,22 @@ public class TellMe extends TelegramLongPollingBot {
         noteRepository.saveNote(
                 Note.createNewNote(
                         message.getPhoto().get(0).getFileId(),
+                        photoCategory.getId(),
+                        chatId)
+        );
+        TelegramUser telegramUser = telegramUserService.getOrCreateTelegramUserByUserId(message.getFrom());
+        onShowCategories(telegramUser, chatId);
+    }
+
+    private void handleVoiceMessage(Message message) {
+        if (message.getVoice() == null) {
+            return;
+        }
+        Long chatId = message.getChatId();
+        Category photoCategory = categoryRepository.createCategoryIfNotExist(chatId, "Voice");
+        noteRepository.saveNote(
+                Note.createNewNote(
+                        message.getVoice().getFileId(),
                         photoCategory.getId(),
                         chatId)
         );
