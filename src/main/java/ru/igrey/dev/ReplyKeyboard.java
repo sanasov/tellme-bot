@@ -51,9 +51,9 @@ public class ReplyKeyboard {
         InlineKeyboardMarkup markup = new InlineKeyboardMarkup();
         List<List<InlineKeyboardButton>> keyboard = new ArrayList<>();
         List<InlineKeyboardButton> firstButtonRow = new ArrayList<>();
-        firstButtonRow.add(createInlineKeyboardButton(ButtonCommandName.CANCEL, ButtonTitle.COMPLETE_DELETING));
+        firstButtonRow.add(createInlineKeyboardButton(ButtonCommandName.CANCEL, ButtonTitle.BACK_TO_CATEGORY_VIEW));
         List<InlineKeyboardButton> lastButtonRow = new ArrayList<>();
-        lastButtonRow.add(createInlineKeyboardButton(ButtonCommandName.CATEGORY_DELETE + DELIMITER + categoryId, Emoji.CROSS_MARK + " CATEGORY: \"" + categoryName + "\""));
+        lastButtonRow.add(createInlineKeyboardButton(ButtonCommandName.CATEGORY_DELETE + DELIMITER + categoryId, Emoji.CROSS_MARK.toString(3) + " CATEGORY: \"" + categoryName + "\""));
         keyboard.add(firstButtonRow);
         for (Note note : notes) {
             List<InlineKeyboardButton> buttonRow = new ArrayList<>();

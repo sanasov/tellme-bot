@@ -190,6 +190,14 @@ public enum Emoji {
         return sb.toString();
     }
 
+    public String toString(Integer times) {
+        StringBuilder sb = new StringBuilder();
+        for (int i = 0; i < times; i++) {
+            sb.append(toString());
+        }
+        return sb.toString();
+    }
+
     public static void main(String[] args) {
         System.out.println(FIRE.toString());
         System.out.println(CROSS_MARK.toString());
