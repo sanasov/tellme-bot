@@ -4,6 +4,7 @@ import org.telegram.telegrambots.api.objects.replykeyboard.InlineKeyboardMarkup;
 import org.telegram.telegrambots.api.objects.replykeyboard.buttons.InlineKeyboardButton;
 import ru.igrey.dev.constant.ButtonCommandName;
 import ru.igrey.dev.constant.ButtonTitle;
+import ru.igrey.dev.constant.Emoji;
 import ru.igrey.dev.domain.Category;
 import ru.igrey.dev.domain.Note;
 
@@ -52,11 +53,11 @@ public class ReplyKeyboard {
         List<InlineKeyboardButton> firstButtonRow = new ArrayList<>();
         firstButtonRow.add(createInlineKeyboardButton(ButtonCommandName.CANCEL, ButtonTitle.COMPLETE_DELETING));
         List<InlineKeyboardButton> lastButtonRow = new ArrayList<>();
-        lastButtonRow.add(createInlineKeyboardButton(ButtonCommandName.CATEGORY_DELETE + DELIMITER + categoryId, "CATEGORY remove: \"" + categoryName + "\""));
+        lastButtonRow.add(createInlineKeyboardButton(ButtonCommandName.CATEGORY_DELETE + DELIMITER + categoryId, Emoji.CROSS_MARK + " CATEGORY: \"" + categoryName + "\""));
         keyboard.add(firstButtonRow);
         for (Note note : notes) {
             List<InlineKeyboardButton> buttonRow = new ArrayList<>();
-            buttonRow.add(createInlineKeyboardButton(ButtonCommandName.NOTE_DELETE + DELIMITER + categoryId + DELIMITER + note.getId().toString(), "remove: \"" + note.getText() + "\""));
+            buttonRow.add(createInlineKeyboardButton(ButtonCommandName.NOTE_DELETE + DELIMITER + categoryId + DELIMITER + note.getId().toString(), Emoji.CROSS_MARK + " \"" + note.getText() + "\""));
             keyboard.add(buttonRow);
         }
         keyboard.add(lastButtonRow);

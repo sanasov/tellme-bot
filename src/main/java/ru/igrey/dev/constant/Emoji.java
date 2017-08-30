@@ -163,8 +163,11 @@ public enum Emoji {
     RED_HEART('\u2764', null),
     BUSTS_IN_SILHOUETTE('\uD83D', '\uDC65'),
     HEAVY_MULTIPLICATION_X('\u2716', null),
-    BLACK_SMALL_SQUARE('\u25AA',null),
-    WHITE_SMALL_SQUARE('\u25AB',null);
+    BLACK_SMALL_SQUARE('\u25AA', null),
+    WHITE_SMALL_SQUARE('\u25AB', null),
+    FIRE('\uD83D', '\uDD25'),
+    LEFT_ARROW('\u2B05', null);
+
     Character firstChar;
     Character secondChar;
 
@@ -185,6 +188,12 @@ public enum Emoji {
         }
 
         return sb.toString();
+    }
+
+    public static void main(String[] args) {
+        System.out.println(FIRE.toString());
+        System.out.println(CROSS_MARK.toString());
+        System.out.println(LEFT_ARROW);
     }
 }
 
