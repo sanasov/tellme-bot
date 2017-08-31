@@ -165,6 +165,8 @@ public enum Emoji {
     HEAVY_MULTIPLICATION_X('\u2716', null),
     BLACK_SMALL_SQUARE('\u25AA', null),
     WHITE_SMALL_SQUARE('\u25AB', null),
+    FOLDER('\uD83D', '\uDCC1'),
+    TRASH('\uD83D', '\uDDD1'),
     FIRE('\uD83D', '\uDD25'),
     LEFT_ARROW('\u2B05', null);
 
@@ -202,6 +204,7 @@ public enum Emoji {
         System.out.println(FIRE.toString());
         System.out.println(CROSS_MARK.toString());
         System.out.println(LEFT_ARROW);
+        System.out.println(TRASH);
     }
 }
 

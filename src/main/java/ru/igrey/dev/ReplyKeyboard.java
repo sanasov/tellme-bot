@@ -25,7 +25,7 @@ public class ReplyKeyboard {
 
         for (Category category : categories) {
             List<InlineKeyboardButton> buttonRow = new ArrayList<>();
-            buttonRow.add(createInlineKeyboardButton(ButtonCommandName.PICK_CATEGORY_FOR_ADDED_NOTE + DELIMITER + category.getId() + DELIMITER + noteId, category.getTitle()));
+            buttonRow.add(createInlineKeyboardButton(ButtonCommandName.PICK_CATEGORY_FOR_ADDED_NOTE + DELIMITER + category.getId() + DELIMITER + noteId, Emoji.FOLDER + " " + category.getTitle()));
             keyboard.add(buttonRow);
         }
         List<InlineKeyboardButton> buttonRow = new ArrayList<>();
@@ -40,7 +40,7 @@ public class ReplyKeyboard {
         List<List<InlineKeyboardButton>> keyboard = new ArrayList<>();
         for (Category category : categories) {
             List<InlineKeyboardButton> buttonRow = new ArrayList<>();
-            buttonRow.add(createInlineKeyboardButton(ButtonCommandName.PICK_CATEGORY_TO_VIEW_NOTES + DELIMITER + category.getId().toString(), category.getTitle()));
+            buttonRow.add(createInlineKeyboardButton(ButtonCommandName.PICK_CATEGORY_TO_VIEW_NOTES + DELIMITER + category.getId().toString(), Emoji.FOLDER + " " + category.getTitle()));
             keyboard.add(buttonRow);
         }
         markup.setKeyboard(keyboard);
@@ -71,7 +71,7 @@ public class ReplyKeyboard {
         List<List<InlineKeyboardButton>> keyboard = new ArrayList<>();
         List<InlineKeyboardButton> buttonRow = new ArrayList<>();
         buttonRow.add(createInlineKeyboardButton(ButtonCommandName.BACK_TO_CATEGORY_VIEW, ButtonTitle.BACK_TO_CATEGORY_VIEW.text()));
-        buttonRow.add(createInlineKeyboardButton(ButtonCommandName.REMOVE_MODE + DELIMITER + categoryId, ButtonTitle.REMOVE_MODE.text()));
+        buttonRow.add(createInlineKeyboardButton(ButtonCommandName.REMOVE_MODE + DELIMITER + categoryId, Emoji.TRASH + " " + ButtonTitle.REMOVE_MODE.text()));
         keyboard.add(buttonRow);
         markup.setKeyboard(keyboard);
         return markup;
