@@ -1,6 +1,7 @@
 package ru.igrey.dev.domain;
 
 import ru.igrey.dev.constant.AnswerMessageText;
+import ru.igrey.dev.constant.Emoji;
 import ru.igrey.dev.entity.CategoryEntity;
 
 import java.time.LocalDateTime;
@@ -45,7 +46,7 @@ public class Category {
     }
 
     public String toString() {
-        return toBold(this.getTitle()) + "\n"
+        return Emoji.OPEN_FOLDER + " " + toBold(this.getTitle()) + "\n"
                 + notes(this.getNotes());
     }
 

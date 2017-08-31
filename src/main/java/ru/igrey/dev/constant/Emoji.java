@@ -166,6 +166,7 @@ public enum Emoji {
     BLACK_SMALL_SQUARE('\u25AA', null),
     WHITE_SMALL_SQUARE('\u25AB', null),
     FOLDER('\uD83D', '\uDCC1'),
+    OPEN_FOLDER('\uD83D', '\uDCC2'),
     TRASH('\uD83D', '\uDDD1'),
     FIRE('\uD83D', '\uDD25'),
     LEFT_ARROW('\u2B05', null);
