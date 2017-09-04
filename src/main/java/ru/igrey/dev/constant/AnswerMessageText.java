@@ -12,7 +12,7 @@ public enum AnswerMessageText {
             "Категория добавлена",
             "Category added"),
     ADD_CATEGORY(
-            "Отправьте название категории",
+            "Отправьте мне название категории",
             "Send me a category name"),
     NO_CATEGORIES_NO_NOTES(
             "Нет категорий. Нет записей. \n Отправьте мне запись и выберите для нее категорию " + Emoji.SMILING_FACE_WITH_SMILING_EYES,
