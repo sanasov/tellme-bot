@@ -1,6 +1,7 @@
 package ru.igrey.dev.domain;
 
 import lombok.ToString;
+import org.apache.commons.lang3.StringUtils;
 import org.telegram.telegrambots.api.objects.User;
 import ru.igrey.dev.entity.TelegramUserEntity;
 
@@ -8,7 +9,7 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
-@ToString(exclude = "categories")
+@ToString(exclude = {"categories", "isActive", "status"})
 public class TelegramUser {
     private Long userId;
     private String firstName;
@@ -64,6 +65,9 @@ public class TelegramUser {
         );
     }
 
+    public String toView() {
+        return "userId: " + userId + " fullName: " + firstName + " " + lastName + " userName: " + getUserName();
+    }
 
     public Long getUserId() {
         return userId;
@@ -90,7 +94,7 @@ public class TelegramUser {
     }
 
     public String getUserName() {
-        return userName;
+        return StringUtils.isNotBlank(userName) ? userName : "";
     }
 
     public void setUserName(String userName) {
