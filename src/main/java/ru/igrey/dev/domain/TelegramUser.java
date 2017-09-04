@@ -8,7 +8,7 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
-@ToString
+@ToString(exclude = "categories")
 public class TelegramUser {
     private Long userId;
     private String firstName;

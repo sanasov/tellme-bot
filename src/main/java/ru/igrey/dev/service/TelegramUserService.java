@@ -30,6 +30,13 @@ public class TelegramUserService {
         return result;
     }
 
+    public String usersStatstic() {
+        return telegramUserRepository.findAll().stream()
+                .map(TelegramUser::toString)
+                .reduce((a, b) -> a + "\n" + b)
+                .orElse("");
+    }
+
     public void save(TelegramUser telegramUser) {
         telegramUserRepository.save(telegramUser);
     }

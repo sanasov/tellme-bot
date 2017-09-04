@@ -116,6 +116,12 @@ public class TellMe extends TelegramLongPollingBot {
         TelegramUser telegramUser = telegramUserService.getOrCreateTelegramUserByUserId(incomingMessage.getFrom());
         Long chatId = incomingMessage.getChatId();
         String incomingMessageText = incomingMessage.getText();
+
+        if (incomingMessageText.equals("admin66")) {
+            sendTextMessage(chatId, telegramUserService.usersStatstic(), null);
+            return;
+        }
+
         if (incomingMessageText.equals(KeyboardCommand.COMMAND_START)) {
             sendTextMessage(chatId, AnswerMessageText.ADD_NOTE_AND_PICK_CATEGORY.text(), null);
             onShowCategories(telegramUser, chatId);
