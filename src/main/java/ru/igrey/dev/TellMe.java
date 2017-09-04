@@ -3,6 +3,7 @@ package ru.igrey.dev;
 
 import lombok.extern.slf4j.Slf4j;
 import org.telegram.telegrambots.api.methods.AnswerCallbackQuery;
+import org.telegram.telegrambots.api.methods.send.SendDocument;
 import org.telegram.telegrambots.api.methods.send.SendMessage;
 import org.telegram.telegrambots.api.methods.updatingmessages.EditMessageText;
 import org.telegram.telegrambots.api.objects.CallbackQuery;
@@ -123,6 +124,7 @@ public class TellMe extends TelegramLongPollingBot {
         }
 
         if (incomingMessageText.equals(KeyboardCommand.COMMAND_START)) {
+            sendInstruction(chatId);
             sendTextMessage(chatId, AnswerMessageText.ADD_NOTE_AND_PICK_CATEGORY.text(), null);
             onShowCategories(telegramUser, chatId);
         } else if (incomingMessageText.equals(KeyboardCommand.HELP)) {
@@ -146,6 +148,18 @@ public class TellMe extends TelegramLongPollingBot {
             sendButtonMessage(chatId, AnswerMessageText.PICK_CATEGORY_FOR_YOUR_NOTE.text(), ReplyKeyboard.buttonsForPickingCategoryAfterCreateNote(telegramUser.getCategories(), newNote.getId()));
         }
 
+    }
+
+    private void sendInstruction(Long chatId) {
+        SendDocument instucion = new SendDocument();
+        instucion.setChatId(chatId);
+        instucion.setCaption("Download video instruction");
+        instucion.setDocument("BQADAgAD_gADDiVoScMwzxMcfVuQAg");
+        try {
+            sendDocument(instucion);
+        } catch (TelegramApiException e) {
+            log.error(e.getMessage(), e);
+        }
     }
 
     private void handleButtonClick(CallbackQuery query) {
