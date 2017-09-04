@@ -12,8 +12,8 @@ public enum AnswerMessageText {
             "Категория добавлена",
             "Category added"),
     ADD_CATEGORY(
-            "Добавьте категорию",
-            "Add a category"),
+            "Отправьте название категории",
+            "Send me a category name"),
     NO_CATEGORIES_NO_NOTES(
             "Нет категорий. Нет записей. \n Отправьте мне запись и выберите для нее категорию " + Emoji.SMILING_FACE_WITH_SMILING_EYES,
             "No categories. No records. Send me your note and pick category for it" + Emoji.SMILING_FACE_WITH_SMILING_EYES),
@@ -21,8 +21,8 @@ public enum AnswerMessageText {
             "Выберите категорию для просмотра записей",
             "Select a category to view the notes"),
     PICK_CATEGORY_FOR_YOUR_NOTE(
-            "Выберите категорию для вашей заметки",
-            ""),
+            "Выберите или создайте категорию для вашей заметки",
+            "Pick or create category for your note"),
     PICK_NOTES_FOR_DELETE(
             "Выберите записи для удаления",
             "Select a category for your note"),
