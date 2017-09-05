@@ -4,7 +4,6 @@ import ru.igrey.dev.dao.TelegramUserDao;
 import ru.igrey.dev.domain.TelegramUser;
 import ru.igrey.dev.entity.TelegramUserEntity;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -31,7 +30,7 @@ public class TelegramUserRepository {
 
     public List<TelegramUser> findAll() {
         return userDao.findAll().stream()
-                .map(entity -> new TelegramUser(entity, new ArrayList<>()))
+                .map(entity -> new TelegramUser(entity, categoryRepository.findCategoryByUserId(entity.getUserId())))
                 .collect(Collectors.toList());
     }
 
