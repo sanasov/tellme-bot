@@ -2,6 +2,7 @@ package ru.igrey.dev.entity;
 
 import lombok.EqualsAndHashCode;
 import lombok.ToString;
+import org.apache.commons.lang3.StringUtils;
 
 import java.time.LocalDateTime;
 
@@ -95,6 +96,6 @@ public class TelegramUserEntity {
     }
 
     public String getLanguageCode() {
-        return languageCode;
+        return StringUtils.isNotBlank(languageCode) ? languageCode : "";
     }
 }

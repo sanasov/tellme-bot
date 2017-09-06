@@ -54,6 +54,7 @@ public class TelegramUser {
         this.status = UserStatus.valueOf(userEntity.getStatus());
         this.createDate = userEntity.getCreateDate();
         this.categories = categories;
+        this.languageCode = userEntity.getLanguageCode();
     }
 
     public TelegramUserEntity toEntity() {
@@ -135,5 +136,13 @@ public class TelegramUser {
 
     public void setCategories(List<Category> categories) {
         this.categories = categories;
+    }
+
+    public String getLanguageCode() {
+        return languageCode;
+    }
+
+    public void setLanguageCode(String languageCode) {
+        this.languageCode = languageCode;
     }
 }

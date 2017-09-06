@@ -7,7 +7,6 @@ import ru.igrey.dev.dao.repository.CategoryRepository;
 import ru.igrey.dev.dao.repository.NoteRepository;
 import ru.igrey.dev.dao.repository.TelegramUserRepository;
 import ru.igrey.dev.domain.Category;
-import ru.igrey.dev.domain.Note;
 import ru.igrey.dev.domain.TelegramUser;
 import ru.igrey.dev.domain.UserStatus;
 
@@ -45,12 +44,9 @@ public class JdbcTemplateFactory {
         TelegramUserDao telegramUserDao = new TelegramUserDao(jdbcTemplate);
         CategoryRepository categoryRepository = categoryRepository(jdbcTemplate);
         TelegramUserRepository repository = new TelegramUserRepository(telegramUserDao, categoryRepository);
-        NoteRepository noteRepository = new NoteRepository(new NoteDao(jdbcTemplate));
         TelegramUser telegramUser = createTelegramUser();
+        telegramUser.setLanguageCode("BB");
         repository.save(telegramUser);
-        categoryRepository.saveCategory(createCategory());
-        noteRepository.saveNote(new Note(null, null, 11L, null, "Terminator"));
-        repository.findById(11L);
     }
 
     private static TelegramUser createTelegramUser() {
