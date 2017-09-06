@@ -62,7 +62,8 @@ public class JdbcTemplateFactory {
                 null,
                 UserStatus.NEW,
                 null,
-                null);
+                null,
+                "ru-RU");
         return telegramUser;
     }
 

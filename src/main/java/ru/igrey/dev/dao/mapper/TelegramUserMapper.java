@@ -20,6 +20,7 @@ public class TelegramUserMapper implements RowMapper {
         user.setUserName(rs.getString("USER_NAME"));
         user.setStatus(rs.getString("STATUS"));
         user.setActive(rs.getInt("IS_ACTIVE"));
+        user.setLanguageCode(rs.getString("LANGUAGE_CODE"));
         user.setCreateDate(LocalDateTime.parse(rs.getString("CREATE_DATE"), DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss")));
         return user;
     }

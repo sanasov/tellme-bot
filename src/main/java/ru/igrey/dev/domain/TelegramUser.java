@@ -19,8 +19,9 @@ public class TelegramUser {
     private UserStatus status;
     private LocalDateTime createDate;
     private List<Category> categories;
+    private String languageCode;
 
-    public TelegramUser(Long userId, String firstName, String lastName, String userName, Boolean isActive, UserStatus status, LocalDateTime createDate, List<Category> categories) {
+    public TelegramUser(Long userId, String firstName, String lastName, String userName, Boolean isActive, UserStatus status, LocalDateTime createDate, List<Category> categories, String languageCode) {
         this.userId = userId;
         this.firstName = firstName;
         this.lastName = lastName;
@@ -29,6 +30,7 @@ public class TelegramUser {
         this.status = status;
         this.createDate = createDate;
         this.categories = categories;
+        this.languageCode = languageCode;
     }
 
     public static TelegramUser createNewUser(User user) {
@@ -39,7 +41,8 @@ public class TelegramUser {
                 null,
                 UserStatus.NEW,
                 null,
-                null);
+                null,
+                user.getLanguageCode());
     }
 
 
@@ -61,7 +64,8 @@ public class TelegramUser {
                 userName,
                 status.name(),
                 createDate,
-                null
+                null,
+                languageCode
         );
     }
 
