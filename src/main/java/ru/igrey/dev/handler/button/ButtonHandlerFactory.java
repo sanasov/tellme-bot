@@ -1,4 +1,4 @@
-package ru.igrey.dev.handler;
+package ru.igrey.dev.handler.button;
 
 import lombok.extern.slf4j.Slf4j;
 import org.telegram.telegrambots.api.objects.CallbackQuery;

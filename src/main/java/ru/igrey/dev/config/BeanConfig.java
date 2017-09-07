@@ -15,7 +15,7 @@ import ru.igrey.dev.dao.TelegramUserDao;
 import ru.igrey.dev.dao.repository.CategoryRepository;
 import ru.igrey.dev.dao.repository.NoteRepository;
 import ru.igrey.dev.dao.repository.TelegramUserRepository;
-import ru.igrey.dev.handler.ButtonHandlerFactory;
+import ru.igrey.dev.handler.button.ButtonHandlerFactory;
 import ru.igrey.dev.service.TelegramUserService;
 
 @Slf4j

@@ -1,4 +1,4 @@
-package ru.igrey.dev.handler;
+package ru.igrey.dev.handler.button;
 
 import org.telegram.telegrambots.api.objects.CallbackQuery;
 import ru.igrey.dev.config.BeanConfig;
