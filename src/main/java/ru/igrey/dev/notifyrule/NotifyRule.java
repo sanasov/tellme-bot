@@ -1,10 +1,13 @@
 package ru.igrey.dev.notifyrule;
 
+import lombok.ToString;
+
 import java.time.DayOfWeek;
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.List;
 
+@ToString
 public class NotifyRule {
     private LocalDate notifyDate;
     private Long IntervalSeconds;

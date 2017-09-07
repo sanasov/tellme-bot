@@ -26,11 +26,12 @@ public class NotifyRuleParser {
 
 
     public static void main(String[] args) {
-        System.out.println(new NotifyRuleParser("8:15").parse().getTime());
-        System.out.println(new NotifyRuleParser("утром").parse().getTime());
-        System.out.println(new NotifyRuleParser("днем").parse().getTime());
-        System.out.println(new NotifyRuleParser("вечером").parse().getTime());
-        System.out.println(new NotifyRuleParser("ночью").parse().getTime());
+        System.out.println(new NotifyRuleParser("tomorrow night").parse());
+        System.out.println(new NotifyRuleParser("завтра утром").parse());
+        System.out.println(new NotifyRuleParser("днем 18.05").parse());
+        System.out.println(new NotifyRuleParser("вечером 28.02").parse());
+        System.out.println(new NotifyRuleParser("ночью").parse());
+        System.out.println(new NotifyRuleParser("перед сном завтра").parse());
     }
 
 }

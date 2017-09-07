@@ -15,7 +15,7 @@ public class ParsedTime {
     }
 
     public LocalTime get() {
-        String time = new Time24HoursValidator().find(rule);
+        String time = new Time24HourRecognizer().find(rule);
         if (time == null) {
             return getDefaultTimeByDayPart();
         }
@@ -39,6 +39,8 @@ public class ParsedTime {
             return defaultAfternoonTime;
         }
         if (rule.toLowerCase().contains("вечер")
+                || rule.toLowerCase().contains("ужин")
+                || rule.toLowerCase().contains("dinner")
                 || rule.toLowerCase().contains("evening")) {
             return defaultEveningTime;
         }

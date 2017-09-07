@@ -11,7 +11,16 @@ public class ParsedDate {
     }
 
     public LocalDate get() {
-        return LocalDate.now();
+        LocalDate date = new DateRecognizer(rule).find();
+        if (date != null) {
+            return date;
+        }
+        if (rule.contains("завтра")
+                || rule.contains("tomorrow")
+                ) {
+            return LocalDate.now().plusDays(1);
+        }
+        return null;
     }
 
 }
