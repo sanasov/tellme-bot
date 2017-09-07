@@ -2,6 +2,8 @@ package ru.igrey.dev;
 
 
 import lombok.extern.slf4j.Slf4j;
+import org.quartz.Scheduler;
+import org.quartz.SchedulerException;
 import org.telegram.telegrambots.api.methods.AnswerCallbackQuery;
 import org.telegram.telegrambots.api.methods.send.SendDocument;
 import org.telegram.telegrambots.api.methods.send.SendMessage;
@@ -23,6 +25,8 @@ import ru.igrey.dev.domain.Category;
 import ru.igrey.dev.domain.Note;
 import ru.igrey.dev.domain.TelegramUser;
 import ru.igrey.dev.domain.UserStatus;
+import ru.igrey.dev.scheduler.JobFactory;
+import ru.igrey.dev.scheduler.TriggerFactory;
 import ru.igrey.dev.service.TelegramUserService;
 
 import static ru.igrey.dev.constant.Delimiter.DELIMITER;
@@ -37,11 +41,18 @@ public class TellMe extends TelegramLongPollingBot {
     private NoteRepository noteRepository;
     private CategoryRepository categoryRepository;
 
-    public TellMe(DefaultBotOptions defaultBotOptions, TelegramUserService telegramUserService, NoteRepository noteRepository, CategoryRepository categoryRepository) {
+    public TellMe(DefaultBotOptions defaultBotOptions, TelegramUserService telegramUserService, NoteRepository noteRepository, CategoryRepository categoryRepository, Scheduler scheduler) {
         super(defaultBotOptions);
         this.telegramUserService = telegramUserService;
         this.noteRepository = noteRepository;
         this.categoryRepository = categoryRepository;
+
+        try {
+            scheduler.start();
+            scheduler.scheduleJob(JobFactory.createNotificationJob(), TriggerFactory.createTrigger());
+        } catch (SchedulerException e) {
+            log.error(e.getMessage(), e);
+        }
     }
 
     @Override
@@ -362,6 +373,10 @@ public class TellMe extends TelegramLongPollingBot {
         } catch (TelegramApiException e) {
             log.error(e.getMessage(), e);
         }
+    }
+
+    public void sendNotification() {
+        sendTextMessage(154090812L, "notification", null);
     }
 
     @Override

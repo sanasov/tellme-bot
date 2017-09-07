@@ -1,6 +1,13 @@
 package ru.igrey.dev.config;
 
+import lombok.extern.slf4j.Slf4j;
+import org.quartz.Scheduler;
+import org.quartz.SchedulerException;
+import org.quartz.impl.StdSchedulerFactory;
 import org.springframework.jdbc.core.JdbcTemplate;
+import org.telegram.telegrambots.ApiContext;
+import org.telegram.telegrambots.bots.DefaultBotOptions;
+import ru.igrey.dev.TellMe;
 import ru.igrey.dev.dao.CategoryDao;
 import ru.igrey.dev.dao.JdbcTemplateFactory;
 import ru.igrey.dev.dao.NoteDao;
@@ -10,14 +17,34 @@ import ru.igrey.dev.dao.repository.NoteRepository;
 import ru.igrey.dev.dao.repository.TelegramUserRepository;
 import ru.igrey.dev.service.TelegramUserService;
 
+@Slf4j
 public class BeanConfig {
 
+    private static TellMe tellMeBot;
     private static TelegramUserService telegramUserService;
     private static TelegramUserRepository telegramUserRepository;
     private static CategoryRepository categoryRepository;
     private static NoteRepository noteRepository;
     private static TelegramUserDao telegramUserDao;
     private static JdbcTemplate jdbcTemplate;
+    private static Scheduler scheduler;
+
+
+    public static TellMe tellMeBot() {
+        if (tellMeBot == null) {
+            DefaultBotOptions options = ApiContext.getInstance(DefaultBotOptions.class);
+            options.setMaxThreads(10);
+            tellMeBot = new TellMe(
+                    options,
+                    telegramUserService(),
+                    noteRepository(),
+                    categoryRepository(),
+                    scheduler()
+            );
+        }
+        return tellMeBot;
+    }
+
 
     public static TelegramUserService telegramUserService() {
         if (telegramUserService == null) {
@@ -62,5 +89,18 @@ public class BeanConfig {
         }
         return jdbcTemplate;
     }
+
+
+    public static Scheduler scheduler() {
+        if (scheduler == null) {
+            try {
+                scheduler = new StdSchedulerFactory().getScheduler();
+            } catch (SchedulerException e) {
+                log.error(e.getMessage(), e);
+            }
+        }
+        return scheduler;
+    }
+
 
 }
