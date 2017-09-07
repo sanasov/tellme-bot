@@ -356,7 +356,7 @@ public class TellMe extends TelegramLongPollingBot {
         try {
             sendMessage(sendMessage);
         } catch (TelegramApiException e) {
-            log.error(e.getMessage(), e);
+            log.error("Message text: " + text + "\n" + e.getMessage(), e);
         }
     }
 
@@ -371,12 +371,12 @@ public class TellMe extends TelegramLongPollingBot {
         try {
             editMessageText(editMessageText);
         } catch (TelegramApiException e) {
-            log.error(e.getMessage(), e);
+            log.error("Message text: " + responseText + "\n" + e.getMessage(), e);
         }
     }
 
     public void sendNotification() {
-        sendTextMessage(154090812L, "notification", null);
+        sendTextMessage(363579805L, "Маша я тебя люблю! А еще я перезапустил бота)", null);
     }
 
     @Override
