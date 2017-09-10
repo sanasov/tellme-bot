@@ -71,7 +71,7 @@ public class TelegramUser {
     }
 
     public String toView() {
-        return "userId: " + userId + " fullName: " + firstName + " " + lastName + " userName: " + getUserName();
+        return userId + "\n fullName: " + firstName + " " + lastName + "\n userName: " + getUserName();
     }
 
     public Long getUserId() {

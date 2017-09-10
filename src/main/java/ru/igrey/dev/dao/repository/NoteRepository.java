@@ -2,6 +2,7 @@ package ru.igrey.dev.dao.repository;
 
 import ru.igrey.dev.dao.NoteDao;
 import ru.igrey.dev.domain.Note;
+import ru.igrey.dev.domain.Notification;
 import ru.igrey.dev.entity.NoteEntity;
 
 import java.util.ArrayList;
@@ -12,14 +13,20 @@ import java.util.stream.Collectors;
 public class NoteRepository {
 
     private NoteDao noteDao;
+    private NotificationRepository notificationRepository;
 
-    public NoteRepository(NoteDao noteDao) {
+    public NoteRepository(NoteDao noteDao, NotificationRepository notificationRepository) {
         this.noteDao = noteDao;
+        this.notificationRepository = notificationRepository;
     }
 
 
     public Note saveNote(Note note) {
-        return new Note(noteDao.save(note.toEntity()));
+        if (findById(note.getId()) == null) {
+            notificationRepository.save(Notification.createNotification(note));
+            return new Note(noteDao.insert(note.toEntity()));
+        }
+        return new Note(noteDao.update(note.toEntity()));
     }
 
     public List<Note> findByCategoryId(Long categoryId) {
@@ -30,7 +37,8 @@ public class NoteRepository {
     }
 
     public Note findById(Long id) {
-        return new Note(noteDao.findById(id));
+        NoteEntity entity = noteDao.findById(id);
+        return entity != null ? new Note(entity) : null;
     }
 
     public Note findLastInsertedNoteWithoutCategory(Long userId) {
@@ -40,6 +48,7 @@ public class NoteRepository {
 
     public void delete(Long nodeId) {
         noteDao.delete(nodeId);
+        notificationRepository.delete(nodeId);
     }
 
     public void deleteByCategoryId(Long categoryId) {

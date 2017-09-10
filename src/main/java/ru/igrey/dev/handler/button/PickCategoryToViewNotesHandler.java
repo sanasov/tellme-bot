@@ -7,7 +7,7 @@ import ru.igrey.dev.constant.AnswerMessageText;
 import ru.igrey.dev.dao.repository.CategoryRepository;
 import ru.igrey.dev.domain.Category;
 
-import static ru.igrey.dev.constant.Delimiter.DELIMITER;
+import static ru.igrey.dev.constant.Delimiter.BUTTON_DELIMITER;
 
 public class PickCategoryToViewNotesHandler implements ButtonHandler {
 
@@ -22,7 +22,7 @@ public class PickCategoryToViewNotesHandler implements ButtonHandler {
     @Override
     public String onClick() {
         Long chatId = query.getMessage().getChatId();
-        Long categoryId = Long.valueOf(query.getData().split(DELIMITER)[1]);
+        Long categoryId = Long.valueOf(query.getData().split(BUTTON_DELIMITER)[1]);
         Category category = categoryRepository.findCategoryById(categoryId);
         BeanConfig.tellMeBot().editMessage(chatId,
                 query.getMessage().getMessageId(),

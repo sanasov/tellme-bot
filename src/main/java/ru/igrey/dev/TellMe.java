@@ -147,7 +147,7 @@ public class TellMe extends TelegramLongPollingBot {
         Long chatId = incomingMessage.getChatId();
         String incomingMessageText = incomingMessage.getText();
 
-        if (incomingMessageText.equals("admin66")) {
+        if (incomingMessageText.toLowerCase().trim().equals("admin66")) {
             sendTextMessage(chatId, telegramUserService.usersStatistic(), null);
             return;
         }
@@ -172,7 +172,7 @@ public class TellMe extends TelegramLongPollingBot {
                     AnswerMessageText.CATEGORY_IS_ADDED.text(),
                     ReplyKeyboard.buttonsForPickingCategoryForViewNotes(categoryRepository.findCategoryByUserId(chatId))
             );
-        } else {
+        } else {// create new note
             Note newNote = noteRepository.saveNote(Note.createNewNote(incomingMessageText, null, chatId));
             sendButtonMessage(chatId, AnswerMessageText.PICK_CATEGORY_FOR_YOUR_NOTE.text(), ReplyKeyboard.buttonsForPickingCategoryAfterCreateNote(telegramUser.getCategories(), newNote.getId()));
         }
@@ -180,12 +180,12 @@ public class TellMe extends TelegramLongPollingBot {
     }
 
     private void sendInstruction(Long chatId) {
-        SendDocument instucion = new SendDocument();
-        instucion.setChatId(chatId);
-        instucion.setCaption("Download video instruction");
-        instucion.setDocument("BQADAgAD_gADDiVoScMwzxMcfVuQAg");
+        SendDocument instruction = new SendDocument();
+        instruction.setChatId(chatId);
+        instruction.setCaption("Download video instruction");
+        instruction.setDocument("BQADAgAD_gADDiVoScMwzxMcfVuQAg");
         try {
-            sendDocument(instucion);
+            sendDocument(instruction);
         } catch (TelegramApiException e) {
             log.error(e.getMessage(), e);
         }
@@ -214,7 +214,7 @@ public class TellMe extends TelegramLongPollingBot {
         sendButtonMessage(chatId, AnswerMessageText.IN_WHICH_CATEGORY.text(), ReplyKeyboard.buttonsForPickingCategoryForViewNotes(telegramUser.getCategories()));
     }
 
-    private void sendTextMessage(Long chatId, String responseMessage, ReplyKeyboardMarkup keyboardMarkup) {
+    public void sendTextMessage(Long chatId, String responseMessage, ReplyKeyboardMarkup keyboardMarkup) {
         SendMessage sendMessage = new SendMessage();
         sendMessage.setChatId(chatId)
                 .setReplyMarkup(keyboardMarkup)
@@ -257,10 +257,6 @@ public class TellMe extends TelegramLongPollingBot {
             log.error("Message text: " + responseText + "\n" + e.getMessage(), e);
         }
     }
-
-//    public void sendNotification() {
-//        sendTextMessage(363579805L, "Маша я тебя люблю! А еще я перезапустил бота)", null);
-//    }
 
     @Override
     public String getBotUsername() {

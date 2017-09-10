@@ -4,7 +4,7 @@
     <appender name="FILE-ENGINE" class="ch.qos.logback.core.FileAppender">
         <file>logs/tellMeBot.log</file>
         <encoder>
-            <pattern>%d{yyyy-MM-dd HH:mm:ss} [%thread] %-5level %logger{35} - %msg%n</pattern>
+            <pattern>%d{yyyy-MM-dd HH:mm:ss} %-5level %logger{35} - %msg%n</pattern>
         </encoder>
     </appender>
 

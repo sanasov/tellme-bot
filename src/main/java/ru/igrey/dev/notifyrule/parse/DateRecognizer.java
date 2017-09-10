@@ -62,10 +62,22 @@ public class DateRecognizer {
         System.out.println(new DateRecognizer("23.12.2018").find());
         System.out.println(new DateRecognizer("22-12-1999").find());
         System.out.println(new DateRecognizer("19-12-23").find());
+        System.out.println(new DateRecognizer("11.01").find());
+        System.out.println(new DateRecognizer("12.02").find());
+        System.out.println(new DateRecognizer("13.03").find());
+        System.out.println(new DateRecognizer("14.04").find());
+        System.out.println(new DateRecognizer("15.05").find());
+        System.out.println(new DateRecognizer("16.06").find());
+        System.out.println(new DateRecognizer("17.08").find());
+        System.out.println(new DateRecognizer("18.09").find());
+        System.out.println(new DateRecognizer("19.10").find());
+        System.out.println(new DateRecognizer("20.11").find());
+        System.out.println(new DateRecognizer("21-12").find());
+        System.out.println(new DateRecognizer("21-12-2017").find());
     }
 
-    private String fullDatePattern(String delimeter) {
-        return "(0?[1-9]|[12][0-9]|3[01])" + delimeter + "(0?[1-9]|1[012])" + delimeter + "((20)?\\d\\d)";
+    private String fullDatePattern(String delimiter) {
+        return "(0?[1-9]|[12][0-9]|3[01])" + delimiter + "(0?[1-9]|1[012])" + delimiter + "((20)?\\d\\d)";
     }
 
     private String dayMonthPattern(String delimiter) {

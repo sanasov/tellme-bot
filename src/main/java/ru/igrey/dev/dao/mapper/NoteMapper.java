@@ -18,8 +18,8 @@ public class NoteMapper implements RowMapper {
                 LocalDateTime.parse(rs.getString("CREATE_DATE"), DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss")),
                 rs.getString("TXT"),
                 rs.getLong("CATEGORY_ID"),
-                rs.getLong("USER_ID")
-
+                rs.getLong("USER_ID"),
+                rs.getString("NOTIFY_RULE")
         );
     }
 }

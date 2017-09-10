@@ -1,6 +1,8 @@
 package ru.igrey.dev.notifyrule;
 
 import lombok.ToString;
+import org.apache.commons.lang3.StringUtils;
+import ru.igrey.dev.notifyrule.parse.NotifyRuleParser;
 
 import java.time.DayOfWeek;
 import java.time.LocalDate;
@@ -10,7 +12,7 @@ import java.util.List;
 @ToString
 public class NotifyRule {
     private LocalDate notifyDate;
-    private Long IntervalSeconds;
+    private Long intervalSeconds;
     private LocalTime time; //HH:mm
     private List<DayOfWeek> dayOfWeeks;
     private Boolean isPeriodical;
@@ -18,12 +20,24 @@ public class NotifyRule {
 
     public NotifyRule(LocalDate notifyDate, Long intervalSeconds, LocalTime time, List<DayOfWeek> dayOfWeeks, Boolean isPeriodical, RepeatPeriod period) {
         this.notifyDate = notifyDate;
-        IntervalSeconds = intervalSeconds;
+        this.intervalSeconds = intervalSeconds;
         this.time = time;
         this.dayOfWeeks = dayOfWeeks;
         this.isPeriodical = isPeriodical;
         this.period = period;
     }
+
+    public static NotifyRule buildNotifyRule(String notifyRule) {
+        if (StringUtils.isBlank(notifyRule)) {
+            return null;
+        }
+        return new NotifyRuleParser(notifyRule).parse();
+    }
+
+    public boolean isValid() {
+        return true;
+    }
+
 
     public LocalDate getNotifyDate() {
         return notifyDate;
@@ -34,11 +48,11 @@ public class NotifyRule {
     }
 
     public Long getIntervalSeconds() {
-        return IntervalSeconds;
+        return intervalSeconds;
     }
 
     public void setIntervalSeconds(Long intervalSeconds) {
-        IntervalSeconds = intervalSeconds;
+        this.intervalSeconds = intervalSeconds;
     }
 
     public LocalTime getTime() {

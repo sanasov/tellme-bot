@@ -8,7 +8,7 @@ import ru.igrey.dev.dao.repository.NoteRepository;
 import ru.igrey.dev.domain.TelegramUser;
 import ru.igrey.dev.service.TelegramUserService;
 
-import static ru.igrey.dev.constant.Delimiter.DELIMITER;
+import static ru.igrey.dev.constant.Delimiter.BUTTON_DELIMITER;
 
 @Slf4j
 public class ButtonHandlerFactory {
@@ -25,7 +25,8 @@ public class ButtonHandlerFactory {
     }
 
     public ButtonHandler create(TelegramUser telegramUser, CallbackQuery query) {
-        String buttonCommand = query.getData().split(DELIMITER)[0];
+        String buttonCommand = query.getData().split(BUTTON_DELIMITER)[0];
+        log.info("USER: " + telegramUser.toView());
         log.info("Button command: " + buttonCommand);
         switch (buttonCommand) {
             case ButtonCommandName.CREATE_CATEGORY:

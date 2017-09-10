@@ -3,8 +3,7 @@ package ru.igrey.dev.dao;
 
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.sqlite.SQLiteDataSource;
-import ru.igrey.dev.dao.repository.CategoryRepository;
-import ru.igrey.dev.dao.repository.NoteRepository;
+import ru.igrey.dev.config.BeanConfig;
 import ru.igrey.dev.dao.repository.TelegramUserRepository;
 import ru.igrey.dev.domain.Category;
 import ru.igrey.dev.domain.TelegramUser;
@@ -40,10 +39,7 @@ public class JdbcTemplateFactory {
 
 
     public static void main(String[] args) {
-        JdbcTemplate jdbcTemplate = new JdbcTemplateFactory().create2();
-        TelegramUserDao telegramUserDao = new TelegramUserDao(jdbcTemplate);
-        CategoryRepository categoryRepository = categoryRepository(jdbcTemplate);
-        TelegramUserRepository repository = new TelegramUserRepository(telegramUserDao, categoryRepository);
+        TelegramUserRepository repository = BeanConfig.telegramUserRepository();
         TelegramUser telegramUser = createTelegramUser();
         telegramUser.setLanguageCode("BB");
         repository.save(telegramUser);
@@ -72,10 +68,5 @@ public class JdbcTemplateFactory {
                 null);
     }
 
-    private static CategoryRepository categoryRepository(JdbcTemplate jdbcTemplate) {
-        CategoryDao categoryDao = new CategoryDao(jdbcTemplate);
-        NoteDao noteDao = new NoteDao(jdbcTemplate);
-        return new CategoryRepository(new NoteRepository(noteDao), categoryDao);
-    }
 
 }

@@ -8,7 +8,7 @@ import ru.igrey.dev.dao.repository.CategoryRepository;
 import ru.igrey.dev.dao.repository.NoteRepository;
 import ru.igrey.dev.domain.Category;
 
-import static ru.igrey.dev.constant.Delimiter.DELIMITER;
+import static ru.igrey.dev.constant.Delimiter.BUTTON_DELIMITER;
 
 public class DeleteNoteHandler implements ButtonHandler {
 
@@ -25,8 +25,8 @@ public class DeleteNoteHandler implements ButtonHandler {
     @Override
     public String onClick() {
         Long chatId = query.getMessage().getChatId();
-        Long categoryId = Long.valueOf(query.getData().split(DELIMITER)[1]);
-        Long noteId = Long.valueOf(query.getData().split(DELIMITER)[2]);
+        Long categoryId = Long.valueOf(query.getData().split(BUTTON_DELIMITER)[1]);
+        Long noteId = Long.valueOf(query.getData().split(BUTTON_DELIMITER)[2]);
         deleteNote(chatId, query.getMessage().getMessageId(), noteId, categoryId);
         return AnswerMessageText.NOTE_IS_DELETED.text();
     }

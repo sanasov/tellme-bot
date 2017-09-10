@@ -8,7 +8,7 @@ import ru.igrey.dev.dao.repository.CategoryRepository;
 import ru.igrey.dev.domain.TelegramUser;
 import ru.igrey.dev.service.TelegramUserService;
 
-import static ru.igrey.dev.constant.Delimiter.DELIMITER;
+import static ru.igrey.dev.constant.Delimiter.BUTTON_DELIMITER;
 
 public class DeleteCategoryHandler implements ButtonHandler {
 
@@ -26,7 +26,7 @@ public class DeleteCategoryHandler implements ButtonHandler {
 
     @Override
     public String onClick() {
-        Long categoryId = Long.valueOf(query.getData().split(DELIMITER)[1]);
+        Long categoryId = Long.valueOf(query.getData().split(BUTTON_DELIMITER)[1]);
         categoryRepository.deleteCategoryById(categoryId);
         backToViewCategories();
         return AnswerMessageText.CATEGORY_IS_DELETED.text() + "\n" + AnswerMessageText.BACK_TO_CATEGORY_VIEW.text();

@@ -8,7 +8,7 @@ import ru.igrey.dev.dao.repository.CategoryRepository;
 import ru.igrey.dev.dao.repository.NoteRepository;
 import ru.igrey.dev.domain.Category;
 
-import static ru.igrey.dev.constant.Delimiter.DELIMITER;
+import static ru.igrey.dev.constant.Delimiter.BUTTON_DELIMITER;
 
 public class PickRemoveModeHandler implements ButtonHandler {
 
@@ -25,7 +25,7 @@ public class PickRemoveModeHandler implements ButtonHandler {
 
     @Override
     public String onClick() {
-        Long categoryId = Long.valueOf(query.getData().split(DELIMITER)[1]);
+        Long categoryId = Long.valueOf(query.getData().split(BUTTON_DELIMITER)[1]);
         Long chatId = query.getMessage().getChatId();
         Category category = categoryRepository.findCategoryById(categoryId);
         if (category == null) {

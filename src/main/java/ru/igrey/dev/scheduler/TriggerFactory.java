@@ -11,7 +11,7 @@ public class TriggerFactory {
                 .withIdentity("repeatTrigger", GroupName.NOTIFICATION_GROUP)
                 .withSchedule(
                         SimpleScheduleBuilder.simpleSchedule()
-                                .withIntervalInSeconds(60).withRepeatCount(0))
+                                .withIntervalInSeconds(30).repeatForever())
                 .build();
     }
 

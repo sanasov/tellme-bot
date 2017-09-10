@@ -1,5 +1,6 @@
 package ru.igrey.dev.domain;
 
+import ru.igrey.dev.constant.Delimiter;
 import ru.igrey.dev.entity.NoteEntity;
 
 import java.time.LocalDateTime;
@@ -10,13 +11,15 @@ public class Note {
     private Long userId;
     private LocalDateTime createDate;
     private String text;
+    private String notifyRule;
 
-    public Note(Long id, Long categoryId, Long userId, LocalDateTime createDate, String text) {
+    public Note(Long id, Long categoryId, Long userId, LocalDateTime createDate, String text, String notifyRule) {
         this.id = id;
         this.categoryId = categoryId;
         this.userId = userId;
         this.createDate = createDate;
         this.text = text;
+        this.notifyRule = notifyRule;
     }
 
     public Note(NoteEntity entity) {
@@ -24,15 +27,20 @@ public class Note {
         this.userId = entity.getUserId();
         this.createDate = entity.getCreateDate();
         this.text = entity.getText();
+        this.notifyRule = entity.getNotifyRule();
     }
 
     public static Note createNewNote(String text, Long categoryId, Long userId) {
-        return new Note(null, categoryId, userId, null, text);
+        String[] notifyRuleAndNoteName = text.split(Delimiter.NOTIFY_DELIMITER);
+        if (notifyRuleAndNoteName.length == 2) {
+            return new Note(null, categoryId, userId, null, notifyRuleAndNoteName[1].trim(), notifyRuleAndNoteName[0].trim());
+        }
+        return new Note(null, categoryId, userId, null, text, null);
     }
 
 
     public NoteEntity toEntity() {
-        return new NoteEntity(id, createDate, text, categoryId, userId);
+        return new NoteEntity(id, createDate, text, categoryId, userId, notifyRule);
     }
 
     public Long getId() {
@@ -73,5 +81,13 @@ public class Note {
 
     public void setCategoryId(Long categoryId) {
         this.categoryId = categoryId;
+    }
+
+    public String getNotifyRule() {
+        return notifyRule;
+    }
+
+    public void setNotifyRule(String notifyRule) {
+        this.notifyRule = notifyRule;
     }
 }

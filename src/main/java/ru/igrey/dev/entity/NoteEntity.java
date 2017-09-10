@@ -1,7 +1,12 @@
 package ru.igrey.dev.entity;
 
+import lombok.EqualsAndHashCode;
+import lombok.ToString;
+
 import java.time.LocalDateTime;
 
+@EqualsAndHashCode
+@ToString
 public class NoteEntity {
 
     private Long id;
@@ -9,13 +14,15 @@ public class NoteEntity {
     private String text;
     private Long categoryId;
     private Long userId;
+    private String notifyRule;
 
-    public NoteEntity(Long id, LocalDateTime createDate, String text, Long categoryId, Long userId) {
+    public NoteEntity(Long id, LocalDateTime createDate, String text, Long categoryId, Long userId, String notifyRule) {
         this.id = id;
         this.createDate = createDate;
         this.text = text;
         this.categoryId = categoryId;
         this.userId = userId;
+        this.notifyRule = notifyRule;
     }
 
     public NoteEntity() {
@@ -59,5 +66,13 @@ public class NoteEntity {
 
     public void setUserId(Long userId) {
         this.userId = userId;
+    }
+
+    public String getNotifyRule() {
+        return notifyRule;
+    }
+
+    public void setNotifyRule(String notifyRule) {
+        this.notifyRule = notifyRule;
     }
 }

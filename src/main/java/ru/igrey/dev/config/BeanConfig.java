@@ -8,12 +8,10 @@ import org.springframework.jdbc.core.JdbcTemplate;
 import org.telegram.telegrambots.ApiContext;
 import org.telegram.telegrambots.bots.DefaultBotOptions;
 import ru.igrey.dev.TellMe;
-import ru.igrey.dev.dao.CategoryDao;
-import ru.igrey.dev.dao.JdbcTemplateFactory;
-import ru.igrey.dev.dao.NoteDao;
-import ru.igrey.dev.dao.TelegramUserDao;
+import ru.igrey.dev.dao.*;
 import ru.igrey.dev.dao.repository.CategoryRepository;
 import ru.igrey.dev.dao.repository.NoteRepository;
+import ru.igrey.dev.dao.repository.NotificationRepository;
 import ru.igrey.dev.dao.repository.TelegramUserRepository;
 import ru.igrey.dev.handler.button.ButtonHandlerFactory;
 import ru.igrey.dev.service.TelegramUserService;
@@ -26,6 +24,7 @@ public class BeanConfig {
     private static TelegramUserRepository telegramUserRepository;
     private static CategoryRepository categoryRepository;
     private static NoteRepository noteRepository;
+    private static NotificationRepository notificationRepository;
     private static TelegramUserDao telegramUserDao;
     private static JdbcTemplate jdbcTemplate;
     private static Scheduler scheduler;
@@ -66,17 +65,23 @@ public class BeanConfig {
     public static CategoryRepository categoryRepository() {
         if (categoryRepository == null) {
             CategoryDao categoryDao = new CategoryDao(jdbcTemplate());
-            NoteDao noteDao = new NoteDao(jdbcTemplate());
-            categoryRepository = new CategoryRepository(new NoteRepository(noteDao), categoryDao);
+            categoryRepository = new CategoryRepository(noteRepository(), categoryDao);
         }
         return categoryRepository;
     }
 
     public static NoteRepository noteRepository() {
         if (noteRepository == null) {
-            noteRepository = new NoteRepository(new NoteDao(jdbcTemplate()));
+            noteRepository = new NoteRepository(new NoteDao(jdbcTemplate()), notificationRepository());
         }
         return noteRepository;
+    }
+
+    public static NotificationRepository notificationRepository() {
+        if (notificationRepository == null) {
+            notificationRepository = new NotificationRepository(new NotificationDao(jdbcTemplate()));
+        }
+        return notificationRepository;
     }
 
     public static TelegramUserDao userDao() {
