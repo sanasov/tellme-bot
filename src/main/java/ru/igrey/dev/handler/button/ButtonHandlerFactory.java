@@ -43,8 +43,21 @@ public class ButtonHandlerFactory {
                 return new BackToViewCategoriesHandler(query, telegramUserService);
             case ButtonCommandName.PICK_CATEGORY_TO_VIEW_NOTES:
                 return new PickCategoryToViewNotesHandler(query, categoryRepository);
+            case ButtonCommandName.PICK_CATEGORY_TO_VIEW_DOCUMENTS:
+            case ButtonCommandName.PICK_CATEGORY_TO_VIEW_PHOTOS:
+            case ButtonCommandName.PICK_CATEGORY_TO_VIEW_VOICES:
+            case ButtonCommandName.PICK_CATEGORY_TO_VIEW_VIDEOS:
+                return new PickCategoryToViewFileHandler(query, categoryRepository);
             case ButtonCommandName.REMOVE_MODE:
                 return new PickRemoveModeHandler(query, noteRepository, categoryRepository);
+            case ButtonCommandName.PICK_DOCUMENT:
+                return new PickDocumentHandler(query, noteRepository);
+            case ButtonCommandName.PICK_PHOTO:
+                return new PickPhotoHandler(query, noteRepository);
+            case ButtonCommandName.PICK_VIDEO:
+                return new PickVideoHandler(query, noteRepository);
+            case ButtonCommandName.PICK_VOICE:
+                return new PickVoiceHandler(query, noteRepository);
         }
         throw new RuntimeException("There is no button handler for command: " + buttonCommand);
     }

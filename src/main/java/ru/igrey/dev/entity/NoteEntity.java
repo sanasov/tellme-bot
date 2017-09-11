@@ -15,17 +15,18 @@ public class NoteEntity {
     private Long categoryId;
     private Long userId;
     private String notifyRule;
+    private String fileName;
+    private String caption;
 
-    public NoteEntity(Long id, LocalDateTime createDate, String text, Long categoryId, Long userId, String notifyRule) {
+    public NoteEntity(Long id, LocalDateTime createDate, String text, Long categoryId, Long userId, String notifyRule, String fileName, String caption) {
         this.id = id;
         this.createDate = createDate;
         this.text = text;
         this.categoryId = categoryId;
         this.userId = userId;
         this.notifyRule = notifyRule;
-    }
-
-    public NoteEntity() {
+        this.fileName = fileName;
+        this.caption = caption;
     }
 
     public Long getId() {
@@ -74,5 +75,21 @@ public class NoteEntity {
 
     public void setNotifyRule(String notifyRule) {
         this.notifyRule = notifyRule;
+    }
+
+    public String getFileName() {
+        return fileName;
+    }
+
+    public void setFileName(String fileName) {
+        this.fileName = fileName;
+    }
+
+    public String getCaption() {
+        return caption;
+    }
+
+    public void setCaption(String caption) {
+        this.caption = caption;
     }
 }

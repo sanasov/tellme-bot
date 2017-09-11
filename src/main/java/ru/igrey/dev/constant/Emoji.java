@@ -172,7 +172,11 @@ public enum Emoji {
     LEFT_ARROW('\u2B05', null),
     WATCH('\u23F0', null),
     BELL('\uD83D', '\uDD14'),
-    STAR('\u2B50', null);
+    STAR('\u2B50', null),
+    PICTURE('\uD83C', '\uDF07'),
+    MICROPHONE('\uD83C', '\uDF99'),
+    DOCUMENT('\uD83D', '\uDDC2'),
+    VIDEO('\uD83C', '\uDFAC');
 
     Character firstChar;
     Character secondChar;
@@ -212,6 +216,10 @@ public enum Emoji {
         System.out.println(WATCH);
         System.out.println(BELL);
         System.out.println(STAR);
+        System.out.println(PICTURE);
+        System.out.println(MICROPHONE);
+        System.out.println(DOCUMENT);
+        System.out.println(VIDEO);
     }
 }
 

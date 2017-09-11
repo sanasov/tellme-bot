@@ -20,14 +20,18 @@ public class Note {
     private LocalDateTime createDate;
     private String text;
     private String notifyRule;
+    private String fileName;
+    private String caption;
 
-    public Note(Long id, Long categoryId, Long userId, LocalDateTime createDate, String text, String notifyRule) {
+    public Note(Long id, Long categoryId, Long userId, LocalDateTime createDate, String text, String notifyRule, String fileName, String capture) {
         this.id = id;
         this.categoryId = categoryId;
         this.userId = userId;
         this.createDate = createDate;
         this.text = text;
         this.notifyRule = notifyRule;
+        this.fileName = fileName;
+        this.caption = capture;
     }
 
     public Note(NoteEntity entity) {
@@ -36,14 +40,16 @@ public class Note {
         this.createDate = entity.getCreateDate();
         this.text = entity.getText();
         this.notifyRule = entity.getNotifyRule();
+        this.fileName = entity.getFileName();
+        this.caption = entity.getCaption();
     }
 
-    public static Note createNewNote(String text, Long categoryId, Long userId) {
+    public static Note createNewNote(String text, String fileName, String capture, Long categoryId, Long userId) {
         String[] notifyRuleAndNoteName = text.split(Delimiter.NOTIFY_DELIMITER);
         if (notifyRuleAndNoteName.length == 2) {
-            return new Note(null, categoryId, userId, null, notifyRuleAndNoteName[1].trim(), notifyRuleAndNoteName[0].trim());
+            return new Note(null, categoryId, userId, null, notifyRuleAndNoteName[1].trim(), notifyRuleAndNoteName[0].trim(), fileName, capture);
         }
-        return new Note(null, categoryId, userId, null, text, null);
+        return new Note(null, categoryId, userId, null, text, null, fileName, capture);
     }
 
     public List<Notification> createNotifications() {
@@ -62,7 +68,7 @@ public class Note {
 
 
     public NoteEntity toEntity() {
-        return new NoteEntity(id, createDate, text, categoryId, userId, notifyRule);
+        return new NoteEntity(id, createDate, text, categoryId, userId, notifyRule, fileName, caption);
     }
 
     public Long getId() {
@@ -113,6 +119,22 @@ public class Note {
         this.notifyRule = notifyRule;
     }
 
+    public String getFileName() {
+        return fileName;
+    }
+
+    public void setFileName(String fileName) {
+        this.fileName = fileName;
+    }
+
+    public String getCaption() {
+        return caption;
+    }
+
+    public void setCaption(String caption) {
+        this.caption = caption;
+    }
+
     public String toView() {
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd.MM.YYYY HH:mm");
         List<Notification> notifications = createNotifications();
@@ -131,6 +153,14 @@ public class Note {
                 + htmlSafe(text)
                 + " "
                 + notificationDates;
+    }
+
+    public String toFileView() {
+        if (StringUtils.isNotBlank(caption)) {
+            return caption;
+        } else {
+            return fileName;
+        }
     }
 
     public String toInlineFixedWidthCode(String text) {

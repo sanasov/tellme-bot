@@ -80,6 +80,8 @@ public class TellMe extends TelegramLongPollingBot {
         noteRepository.saveNote(
                 Note.createNewNote(
                         message.getPhoto().get(0).getFileId(),
+                        message.getPhoto().get(0).getFilePath(),
+                        message.getCaption(),
                         photoCategory.getId(),
                         chatId)
         );
@@ -96,6 +98,8 @@ public class TellMe extends TelegramLongPollingBot {
         noteRepository.saveNote(
                 Note.createNewNote(
                         message.getVoice().getFileId(),
+                        message.getVoice().getMimeType() + ", " + message.getVoice().getDuration() + ", " + message.getVoice().getFileSize(),
+                        message.getCaption(),
                         photoCategory.getId(),
                         chatId)
         );
@@ -112,6 +116,8 @@ public class TellMe extends TelegramLongPollingBot {
         noteRepository.saveNote(
                 Note.createNewNote(
                         message.getVideo().getFileId(),
+                        message.getVideo().getMimeType() + ", " + message.getVideo().getDuration() + ", " + message.getVideo().getThumb(),
+                        message.getCaption(),
                         videoCategory.getId(),
                         chatId)
         );
@@ -128,6 +134,8 @@ public class TellMe extends TelegramLongPollingBot {
         noteRepository.saveNote(
                 Note.createNewNote(
                         message.getDocument().getFileId(),
+                        message.getDocument().getFileName(),
+                        message.getCaption(),
                         photoCategory.getId(),
                         chatId)
         );
@@ -180,7 +188,7 @@ public class TellMe extends TelegramLongPollingBot {
                     ReplyKeyboard.buttonsForPickingCategoryForViewNotes(categoryRepository.findCategoryByUserId(chatId))
             );
         } else {// create new note
-            Note newNote = noteRepository.saveNote(Note.createNewNote(incomingMessageText, null, chatId));
+            Note newNote = noteRepository.saveNote(Note.createNewNote(incomingMessageText, null, null, null, chatId));
             sendButtonMessage(chatId, AnswerMessageText.PICK_CATEGORY_FOR_YOUR_NOTE.text(), ReplyKeyboard.buttonsForPickingCategoryAfterCreateNote(telegramUser.getCategories(), newNote.getId()));
         }
 

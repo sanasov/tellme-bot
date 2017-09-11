@@ -1,5 +1,6 @@
 package ru.igrey.dev;
 
+import org.apache.commons.lang3.StringUtils;
 import org.telegram.telegrambots.api.objects.replykeyboard.InlineKeyboardMarkup;
 import org.telegram.telegrambots.api.objects.replykeyboard.buttons.InlineKeyboardButton;
 import ru.igrey.dev.constant.ButtonCommandName;
@@ -40,9 +41,43 @@ public class ReplyKeyboard {
         List<List<InlineKeyboardButton>> keyboard = new ArrayList<>();
         for (Category category : categories) {
             List<InlineKeyboardButton> buttonRow = new ArrayList<>();
-            buttonRow.add(createInlineKeyboardButton(ButtonCommandName.PICK_CATEGORY_TO_VIEW_NOTES + BUTTON_DELIMITER + category.getId().toString(), Emoji.FOLDER + " " + category.getTitle()));
+            if (category.getTitle().equals("Photo")) {
+                buttonRow.add(createInlineKeyboardButton(ButtonCommandName.PICK_CATEGORY_TO_VIEW_PHOTOS + BUTTON_DELIMITER + category.getId().toString(), Emoji.PICTURE + " " + category.getTitle()));
+            } else if (category.getTitle().equals("Video")) {
+                buttonRow.add(createInlineKeyboardButton(ButtonCommandName.PICK_CATEGORY_TO_VIEW_VIDEOS + BUTTON_DELIMITER + category.getId().toString(), Emoji.VIDEO + " " + category.getTitle()));
+            } else if (category.getTitle().equals("File document")) {
+                buttonRow.add(createInlineKeyboardButton(ButtonCommandName.PICK_CATEGORY_TO_VIEW_DOCUMENTS + BUTTON_DELIMITER + category.getId().toString(), Emoji.DOCUMENT + " " + category.getTitle()));
+            } else if (category.getTitle().equals("Voice")) {
+                buttonRow.add(createInlineKeyboardButton(ButtonCommandName.PICK_CATEGORY_TO_VIEW_VOICES + BUTTON_DELIMITER + category.getId().toString(), Emoji.MICROPHONE + " " + category.getTitle()));
+            } else {
+                buttonRow.add(createInlineKeyboardButton(ButtonCommandName.PICK_CATEGORY_TO_VIEW_NOTES + BUTTON_DELIMITER + category.getId().toString(), Emoji.FOLDER + " " + category.getTitle()));
+            }
             keyboard.add(buttonRow);
         }
+        markup.setKeyboard(keyboard);
+        return markup;
+    }
+
+    public static InlineKeyboardMarkup buttonsForPickingFileForView(Category category) {
+        InlineKeyboardMarkup markup = new InlineKeyboardMarkup();
+        List<List<InlineKeyboardButton>> keyboard = new ArrayList<>();
+        for (Note note : category.getNotes()) {
+            List<InlineKeyboardButton> buttonRow = new ArrayList<>();
+            if (category.getTitle().equals("Photo")) {
+                buttonRow.add(createInlineKeyboardButton(ButtonCommandName.PICK_PHOTO + BUTTON_DELIMITER + category.getId().toString() + BUTTON_DELIMITER + note.getId().toString(), note.toFileView()));
+            } else if (category.getTitle().equals("Video")) {
+                buttonRow.add(createInlineKeyboardButton(ButtonCommandName.PICK_VIDEO + BUTTON_DELIMITER + category.getId().toString() + BUTTON_DELIMITER + note.getId().toString(), note.toFileView()));
+            } else if (category.getTitle().equals("File document")) {
+                buttonRow.add(createInlineKeyboardButton(ButtonCommandName.PICK_DOCUMENT + BUTTON_DELIMITER + category.getId().toString() + BUTTON_DELIMITER + note.getId().toString(), note.toFileView()));
+            } else {
+                buttonRow.add(createInlineKeyboardButton(ButtonCommandName.PICK_VOICE + BUTTON_DELIMITER + category.getId().toString() + BUTTON_DELIMITER + note.getId().toString(), note.toFileView()));
+            }
+            keyboard.add(buttonRow);
+        }
+        List<InlineKeyboardButton> buttonRow = new ArrayList<>();
+        buttonRow.add(createInlineKeyboardButton(ButtonCommandName.BACK_TO_CATEGORY_VIEW, ButtonTitle.BACK_TO_CATEGORY_VIEW.text()));
+        buttonRow.add(createInlineKeyboardButton(ButtonCommandName.REMOVE_MODE + BUTTON_DELIMITER + category.getId(), Emoji.TRASH + " " + ButtonTitle.REMOVE_MODE.text()));
+        keyboard.add(buttonRow);
         markup.setKeyboard(keyboard);
         return markup;
     }
@@ -57,14 +92,14 @@ public class ReplyKeyboard {
         keyboard.add(firstButtonRow);
         for (Note note : notes) {
             List<InlineKeyboardButton> buttonRow = new ArrayList<>();
-            buttonRow.add(createInlineKeyboardButton(ButtonCommandName.NOTE_DELETE + BUTTON_DELIMITER + categoryId + BUTTON_DELIMITER + note.getId().toString(), Emoji.CROSS_MARK + " \"" + note.getText() + "\""));
+            String removeView = StringUtils.isNotBlank(note.toFileView()) ? note.toFileView() : note.toView();
+            buttonRow.add(createInlineKeyboardButton(ButtonCommandName.NOTE_DELETE + BUTTON_DELIMITER + categoryId + BUTTON_DELIMITER + note.getId().toString(), Emoji.CROSS_MARK + " \"" + removeView + "\""));
             keyboard.add(buttonRow);
         }
         keyboard.add(lastButtonRow);
         markup.setKeyboard(keyboard);
         return markup;
     }
-
 
     public static InlineKeyboardMarkup buttonBackToCategoryView(Long categoryId) {
         InlineKeyboardMarkup markup = new InlineKeyboardMarkup();
@@ -76,7 +111,6 @@ public class ReplyKeyboard {
         markup.setKeyboard(keyboard);
         return markup;
     }
-
 
     private static InlineKeyboardButton createInlineKeyboardButton(String buttonId, String label) {
         InlineKeyboardButton btn = new InlineKeyboardButton();
