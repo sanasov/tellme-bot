@@ -81,6 +81,6 @@ public class DateRecognizer {
     }
 
     private String dayMonthPattern(String delimiter) {
-        return "(0?[1-9]|[12][0-9]|3[01])" + delimiter + "(0?[1-9]|1[012])";
+        return "(0?[1-9]|[12][0-9]|3[01])" + delimiter + "(1[012]|0?[1-9])";
     }
 }
