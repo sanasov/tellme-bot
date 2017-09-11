@@ -33,6 +33,8 @@ public class ButtonHandlerFactory {
                 return new CreateCategoryHandler(query, telegramUserService, telegramUser);
             case ButtonCommandName.NOTE_DELETE:
                 return new DeleteNoteHandler(query, noteRepository, categoryRepository);
+            case ButtonCommandName.REMOVE_FILE:
+                return new DeleteFileHandler(query, noteRepository);
             case ButtonCommandName.PICK_CATEGORY_FOR_ADDED_NOTE:
                 return new PickCategoryForNewNoteHandler(query, noteRepository, categoryRepository);
             case ButtonCommandName.BACK_TO_CATEGORY_VIEW:
@@ -42,7 +44,8 @@ public class ButtonHandlerFactory {
             case ButtonCommandName.CANCEL:
                 return new BackToViewCategoriesHandler(query, telegramUserService);
             case ButtonCommandName.PICK_CATEGORY_TO_VIEW_NOTES:
-                return new PickCategoryToViewNotesHandler(query, categoryRepository);
+            case ButtonCommandName.VIEW_CATEGORY:
+                return new PickCategoryToViewFilesHandler(query, categoryRepository);
             case ButtonCommandName.PICK_CATEGORY_TO_VIEW_DOCUMENTS:
             case ButtonCommandName.PICK_CATEGORY_TO_VIEW_PHOTOS:
             case ButtonCommandName.PICK_CATEGORY_TO_VIEW_VOICES:

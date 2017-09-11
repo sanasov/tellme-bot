@@ -32,7 +32,7 @@ public class PickVideoHandler implements ButtonHandler {
         video.setVideo(note.getText());
         video.setCaption(note.getCaption());
         video.setChatId(chatId);
-        video.setReplyMarkup(ReplyKeyboard.buttonBackToCategoryView(categoryId));
+        video.setReplyMarkup(ReplyKeyboard.buttonViewFileCategoryDeleteFile(categoryId, noteId));
         try {
             BeanConfig.tellMeBot().sendVideo(video);
         } catch (TelegramApiException e) {

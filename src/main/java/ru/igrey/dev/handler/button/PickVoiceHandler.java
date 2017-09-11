@@ -32,7 +32,7 @@ public class PickVoiceHandler implements ButtonHandler {
         voice.setVoice(note.getText());
         voice.setCaption(note.getCaption());
         voice.setChatId(chatId);
-        voice.setReplyMarkup(ReplyKeyboard.buttonBackToCategoryView(categoryId));
+        voice.setReplyMarkup(ReplyKeyboard.buttonViewFileCategoryDeleteFile(categoryId, noteId));
         try {
             BeanConfig.tellMeBot().sendVoice(voice);
         } catch (TelegramApiException e) {

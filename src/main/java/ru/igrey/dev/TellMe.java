@@ -80,7 +80,7 @@ public class TellMe extends TelegramLongPollingBot {
         noteRepository.saveNote(
                 Note.createNewNote(
                         message.getPhoto().get(0).getFileId(),
-                        message.getPhoto().get(0).getFilePath(),
+                        message.getPhoto().get(0).hasFilePath() ? message.getPhoto().get(0).getFilePath() : "Photo" + message.getPhoto().get(0).getFileSize(),
                         message.getCaption(),
                         photoCategory.getId(),
                         chatId)
@@ -243,7 +243,7 @@ public class TellMe extends TelegramLongPollingBot {
         }
     }
 
-    private void sendButtonMessage(Long chatId, String text, InlineKeyboardMarkup markup) {
+    public void sendButtonMessage(Long chatId, String text, InlineKeyboardMarkup markup) {
         SendMessage sendMessage = new SendMessage();
         sendMessage.enableHtml(true);
         sendMessage.enableMarkdown(false);

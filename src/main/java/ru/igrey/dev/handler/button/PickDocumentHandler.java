@@ -32,7 +32,7 @@ public class PickDocumentHandler implements ButtonHandler {
         document.setDocument(note.getText());
         document.setCaption(note.getCaption());
         document.setChatId(chatId);
-        document.setReplyMarkup(ReplyKeyboard.buttonBackToCategoryView(categoryId));
+        document.setReplyMarkup(ReplyKeyboard.buttonViewFileCategoryDeleteFile(categoryId, noteId));
         try {
             BeanConfig.tellMeBot().sendDocument(document);
         } catch (TelegramApiException e) {

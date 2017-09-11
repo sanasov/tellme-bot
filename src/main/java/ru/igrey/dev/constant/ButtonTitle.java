@@ -4,6 +4,14 @@ import ru.igrey.dev.Localization;
 
 public enum ButtonTitle {
 
+    REMOVE_FILE(
+            "Удалить",
+            "Delete"),
+
+    VIEW_CATEGORY(
+            "Просмотр категории",
+            "View category"),
+
     REMOVE_MODE(
             "Процесс удаления",
             "Delete mode"),

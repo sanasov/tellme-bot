@@ -31,7 +31,7 @@ public class PickPhotoHandler implements ButtonHandler {
         photo.setPhoto(note.getText());
         photo.setCaption(note.getCaption());
         photo.setChatId(chatId);
-        photo.setReplyMarkup(ReplyKeyboard.buttonBackToCategoryView(categoryId));
+        photo.setReplyMarkup(ReplyKeyboard.buttonViewFileCategoryDeleteFile(categoryId, noteId));
         try {
             BeanConfig.tellMeBot().sendPhoto(photo);
         } catch (TelegramApiException e) {

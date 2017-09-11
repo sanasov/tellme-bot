@@ -3,7 +3,6 @@ package ru.igrey.dev.constant;
 public class ButtonCommandName {
     public final static String PICK_CATEGORY_FOR_ADDED_NOTE = "PICK_CATEGORY_FOR_ADDED_NOTE";
 
-
     public final static String CATEGORY_DELETE = "CATEGORY_DELETE";
     public final static String NOTE_DELETE = "NOTE_DELETE";
     public final static String BACK_TO_CATEGORY_VIEW = "BACK_TO_CATEGORY_VIEW";
@@ -21,4 +20,7 @@ public class ButtonCommandName {
     public final static String PICK_DOCUMENT = "PICK_DOCUMENT";
     public final static String PICK_VIDEO = "PICK_VIDEO";
     public final static String PICK_VOICE = "PICK_VOICE";
+
+    public final static String REMOVE_FILE = "REMOVE_FILE";
+    public final static String VIEW_CATEGORY = "VIEW_CATEGORY";
 }

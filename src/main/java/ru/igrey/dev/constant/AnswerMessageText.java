@@ -32,6 +32,9 @@ public enum AnswerMessageText {
     NOTE_IS_DELETED(
             "Запись удалена",
             "Note deleted"),
+    FILE_IS_DELETED(
+            "Файл удален",
+            "File deleted"),
     CATEGORY_IS_DELETED(
             "Категория удалена",
             "Category deleted"),

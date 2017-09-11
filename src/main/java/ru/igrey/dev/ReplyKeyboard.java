@@ -11,6 +11,7 @@ import ru.igrey.dev.domain.Note;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import static ru.igrey.dev.constant.Delimiter.BUTTON_DELIMITER;
 
@@ -23,8 +24,13 @@ public class ReplyKeyboard {
     public static InlineKeyboardMarkup buttonsForPickingCategoryAfterCreateNote(List<Category> categories, Long noteId) {
         InlineKeyboardMarkup markup = new InlineKeyboardMarkup();
         List<List<InlineKeyboardButton>> keyboard = new ArrayList<>();
-
-        for (Category category : categories) {
+        List<Category> categoriesWithoutFiles = categories.stream()
+                .filter(category -> !category.getTitle().equals("Video"))
+                .filter(category -> !category.getTitle().equals("Photo"))
+                .filter(category -> !category.getTitle().equals("Voice"))
+                .filter(category -> !category.getTitle().equals("File document"))
+                .collect(Collectors.toList());
+        for (Category category : categoriesWithoutFiles) {
             List<InlineKeyboardButton> buttonRow = new ArrayList<>();
             buttonRow.add(createInlineKeyboardButton(ButtonCommandName.PICK_CATEGORY_FOR_ADDED_NOTE + BUTTON_DELIMITER + category.getId() + BUTTON_DELIMITER + noteId, Emoji.FOLDER + " " + category.getTitle()));
             keyboard.add(buttonRow);
@@ -107,6 +113,17 @@ public class ReplyKeyboard {
         List<InlineKeyboardButton> buttonRow = new ArrayList<>();
         buttonRow.add(createInlineKeyboardButton(ButtonCommandName.BACK_TO_CATEGORY_VIEW, ButtonTitle.BACK_TO_CATEGORY_VIEW.text()));
         buttonRow.add(createInlineKeyboardButton(ButtonCommandName.REMOVE_MODE + BUTTON_DELIMITER + categoryId, Emoji.TRASH + " " + ButtonTitle.REMOVE_MODE.text()));
+        keyboard.add(buttonRow);
+        markup.setKeyboard(keyboard);
+        return markup;
+    }
+
+    public static InlineKeyboardMarkup buttonViewFileCategoryDeleteFile(Long categoryId, Long noteId) {
+        InlineKeyboardMarkup markup = new InlineKeyboardMarkup();
+        List<List<InlineKeyboardButton>> keyboard = new ArrayList<>();
+        List<InlineKeyboardButton> buttonRow = new ArrayList<>();
+        buttonRow.add(createInlineKeyboardButton(ButtonCommandName.VIEW_CATEGORY + BUTTON_DELIMITER + categoryId, ButtonTitle.VIEW_CATEGORY.text()));
+        buttonRow.add(createInlineKeyboardButton(ButtonCommandName.REMOVE_FILE + BUTTON_DELIMITER + noteId, Emoji.TRASH + " " + ButtonTitle.REMOVE_FILE.text()));
         keyboard.add(buttonRow);
         markup.setKeyboard(keyboard);
         return markup;
