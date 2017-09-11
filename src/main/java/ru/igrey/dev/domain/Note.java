@@ -49,9 +49,10 @@ public class Note {
     public List<Notification> createNotifications() {
         NotifyRule rule = NotifyRule.buildNotifyRule(this.notifyRule);
         if (rule == null || rule.getPeriodical()) {
-            return null;
+            return new ArrayList<>();
         }
-        return rule.getNotifyDates().stream()
+        return Optional.ofNullable(rule.getNotifyDates()).orElse(new ArrayList<>())
+                .stream()
                 .map(notificationDate -> new Notification(this.text,
                         LocalDateTime.of(notificationDate, rule.getTime()),
                         this.userId,

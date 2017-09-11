@@ -30,6 +30,8 @@ import ru.igrey.dev.scheduler.JobFactory;
 import ru.igrey.dev.scheduler.TriggerFactory;
 import ru.igrey.dev.service.TelegramUserService;
 
+import java.util.Arrays;
+
 /**
  * Created by sanasov on 01.04.2017.
  */
@@ -155,6 +157,9 @@ public class TellMe extends TelegramLongPollingBot {
         if (incomingMessageText.equals(KeyboardCommand.COMMAND_START)) {
             sendInstruction(chatId);
             sendTextMessage(chatId, AnswerMessageText.ADD_NOTE_AND_PICK_CATEGORY.text(), null);
+            if (telegramUser.getCategories().isEmpty()) {
+                telegramUser.setCategories(Arrays.asList(categoryRepository.createCategoryIfNotExist(chatId, "Common")));
+            }
             onShowCategories(telegramUser, chatId);
         } else if (incomingMessageText.equals(KeyboardCommand.HELP)) {
             sendTextMessage(chatId, AnswerMessageText.ADD_NOTE_AND_PICK_CATEGORY.text(), null);
