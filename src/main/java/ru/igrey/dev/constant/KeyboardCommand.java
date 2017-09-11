@@ -5,5 +5,6 @@ package ru.igrey.dev.constant;
  */
 public class KeyboardCommand {
     public static final String HELP = "/help";
+    public static final String RATE = "/rate";
     public static final String COMMAND_START = "/start";
 }

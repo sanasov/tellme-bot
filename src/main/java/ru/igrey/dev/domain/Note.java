@@ -1,9 +1,17 @@
 package ru.igrey.dev.domain;
 
+import org.apache.commons.lang3.StringUtils;
 import ru.igrey.dev.constant.Delimiter;
+import ru.igrey.dev.constant.Emoji;
 import ru.igrey.dev.entity.NoteEntity;
+import ru.igrey.dev.notifyrule.NotifyRule;
 
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Optional;
+import java.util.stream.Collectors;
 
 public class Note {
     private Long id;
@@ -36,6 +44,19 @@ public class Note {
             return new Note(null, categoryId, userId, null, notifyRuleAndNoteName[1].trim(), notifyRuleAndNoteName[0].trim());
         }
         return new Note(null, categoryId, userId, null, text, null);
+    }
+
+    public List<Notification> createNotifications() {
+        NotifyRule rule = NotifyRule.buildNotifyRule(this.notifyRule);
+        if (rule == null || rule.getPeriodical()) {
+            return null;
+        }
+        return rule.getNotifyDates().stream()
+                .map(notificationDate -> new Notification(this.text,
+                        LocalDateTime.of(notificationDate, rule.getTime()),
+                        this.userId,
+                        this.id))
+                .collect(Collectors.toList());
     }
 
 
@@ -89,5 +110,37 @@ public class Note {
 
     public void setNotifyRule(String notifyRule) {
         this.notifyRule = notifyRule;
+    }
+
+    public String toView() {
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd.MM.YYYY HH:mm");
+        List<Notification> notifications = createNotifications();
+        String notificationDates = Optional.ofNullable(notifications).orElse(new ArrayList<>())
+                .stream()
+                .filter(notification -> notification.getNotifyDate().isAfter(LocalDateTime.now()))
+                .map(notification -> notification.getNotifyDate().format(formatter))
+                .reduce((total, curr) -> total + ", " + curr)
+                .orElse(notifications != null && notifications.size() > 0 ? "expired" : "");
+        String bell = "";
+        if (StringUtils.isNotBlank(notificationDates)) {
+            bell = Emoji.BELL.toString();
+            notificationDates = toInlineFixedWidthCode("(" + notificationDates + ")");
+        }
+        return bell
+                + htmlSafe(text)
+                + " "
+                + notificationDates;
+    }
+
+    public String toInlineFixedWidthCode(String text) {
+        return "<code>" + text + "</code>";
+    }
+
+    public String toBold(String text) {
+        return "<b>" + text + "</b>";
+    }
+
+    private String htmlSafe(String text) {
+        return text.replace(">", "&gt;").replace("<", "&lt;");
     }
 }

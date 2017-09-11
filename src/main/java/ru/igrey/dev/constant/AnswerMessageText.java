@@ -43,7 +43,12 @@ public enum AnswerMessageText {
             "Go to the notes view"),
     CATEGORY_HAS_BEEN_DELETED(
             "Категория была удалена",
-            "Category has been deleted");
+            "Category has been deleted"),
+    RATE(
+            "Буду счастлив, если вы поставите мне " + Emoji.STAR.toString(5) + "️ тут https://telegram.me/storebot?start=mindkeeperbot \n" +
+                    Emoji.SMILING_FACE_WITH_SMILING_EYES.toString() + "Большое спасибо!",
+            "I would be very grateful if you could give me " + Emoji.STAR.toString(5) + "️ here https://telegram.me/storebot?start=mindkeeperbot \n" +
+                    Emoji.SMILING_FACE_WITH_SMILING_EYES.toString() + "Thank you!");
 
     AnswerMessageText(String ru, String eng) {
         this.ru = ru;

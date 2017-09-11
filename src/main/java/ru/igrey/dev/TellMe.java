@@ -158,6 +158,8 @@ public class TellMe extends TelegramLongPollingBot {
             onShowCategories(telegramUser, chatId);
         } else if (incomingMessageText.equals(KeyboardCommand.HELP)) {
             sendTextMessage(chatId, AnswerMessageText.ADD_NOTE_AND_PICK_CATEGORY.text(), null);
+        } else if (incomingMessageText.equals(KeyboardCommand.RATE)) {
+            sendTextMessage(chatId, AnswerMessageText.RATE.text(), null);
         } else if (telegramUser.getStatus().equals(UserStatus.CREATE_CATEGORY)) {
             Category category = categoryRepository.saveCategory(Category.createNewCategory(chatId, incomingMessageText));
             telegramUser.setStatus(UserStatus.NEW);

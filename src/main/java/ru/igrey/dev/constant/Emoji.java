@@ -171,7 +171,8 @@ public enum Emoji {
     FIRE('\uD83D', '\uDD25'),
     LEFT_ARROW('\u2B05', null),
     WATCH('\u23F0', null),
-    BELL('\uD83D', '\uDD14');
+    BELL('\uD83D', '\uDD14'),
+    STAR('\u2B50', null);
 
     Character firstChar;
     Character secondChar;
@@ -210,6 +211,7 @@ public enum Emoji {
         System.out.println(TRASH);
         System.out.println(WATCH);
         System.out.println(BELL);
+        System.out.println(STAR);
     }
 }
 

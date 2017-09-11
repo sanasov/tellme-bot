@@ -23,7 +23,7 @@ public class NoteRepository {
 
     public Note saveNote(Note note) {
         if (findById(note.getId()) == null) {
-            List<Notification> notifications = Notification.createNotifications(note);
+            List<Notification> notifications = note.createNotifications();
             for (Notification notification : notifications) {
                 notificationRepository.save(notification);
             }
