@@ -11,15 +11,15 @@ import java.util.List;
 
 @ToString
 public class NotifyRule {
-    private LocalDate notifyDate;
+    private List<LocalDate> notifyDates;
     private Long intervalSeconds;
     private LocalTime time; //HH:mm
     private List<DayOfWeek> dayOfWeeks;
     private Boolean isPeriodical;
     private RepeatPeriod period;
 
-    public NotifyRule(LocalDate notifyDate, Long intervalSeconds, LocalTime time, List<DayOfWeek> dayOfWeeks, Boolean isPeriodical, RepeatPeriod period) {
-        this.notifyDate = notifyDate;
+    public NotifyRule(List<LocalDate> notifyDates, Long intervalSeconds, LocalTime time, List<DayOfWeek> dayOfWeeks, Boolean isPeriodical, RepeatPeriod period) {
+        this.notifyDates = notifyDates;
         this.intervalSeconds = intervalSeconds;
         this.time = time;
         this.dayOfWeeks = dayOfWeeks;
@@ -39,12 +39,12 @@ public class NotifyRule {
     }
 
 
-    public LocalDate getNotifyDate() {
-        return notifyDate;
+    public List<LocalDate>  getNotifyDates() {
+        return notifyDates;
     }
 
-    public void setNotifyDate(LocalDate notifyDate) {
-        this.notifyDate = notifyDate;
+    public void setNotifyDates(List<LocalDate>  notifyDates) {
+        this.notifyDates = notifyDates;
     }
 
     public Long getIntervalSeconds() {

@@ -23,7 +23,10 @@ public class NoteRepository {
 
     public Note saveNote(Note note) {
         if (findById(note.getId()) == null) {
-            notificationRepository.save(Notification.createNotification(note));
+            List<Notification> notifications = Notification.createNotifications(note);
+            for (Notification notification : notifications) {
+                notificationRepository.save(notification);
+            }
             return new Note(noteDao.insert(note.toEntity()));
         }
         return new Note(noteDao.update(note.toEntity()));

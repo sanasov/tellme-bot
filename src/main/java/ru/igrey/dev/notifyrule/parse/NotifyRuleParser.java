@@ -7,7 +7,7 @@ public class NotifyRuleParser {
     private String rule;
 
     public NotifyRuleParser(String rule) {
-        this.rule = rule;
+        this.rule = rule.toLowerCase().trim();
     }
 
     public NotifyRule parse() {

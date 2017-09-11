@@ -4,6 +4,8 @@ import ru.igrey.dev.entity.NotificationEntity;
 import ru.igrey.dev.notifyrule.NotifyRule;
 
 import java.time.LocalDateTime;
+import java.util.List;
+import java.util.stream.Collectors;
 
 public class Notification {
     private String note;
@@ -19,17 +21,17 @@ public class Notification {
     }
 
 
-    public static Notification createNotification(Note note) {
+    public static List<Notification> createNotifications(Note note) {
         NotifyRule notifyRule = NotifyRule.buildNotifyRule(note.getNotifyRule());
-        LocalDateTime notificationDate = LocalDateTime.now();
         if (notifyRule == null || notifyRule.getPeriodical()) {
             return null;
         }
-        if (notifyRule.getNotifyDate() != null) {
-            notificationDate = LocalDateTime.of(notifyRule.getNotifyDate(), notifyRule.getTime());
-        }
-
-        return new Notification(note.getText(), notificationDate, note.getUserId(), note.getId());
+        return notifyRule.getNotifyDates().stream()
+                .map(notificationDate -> new Notification(note.getText(),
+                        LocalDateTime.of(notificationDate, notifyRule.getTime()),
+                        note.getUserId(),
+                        note.getId()))
+                .collect(Collectors.toList());
     }
 
     public NotificationEntity toEntity() {

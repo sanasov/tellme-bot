@@ -44,7 +44,11 @@ public class DateRecognizer {
     private LocalDate toLocalDate(String date, String delimiter) {
         String[] dateItems = date.split(delimiter);
         if (dateItems.length == 2) {
-            return LocalDate.of(Year.now().getValue(), Integer.valueOf(dateItems[1]), Integer.valueOf(dateItems[0]));
+            LocalDate dateResult = LocalDate.of(Year.now().getValue(), Integer.valueOf(dateItems[1]), Integer.valueOf(dateItems[0]));
+            if (dateResult.isBefore(LocalDate.now())) {
+                return dateResult.plusYears(1);
+            }
+            return dateResult;
         }
         if (dateItems.length == 3) {
             String year = dateItems[2].length() == 2
