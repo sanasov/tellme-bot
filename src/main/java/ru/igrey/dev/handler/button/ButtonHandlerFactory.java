@@ -44,8 +44,9 @@ public class ButtonHandlerFactory {
             case ButtonCommandName.CANCEL:
                 return new BackToViewCategoriesHandler(query, telegramUserService);
             case ButtonCommandName.PICK_CATEGORY_TO_VIEW_NOTES:
+                return new PickCategoryToViewNotesHandler(query, categoryRepository);
             case ButtonCommandName.VIEW_CATEGORY:
-                return new PickCategoryToViewFilesHandler(query, categoryRepository);
+                return new PickViewCategoryHandler(query, categoryRepository);
             case ButtonCommandName.PICK_CATEGORY_TO_VIEW_DOCUMENTS:
             case ButtonCommandName.PICK_CATEGORY_TO_VIEW_PHOTOS:
             case ButtonCommandName.PICK_CATEGORY_TO_VIEW_VOICES:
