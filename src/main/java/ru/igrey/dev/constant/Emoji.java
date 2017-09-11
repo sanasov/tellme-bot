@@ -169,7 +169,9 @@ public enum Emoji {
     OPEN_FOLDER('\uD83D', '\uDCC2'),
     TRASH('\uD83D', '\uDDD1'),
     FIRE('\uD83D', '\uDD25'),
-    LEFT_ARROW('\u2B05', null);
+    LEFT_ARROW('\u2B05', null),
+    WATCH('\u23F0', null),
+    BELL('\uD83D', '\uDD14');
 
     Character firstChar;
     Character secondChar;
@@ -206,6 +208,8 @@ public enum Emoji {
         System.out.println(CROSS_MARK.toString());
         System.out.println(LEFT_ARROW);
         System.out.println(TRASH);
+        System.out.println(WATCH);
+        System.out.println(BELL);
     }
 }
 

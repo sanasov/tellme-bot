@@ -1,5 +1,6 @@
 package ru.igrey.dev.domain;
 
+import org.apache.commons.lang3.StringUtils;
 import ru.igrey.dev.constant.AnswerMessageText;
 import ru.igrey.dev.constant.Emoji;
 import ru.igrey.dev.entity.CategoryEntity;
@@ -57,7 +58,10 @@ public class Category {
             return AnswerMessageText.EMPTY.text();
         }
         for (Note note : notesList) {
-            result += toInlineFixedWidthCode(i + ") ") + htmlSafe(note.getText()) + "\n";
+            String watch = StringUtils.isNotBlank(note.getNotifyRule()) ? Emoji.BELL.toString() + " " : "";
+            result += toInlineFixedWidthCode(i + ") ")
+                    + watch
+                    + htmlSafe(note.getText()) + "\n";
             i++;
         }
         return result;
