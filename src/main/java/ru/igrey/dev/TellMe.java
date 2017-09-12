@@ -18,6 +18,7 @@ import org.telegram.telegrambots.bots.TelegramLongPollingBot;
 import org.telegram.telegrambots.exceptions.TelegramApiException;
 import ru.igrey.dev.constant.AnswerMessageText;
 import ru.igrey.dev.constant.KeyboardCommand;
+import ru.igrey.dev.constant.NamedCategory;
 import ru.igrey.dev.dao.repository.CategoryRepository;
 import ru.igrey.dev.dao.repository.NoteRepository;
 import ru.igrey.dev.domain.Category;
@@ -76,11 +77,11 @@ public class TellMe extends TelegramLongPollingBot {
             return;
         }
         Long chatId = message.getChatId();
-        Category photoCategory = categoryRepository.createCategoryIfNotExist(chatId, "Photo");
+        Category photoCategory = categoryRepository.createCategoryIfNotExist(chatId, NamedCategory.PHOTO);
         noteRepository.saveNote(
                 Note.createNewNote(
                         message.getPhoto().get(0).getFileId(),
-                        message.getPhoto().get(0).hasFilePath() ? message.getPhoto().get(0).getFilePath() : "Photo" + message.getPhoto().get(0).getFileSize(),
+                        message.getPhoto().get(0).hasFilePath() ? message.getPhoto().get(0).getFilePath() : NamedCategory.PHOTO + message.getPhoto().get(0).getFileSize(),
                         message.getCaption(),
                         photoCategory.getId(),
                         chatId)
@@ -94,7 +95,7 @@ public class TellMe extends TelegramLongPollingBot {
             return;
         }
         Long chatId = message.getChatId();
-        Category photoCategory = categoryRepository.createCategoryIfNotExist(chatId, "Voice");
+        Category photoCategory = categoryRepository.createCategoryIfNotExist(chatId, NamedCategory.VOICE);
         noteRepository.saveNote(
                 Note.createNewNote(
                         message.getVoice().getFileId(),
@@ -112,7 +113,7 @@ public class TellMe extends TelegramLongPollingBot {
             return;
         }
         Long chatId = message.getChatId();
-        Category videoCategory = categoryRepository.createCategoryIfNotExist(chatId, "Video");
+        Category videoCategory = categoryRepository.createCategoryIfNotExist(chatId, NamedCategory.VIDEO);
         noteRepository.saveNote(
                 Note.createNewNote(
                         message.getVideo().getFileId(),
@@ -130,7 +131,7 @@ public class TellMe extends TelegramLongPollingBot {
             return;
         }
         Long chatId = message.getChatId();
-        Category photoCategory = categoryRepository.createCategoryIfNotExist(chatId, "File document");
+        Category photoCategory = categoryRepository.createCategoryIfNotExist(chatId, NamedCategory.FILE_DOCUMENT);
         noteRepository.saveNote(
                 Note.createNewNote(
                         message.getDocument().getFileId(),
@@ -166,7 +167,7 @@ public class TellMe extends TelegramLongPollingBot {
             sendInstruction(chatId);
             sendTextMessage(chatId, AnswerMessageText.ADD_NOTE_AND_PICK_CATEGORY.text(), null);
             if (telegramUser.getCategories().isEmpty()) {
-                telegramUser.setCategories(Arrays.asList(categoryRepository.createCategoryIfNotExist(chatId, "Common")));
+                telegramUser.setCategories(Arrays.asList(categoryRepository.createCategoryIfNotExist(chatId, NamedCategory.COMMON)));
             }
             onShowCategories(telegramUser, chatId);
         } else if (incomingMessageText.equals(KeyboardCommand.HELP)) {

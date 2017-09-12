@@ -6,6 +6,7 @@ import org.telegram.telegrambots.api.objects.replykeyboard.buttons.InlineKeyboar
 import ru.igrey.dev.constant.ButtonCommandName;
 import ru.igrey.dev.constant.ButtonTitle;
 import ru.igrey.dev.constant.Emoji;
+import ru.igrey.dev.constant.NamedCategory;
 import ru.igrey.dev.domain.Category;
 import ru.igrey.dev.domain.Note;
 
@@ -25,10 +26,10 @@ public class ReplyKeyboard {
         InlineKeyboardMarkup markup = new InlineKeyboardMarkup();
         List<List<InlineKeyboardButton>> keyboard = new ArrayList<>();
         List<Category> categoriesWithoutFiles = categories.stream()
-                .filter(category -> !category.getTitle().equals("Video"))
-                .filter(category -> !category.getTitle().equals("Photo"))
-                .filter(category -> !category.getTitle().equals("Voice"))
-                .filter(category -> !category.getTitle().equals("File document"))
+                .filter(category -> !category.getTitle().equals(NamedCategory.VIDEO))
+                .filter(category -> !category.getTitle().equals(NamedCategory.PHOTO))
+                .filter(category -> !category.getTitle().equals(NamedCategory.VOICE))
+                .filter(category -> !category.getTitle().equals(NamedCategory.FILE_DOCUMENT))
                 .collect(Collectors.toList());
         for (Category category : categoriesWithoutFiles) {
             List<InlineKeyboardButton> buttonRow = new ArrayList<>();
@@ -47,13 +48,13 @@ public class ReplyKeyboard {
         List<List<InlineKeyboardButton>> keyboard = new ArrayList<>();
         for (Category category : categories) {
             List<InlineKeyboardButton> buttonRow = new ArrayList<>();
-            if (category.getTitle().equals("Photo")) {
+            if (category.getTitle().equals(NamedCategory.PHOTO)) {
                 buttonRow.add(createInlineKeyboardButton(ButtonCommandName.PICK_CATEGORY_TO_VIEW_PHOTOS + BUTTON_DELIMITER + category.getId().toString(), Emoji.PICTURE + " " + category.getTitle()));
-            } else if (category.getTitle().equals("Video")) {
+            } else if (category.getTitle().equals(NamedCategory.VIDEO)) {
                 buttonRow.add(createInlineKeyboardButton(ButtonCommandName.PICK_CATEGORY_TO_VIEW_VIDEOS + BUTTON_DELIMITER + category.getId().toString(), Emoji.VIDEO + " " + category.getTitle()));
-            } else if (category.getTitle().equals("File document")) {
+            } else if (category.getTitle().equals(NamedCategory.FILE_DOCUMENT)) {
                 buttonRow.add(createInlineKeyboardButton(ButtonCommandName.PICK_CATEGORY_TO_VIEW_DOCUMENTS + BUTTON_DELIMITER + category.getId().toString(), Emoji.DOCUMENT + " " + category.getTitle()));
-            } else if (category.getTitle().equals("Voice")) {
+            } else if (category.getTitle().equals(NamedCategory.VOICE)) {
                 buttonRow.add(createInlineKeyboardButton(ButtonCommandName.PICK_CATEGORY_TO_VIEW_VOICES + BUTTON_DELIMITER + category.getId().toString(), Emoji.MICROPHONE + " " + category.getTitle()));
             } else {
                 buttonRow.add(createInlineKeyboardButton(ButtonCommandName.PICK_CATEGORY_TO_VIEW_NOTES + BUTTON_DELIMITER + category.getId().toString(), Emoji.FOLDER + " " + category.getTitle()));
@@ -69,11 +70,11 @@ public class ReplyKeyboard {
         List<List<InlineKeyboardButton>> keyboard = new ArrayList<>();
         for (Note note : category.getNotes()) {
             List<InlineKeyboardButton> buttonRow = new ArrayList<>();
-            if (category.getTitle().equals("Photo")) {
+            if (category.getTitle().equals(NamedCategory.PHOTO)) {
                 buttonRow.add(createInlineKeyboardButton(ButtonCommandName.PICK_PHOTO + BUTTON_DELIMITER + category.getId().toString() + BUTTON_DELIMITER + note.getId().toString(), note.toFileView()));
-            } else if (category.getTitle().equals("Video")) {
+            } else if (category.getTitle().equals(NamedCategory.VIDEO)) {
                 buttonRow.add(createInlineKeyboardButton(ButtonCommandName.PICK_VIDEO + BUTTON_DELIMITER + category.getId().toString() + BUTTON_DELIMITER + note.getId().toString(), note.toFileView()));
-            } else if (category.getTitle().equals("File document")) {
+            } else if (category.getTitle().equals(NamedCategory.FILE_DOCUMENT)) {
                 buttonRow.add(createInlineKeyboardButton(ButtonCommandName.PICK_DOCUMENT + BUTTON_DELIMITER + category.getId().toString() + BUTTON_DELIMITER + note.getId().toString(), note.toFileView()));
             } else {
                 buttonRow.add(createInlineKeyboardButton(ButtonCommandName.PICK_VOICE + BUTTON_DELIMITER + category.getId().toString() + BUTTON_DELIMITER + note.getId().toString(), note.toFileView()));
