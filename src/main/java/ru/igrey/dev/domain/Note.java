@@ -1,6 +1,7 @@
 package ru.igrey.dev.domain;
 
 import org.apache.commons.lang3.StringUtils;
+import ru.igrey.dev.HtmlWrapper;
 import ru.igrey.dev.constant.Delimiter;
 import ru.igrey.dev.constant.Emoji;
 import ru.igrey.dev.entity.NoteEntity;
@@ -37,6 +38,7 @@ public class Note {
     public Note(NoteEntity entity) {
         this.id = entity.getId();
         this.userId = entity.getUserId();
+        this.categoryId = entity.getCategoryId();
         this.createDate = entity.getCreateDate();
         this.text = entity.getText();
         this.notifyRule = entity.getNotifyRule();
@@ -136,23 +138,41 @@ public class Note {
     }
 
     public String toView() {
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd.MM.YYYY HH:mm");
         List<Notification> notifications = createNotifications();
-        String notificationDates = Optional.ofNullable(notifications).orElse(new ArrayList<>())
+        String notificationDates = notificationDatesView(notifications);
+        String bell = "";
+        if (StringUtils.isNotBlank(notificationDates)) {
+            bell = Emoji.BELL.toString();
+            notificationDates = HtmlWrapper.toInlineFixedWidthCode("(" + notificationDates + ")");
+        }
+        return bell
+                + HtmlWrapper.htmlSafe(text)
+                + " "
+                + notificationDates;
+    }
+
+    public String toViewForDelete() {
+        List<Notification> notifications = createNotifications();
+        String notificationDates = notificationDatesView(notifications);
+        String bell = "";
+        if (StringUtils.isNotBlank(notificationDates)) {
+            bell = Emoji.BELL.toString();
+            notificationDates = "(" + notificationDates + ")";
+        }
+        return bell
+                + HtmlWrapper.htmlSafe(text)
+                + " "
+                + notificationDates;
+    }
+
+    private String notificationDatesView(List<Notification> notifications) {
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd.MM.YYYY HH:mm");
+        return Optional.ofNullable(notifications).orElse(new ArrayList<>())
                 .stream()
                 .filter(notification -> notification.getNotifyDate().isAfter(LocalDateTime.now()))
                 .map(notification -> notification.getNotifyDate().format(formatter))
                 .reduce((total, curr) -> total + ", " + curr)
                 .orElse(notifications != null && notifications.size() > 0 ? "expired" : "");
-        String bell = "";
-        if (StringUtils.isNotBlank(notificationDates)) {
-            bell = Emoji.BELL.toString();
-            notificationDates = toInlineFixedWidthCode("(" + notificationDates + ")");
-        }
-        return bell
-                + htmlSafe(text)
-                + " "
-                + notificationDates;
     }
 
     public String toFileView() {
@@ -163,15 +183,5 @@ public class Note {
         }
     }
 
-    public String toInlineFixedWidthCode(String text) {
-        return "<code>" + text + "</code>";
-    }
 
-    public String toBold(String text) {
-        return "<b>" + text + "</b>";
-    }
-
-    private String htmlSafe(String text) {
-        return text.replace(">", "&gt;").replace("<", "&lt;");
-    }
 }

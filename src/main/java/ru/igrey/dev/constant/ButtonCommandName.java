@@ -23,4 +23,10 @@ public class ButtonCommandName {
 
     public final static String REMOVE_FILE = "REMOVE_FILE";
     public final static String VIEW_CATEGORY = "VIEW_CATEGORY";
+
+    public final static String REMIND_AGAIN_IN_15M = "MINUTES_15";
+    public final static String REMIND_AGAIN_IN_30M = "MINUTES_30";
+    public final static String REMIND_AGAIN_IN_1H = "HOUR";
+    public final static String REMIND_AGAIN_IN_3H = "HOUR_3";
+    public final static String REMIND_AGAIN_IN_1D = "DAY";
 }

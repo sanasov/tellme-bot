@@ -62,6 +62,13 @@ public class ButtonHandlerFactory {
                 return new PickVideoHandler(query, noteRepository);
             case ButtonCommandName.PICK_VOICE:
                 return new PickVoiceHandler(query, noteRepository);
+            //REMIND AGAIN IN
+            case ButtonCommandName.REMIND_AGAIN_IN_15M:
+            case ButtonCommandName.REMIND_AGAIN_IN_30M:
+            case ButtonCommandName.REMIND_AGAIN_IN_1H:
+            case ButtonCommandName.REMIND_AGAIN_IN_3H:
+            case ButtonCommandName.REMIND_AGAIN_IN_1D:
+                return new RemindAgainInHandler(query, noteRepository);
         }
         throw new RuntimeException("There is no button handler for command: " + buttonCommand);
     }

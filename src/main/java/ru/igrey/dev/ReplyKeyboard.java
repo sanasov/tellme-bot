@@ -3,16 +3,14 @@ package ru.igrey.dev;
 import org.apache.commons.lang3.StringUtils;
 import org.telegram.telegrambots.api.objects.replykeyboard.InlineKeyboardMarkup;
 import org.telegram.telegrambots.api.objects.replykeyboard.buttons.InlineKeyboardButton;
-import ru.igrey.dev.constant.ButtonCommandName;
-import ru.igrey.dev.constant.ButtonTitle;
-import ru.igrey.dev.constant.Emoji;
-import ru.igrey.dev.constant.NamedCategory;
+import ru.igrey.dev.constant.*;
 import ru.igrey.dev.domain.Category;
 import ru.igrey.dev.domain.Note;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 import static ru.igrey.dev.constant.Delimiter.BUTTON_DELIMITER;
 
@@ -99,7 +97,7 @@ public class ReplyKeyboard {
         keyboard.add(firstButtonRow);
         for (Note note : notes) {
             List<InlineKeyboardButton> buttonRow = new ArrayList<>();
-            String removeView = StringUtils.isNotBlank(note.toFileView()) ? note.toFileView() : note.toView();
+            String removeView = StringUtils.isNotBlank(note.toFileView()) ? note.toFileView() : note.toViewForDelete();
             buttonRow.add(createInlineKeyboardButton(ButtonCommandName.NOTE_DELETE + BUTTON_DELIMITER + categoryId + BUTTON_DELIMITER + note.getId().toString(), Emoji.CROSS_MARK + " \"" + removeView + "\""));
             keyboard.add(buttonRow);
         }
@@ -125,6 +123,17 @@ public class ReplyKeyboard {
         List<InlineKeyboardButton> buttonRow = new ArrayList<>();
         buttonRow.add(createInlineKeyboardButton(ButtonCommandName.VIEW_CATEGORY + BUTTON_DELIMITER + categoryId, ButtonTitle.VIEW_CATEGORY.text()));
         buttonRow.add(createInlineKeyboardButton(ButtonCommandName.REMOVE_FILE + BUTTON_DELIMITER + noteId, Emoji.TRASH + " " + ButtonTitle.REMOVE_FILE.text()));
+        keyboard.add(buttonRow);
+        markup.setKeyboard(keyboard);
+        return markup;
+    }
+
+    public static InlineKeyboardMarkup buttonsRemindAgainIn(Long noteId) {
+        InlineKeyboardMarkup markup = new InlineKeyboardMarkup();
+        List<List<InlineKeyboardButton>> keyboard = new ArrayList<>();
+        List<InlineKeyboardButton> buttonRow = Stream.of(TimeRemindAgain.values())
+                .map(buttonTimeRemindAgain -> createInlineKeyboardButton(buttonTimeRemindAgain + BUTTON_DELIMITER + noteId, buttonTimeRemindAgain.text()))
+                .collect(Collectors.toList());
         keyboard.add(buttonRow);
         markup.setKeyboard(keyboard);
         return markup;

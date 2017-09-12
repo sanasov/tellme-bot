@@ -51,7 +51,17 @@ public enum AnswerMessageText {
             "Буду счастлив, если вы поставите мне " + Emoji.STAR.toString(5) + "️ тут https://telegram.me/storebot?start=mindkeeperbot \n" +
                     Emoji.SMILING_FACE_WITH_SMILING_EYES.toString() + "Большое спасибо!",
             "I would be very grateful if you could give me " + Emoji.STAR.toString(5) + "️ here https://telegram.me/storebot?start=mindkeeperbot \n" +
-                    Emoji.SMILING_FACE_WITH_SMILING_EYES.toString() + "Thank you!");
+                    Emoji.SMILING_FACE_WITH_SMILING_EYES.toString() + "Thank you!"),
+    NOTIFY_AGAIN_IN(
+            "Напомнить снова через:",
+            "Remind again in:"),
+    NOTIFY_AGAIN(
+            "Напомнить снова:",
+            "Remind again:"),
+    NOTIFICATION_IS_POSTPONED(
+            "Напоминание отложено",
+            "Reminder postponed");
+
 
     AnswerMessageText(String ru, String eng) {
         this.ru = ru;

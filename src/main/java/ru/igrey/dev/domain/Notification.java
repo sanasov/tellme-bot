@@ -1,8 +1,11 @@
 package ru.igrey.dev.domain;
 
+import ru.igrey.dev.HtmlWrapper;
+import ru.igrey.dev.constant.Emoji;
 import ru.igrey.dev.entity.NotificationEntity;
 
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 
 public class Notification {
     private String note;
@@ -23,6 +26,11 @@ public class Notification {
 
     public static Notification fromEntity(NotificationEntity entity) {
         return new Notification(entity.getNote(), entity.getNotifyDate(), entity.getUserId(), entity.getNoteId());
+    }
+
+    public String toView() {
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd.MM.YYYY HH:mm");
+        return Emoji.BELL + note + " " + HtmlWrapper.toInlineFixedWidthCode("(" + notifyDate.format(formatter) + ")");
     }
 
     public String getNote() {

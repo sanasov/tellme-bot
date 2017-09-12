@@ -4,7 +4,10 @@ import lombok.extern.slf4j.Slf4j;
 import org.quartz.Job;
 import org.quartz.JobExecutionContext;
 import org.quartz.JobExecutionException;
+import ru.igrey.dev.ReplyKeyboard;
 import ru.igrey.dev.config.BeanConfig;
+import ru.igrey.dev.constant.AnswerMessageText;
+import ru.igrey.dev.constant.Emoji;
 import ru.igrey.dev.dao.repository.NotificationRepository;
 import ru.igrey.dev.domain.Notification;
 
@@ -36,7 +39,11 @@ public class UserNotificationJob implements Job {
     private void sendNotification(Notification notification) {
         log.info("userId: " + notification.getUserId());
         log.info("send notification: " + notification.getNote());
-        BeanConfig.tellMeBot().sendTextMessage(notification.getUserId(), notification.getNote(), null);
+        BeanConfig.tellMeBot()
+                .sendButtonMessage(
+                        notification.getUserId(),
+                        Emoji.BELL.toString(3) + notification.getNote() + "\n" + AnswerMessageText.NOTIFY_AGAIN_IN.text(),
+                        ReplyKeyboard.buttonsRemindAgainIn(notification.getNoteId()));
     }
 
 }

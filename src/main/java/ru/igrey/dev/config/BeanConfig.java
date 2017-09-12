@@ -112,7 +112,11 @@ public class BeanConfig {
 
     public static ButtonHandlerFactory buttonHandlerFactory() {
         if (buttonHandlerFactory == null) {
-            buttonHandlerFactory = new ButtonHandlerFactory(telegramUserService(), categoryRepository(), noteRepository());
+            buttonHandlerFactory = new ButtonHandlerFactory(
+                    telegramUserService(),
+                    categoryRepository(),
+                    noteRepository()
+            );
         }
         return buttonHandlerFactory;
 
