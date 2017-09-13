@@ -19,6 +19,13 @@ public enum ButtonTitle {
     BACK_TO_CATEGORY_VIEW(
             Emoji.LEFT_ARROW + " Назад к категориям",
             Emoji.LEFT_ARROW + " Back to categories"),
+
+    DISABLE_NOTIFICATION(
+            Emoji.BELL_CANCEL + " Отключить нотификацию",
+            Emoji.BELL_CANCEL + " Disable notification"),
+    REMOVE_NOTIFICATION(
+            Emoji.TRASH + " Удалить запись",
+            Emoji.TRASH + " Delete note"),
     CREATE_CATEGORY(
             "Создать категорию",
             "Create category");

@@ -22,6 +22,8 @@ public class ButtonCommandName {
     public final static String PICK_VOICE = "PICK_VOICE";
 
     public final static String REMOVE_FILE = "REMOVE_FILE";
+    public final static String REMOVE_NOTIFICATION = "REMOVE_NOTIFICATION";
+    public final static String DISABLE_NOTIFICATION = "DISABLE_NOTIFICATION";
     public final static String VIEW_CATEGORY = "VIEW_CATEGORY";
 
     public final static String REMIND_AGAIN_IN_15M = "MINUTES_15";

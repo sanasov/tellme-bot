@@ -32,7 +32,11 @@ public class NotificationRepository {
     }
 
     public void delete(Long nodeId) {
-        notificationDao.delete(nodeId);
+        notificationDao.deleteByNoteId(nodeId);
+    }
+
+    public void deleteById(Long id) {
+        notificationDao.deleteById(id);
     }
 
 }

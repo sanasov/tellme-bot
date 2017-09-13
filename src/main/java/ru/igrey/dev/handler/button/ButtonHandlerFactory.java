@@ -5,6 +5,7 @@ import org.telegram.telegrambots.api.objects.CallbackQuery;
 import ru.igrey.dev.constant.ButtonCommandName;
 import ru.igrey.dev.dao.repository.CategoryRepository;
 import ru.igrey.dev.dao.repository.NoteRepository;
+import ru.igrey.dev.dao.repository.NotificationRepository;
 import ru.igrey.dev.domain.TelegramUser;
 import ru.igrey.dev.service.TelegramUserService;
 
@@ -16,12 +17,14 @@ public class ButtonHandlerFactory {
     TelegramUserService telegramUserService;
     CategoryRepository categoryRepository;
     NoteRepository noteRepository;
+    NotificationRepository notificationRepository;
 
 
-    public ButtonHandlerFactory(TelegramUserService telegramUserService, CategoryRepository categoryRepository, NoteRepository noteRepository) {
+    public ButtonHandlerFactory(TelegramUserService telegramUserService, CategoryRepository categoryRepository, NoteRepository noteRepository, NotificationRepository notificationRepository) {
         this.telegramUserService = telegramUserService;
         this.categoryRepository = categoryRepository;
         this.noteRepository = noteRepository;
+        this.notificationRepository = notificationRepository;
     }
 
     public ButtonHandler create(TelegramUser telegramUser, CallbackQuery query) {
@@ -69,6 +72,8 @@ public class ButtonHandlerFactory {
             case ButtonCommandName.REMIND_AGAIN_IN_3H:
             case ButtonCommandName.REMIND_AGAIN_IN_1D:
                 return new RemindAgainInHandler(query, noteRepository);
+            case ButtonCommandName.REMOVE_NOTIFICATION:
+                return new DeleteNotificationHandler(query, notificationRepository, noteRepository);
         }
         throw new RuntimeException("There is no button handler for command: " + buttonCommand);
     }

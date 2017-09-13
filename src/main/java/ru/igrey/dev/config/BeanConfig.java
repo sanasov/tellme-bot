@@ -115,7 +115,8 @@ public class BeanConfig {
             buttonHandlerFactory = new ButtonHandlerFactory(
                     telegramUserService(),
                     categoryRepository(),
-                    noteRepository()
+                    noteRepository(),
+                    notificationRepository()
             );
         }
         return buttonHandlerFactory;

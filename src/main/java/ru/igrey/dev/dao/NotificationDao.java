@@ -29,9 +29,13 @@ public class NotificationDao {
         return entity;
     }
 
-    public void delete(Long noteId) {
+    public void deleteByNoteId(Long noteId) {
         String sqlDelete = "delete from notification where note_id = ?";
         jdbcTemplate.update(sqlDelete, new Object[]{noteId});
+    }
+    public void deleteById(Long id) {
+        String sqlDelete = "delete from notification where id = ?";
+        jdbcTemplate.update(sqlDelete, new Object[]{id});
     }
 
     public List<NotificationEntity> findAll() {

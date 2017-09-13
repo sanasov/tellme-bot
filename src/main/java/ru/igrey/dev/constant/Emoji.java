@@ -171,13 +171,13 @@ public enum Emoji {
     FIRE('\uD83D', '\uDD25'),
     LEFT_ARROW('\u2B05', null),
     WATCH('\u23F0', null),
+    BELL_CANCEL('\uD83D', '\uDD15'),
     BELL('\uD83D', '\uDD14'),
     STAR('\u2B50', null),
     PICTURE('\uD83C', '\uDF07'),
     MICROPHONE('\uD83C', '\uDF99'),
     DOCUMENT('\uD83D', '\uDDC2'),
     VIDEO('\uD83C', '\uDFAC');
-
     Character firstChar;
     Character secondChar;
 

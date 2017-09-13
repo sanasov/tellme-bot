@@ -8,6 +8,7 @@ import ru.igrey.dev.domain.Category;
 import ru.igrey.dev.domain.Note;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
@@ -128,13 +129,17 @@ public class ReplyKeyboard {
         return markup;
     }
 
-    public static InlineKeyboardMarkup buttonsRemindAgainIn(Long noteId) {
+    public static InlineKeyboardMarkup buttonsRemindAgainIn(Long notificationId) {
         InlineKeyboardMarkup markup = new InlineKeyboardMarkup();
         List<List<InlineKeyboardButton>> keyboard = new ArrayList<>();
         List<InlineKeyboardButton> buttonRow = Stream.of(TimeRemindAgain.values())
-                .map(buttonTimeRemindAgain -> createInlineKeyboardButton(buttonTimeRemindAgain + BUTTON_DELIMITER + noteId, buttonTimeRemindAgain.text()))
+                .map(buttonTimeRemindAgain -> createInlineKeyboardButton(buttonTimeRemindAgain + BUTTON_DELIMITER + notificationId, buttonTimeRemindAgain.text()))
                 .collect(Collectors.toList());
+        List<InlineKeyboardButton> deleteNotificationButtons = Arrays.asList(
+                createInlineKeyboardButton(ButtonCommandName.REMOVE_NOTIFICATION + BUTTON_DELIMITER + notificationId + BUTTON_DELIMITER + notificationId, ButtonTitle.REMOVE_NOTIFICATION.text())
+        );
         keyboard.add(buttonRow);
+        keyboard.add(deleteNotificationButtons);
         markup.setKeyboard(keyboard);
         return markup;
     }

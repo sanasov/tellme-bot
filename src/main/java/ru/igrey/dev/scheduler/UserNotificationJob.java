@@ -42,7 +42,7 @@ public class UserNotificationJob implements Job {
         BeanConfig.tellMeBot()
                 .sendButtonMessage(
                         notification.getUserId(),
-                        Emoji.BELL.toString(3) + notification.getNote() + "\n" + AnswerMessageText.NOTIFY_AGAIN_IN.text(),
+                        Emoji.BELL.toString(3) + " " + notification.getNote() + "\n\n" + AnswerMessageText.NOTIFY_AGAIN_IN.text(),
                         ReplyKeyboard.buttonsRemindAgainIn(notification.getNoteId()));
     }
 
