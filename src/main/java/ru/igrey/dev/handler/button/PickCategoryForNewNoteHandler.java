@@ -7,7 +7,6 @@ import ru.igrey.dev.constant.AnswerMessageText;
 import ru.igrey.dev.dao.repository.CategoryRepository;
 import ru.igrey.dev.dao.repository.NoteRepository;
 import ru.igrey.dev.domain.Category;
-import ru.igrey.dev.domain.Note;
 
 import static ru.igrey.dev.constant.Delimiter.BUTTON_DELIMITER;
 
@@ -25,11 +24,9 @@ public class PickCategoryForNewNoteHandler implements ButtonHandler {
 
     @Override
     public String onClick() {
+        Integer userId = query.getFrom().getId();
         Long categoryId = Long.valueOf(query.getData().split(BUTTON_DELIMITER)[1]);
-        Long noteId = Long.valueOf(query.getData().split(BUTTON_DELIMITER)[2]);
-        Note note = noteRepository.findById(noteId);
-        note.setCategoryId(categoryId);
-        noteRepository.saveNote(note);
+        noteRepository.saveNewNotesInCategory(userId.longValue(), categoryId);
         Category category = categoryRepository.findCategoryById(categoryId);
         BeanConfig.tellMeBot().editMessage(query.getMessage().getChatId(),
                 query.getMessage().getMessageId(),

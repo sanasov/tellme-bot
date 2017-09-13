@@ -56,6 +56,7 @@ public class NoteRepository {
                 .collect(Collectors.toList());
     }
 
+
     public Note findById(Long id) {
         NoteEntity entity = noteDao.findById(id);
         return entity != null ? new Note(entity) : null;
@@ -73,5 +74,20 @@ public class NoteRepository {
 
     public void deleteByCategoryId(Long categoryId) {
         noteDao.deleteByCategoryId(categoryId);
+    }
+
+    public List<Note> findAllNewUserNotes(Long userId) {
+        return Optional.ofNullable(noteDao.findAllNewUserNotes(userId)).orElse(new ArrayList<>())
+                .stream()
+                .map(entity -> new Note(entity))
+                .collect(Collectors.toList());
+    }
+
+    public void saveNewNotesInCategory(Long userId, Long categoryId) {
+        List<Note> newNotes = findAllNewUserNotes(userId);
+        for (Note note : newNotes) {
+            note.setCategoryId(categoryId);
+            saveNote(note);
+        }
     }
 }

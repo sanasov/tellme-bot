@@ -32,6 +32,7 @@ import ru.igrey.dev.scheduler.TriggerFactory;
 import ru.igrey.dev.service.TelegramUserService;
 
 import java.util.Arrays;
+import java.util.List;
 
 /**
  * Created by sanasov on 01.04.2017.
@@ -172,7 +173,7 @@ public class TellMe extends TelegramLongPollingBot {
             onShowCategories(telegramUser, chatId);
         } else if (incomingMessageText.equals(KeyboardCommand.HELP)) {
             sendTextMessage(chatId, AnswerMessageText.ADD_NOTE_AND_PICK_CATEGORY.text(), null);
-        }else if (incomingMessageText.equals(KeyboardCommand.VIEW)) {
+        } else if (incomingMessageText.equals(KeyboardCommand.VIEW)) {
             onShowCategories(telegramUser, chatId);
         } else if (incomingMessageText.equals(KeyboardCommand.RATE)) {
             sendTextMessage(chatId, AnswerMessageText.RATE.text(), null);
@@ -180,11 +181,8 @@ public class TellMe extends TelegramLongPollingBot {
             Category category = categoryRepository.saveCategory(Category.createNewCategory(chatId, incomingMessageText));
             telegramUser.setStatus(UserStatus.NEW);
             telegramUserService.save(telegramUser);
-            Note note = noteRepository.findLastInsertedNoteWithoutCategory(chatId);
-            if (note != null) {
-                note.setCategoryId(category.getId());
-                noteRepository.saveNote(note);
-            }
+            noteRepository.saveNewNotesInCategory(chatId, category.getId());
+
             sendButtonMessage(
                     chatId,
                     AnswerMessageText.CATEGORY_IS_ADDED.text(),

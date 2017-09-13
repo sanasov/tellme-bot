@@ -91,6 +91,13 @@ public class NoteDao {
         return entities;
     }
 
+    public List<NoteEntity> findAllNewUserNotes(Long userId) {
+        String sql = "SELECT * FROM note WHERE category_id is null and user_id = ?";
+        List<NoteEntity> entities = jdbcTemplate.query(
+                sql, new Object[]{userId}, new NoteMapper());
+        return entities;
+    }
+
     public NoteEntity findLastInsertedNoteWithoutCategory(Long userId) {
         String sql = "SELECT * FROM note WHERE ID = (SELECT MAX(ID) FROM note WHERE USER_ID = ? AND category_id is null)";
         List<NoteEntity> entities = jdbcTemplate.query(
