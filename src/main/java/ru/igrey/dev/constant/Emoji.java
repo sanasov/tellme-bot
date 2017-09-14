@@ -177,7 +177,8 @@ public enum Emoji {
     PICTURE('\uD83C', '\uDF07'),
     MICROPHONE('\uD83C', '\uDF99'),
     DOCUMENT('\uD83D', '\uDDC2'),
-    VIDEO('\uD83C', '\uDFAC');
+    VIDEO('\uD83C', '\uDFAC'),
+    NOTE_WITH_PEN('\uD83D', '\uDCDD');
     Character firstChar;
     Character secondChar;
 
@@ -220,6 +221,7 @@ public enum Emoji {
         System.out.println(MICROPHONE);
         System.out.println(DOCUMENT);
         System.out.println(VIDEO);
+        System.out.println(NOTE_WITH_PEN);
     }
 }
 

@@ -27,8 +27,8 @@ public enum AnswerMessageText {
             "Выберите записи для удаления",
             "Select a category for your note"),
     EMPTY(
-            "Нет записей. Добавьте " + Emoji.SMILING_FACE_WITH_SMILING_EYES.toString(),
-            "No records. Add" + Emoji.SMILING_FACE_WITH_SMILING_EYES.toString()),
+            "Пусто. Отправьте мне заметку " + Emoji.NOTE_WITH_PEN.toString(),
+            "Empty. Send me a note " + Emoji.NOTE_WITH_PEN.toString()),
     NOTE_IS_DELETED(
             "Запись удалена",
             "Note deleted"),

@@ -24,13 +24,13 @@ public class TelegramUserService {
     }
 
     public TelegramUser getOrCreateTelegramUserByUserId(User user) {
-        Localization.set(user.getLanguageCode());
         TelegramUser result = telegramUserRepository.findById(user.getId().longValue());
         if (result == null) {
             result = TelegramUser.createNewUser(user);
             telegramUserRepository.save(result);
             logger.info("created user " + result);
         }
+        Localization.set(result.getLanguageCode());
         return result;
     }
 
