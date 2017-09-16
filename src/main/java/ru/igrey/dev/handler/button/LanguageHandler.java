@@ -29,15 +29,16 @@ public class LanguageHandler implements ButtonHandler {
 
     @Override
     public String onClick() {
+        Integer messageId = query.getMessage().getMessageId();
         Long chatId = query.getMessage().getChatId();
         Language language = Language.valueOf(query.getData().split(BUTTON_DELIMITER)[1]);
         telegramUser.setLanguage(language.name());
         Localization.set(language);
         if (telegramUser.getTimezone() == null) {
             telegramUser.setStatus(UserStatus.SET_TIMEZONE);
-            BeanConfig.tellMeBot().sendTextMessage(chatId, AnswerMessageText.SET_TIMEZONE.text(), null);
+            BeanConfig.tellMeBot().editMessage(chatId, messageId, AnswerMessageText.SET_TIMEZONE.text(), null);
         } else {
-            onShowCategories(telegramUser.getCategories(), chatId, query.getMessage().getMessageId());
+            onShowCategories(telegramUser.getCategories(), chatId, messageId);
         }
         telegramUserService.save(telegramUser);
         return language.title();

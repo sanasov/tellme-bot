@@ -85,14 +85,14 @@ public enum AnswerMessageText {
             "دوباره یادآوری کنید:"),
 
     PICK_LANGUAGE(
-            "Выберите ваш язык:",
-            "Сhoose your language:",
+            "Выберите язык:",
+            "Сhoose language:",
             "زبان خود را انتخاب کنید"),
 
     SET_TIMEZONE(
-            "Установите часовой пояс " + Emoji.EARTH_GLOBE_EUROPE_AFRICA + "\n" + " Для этого отправьте мне текущее время в формате HH:MM",
-            "Set timezone " + Emoji.EARTH_GLOBE_EUROPE_AFRICA + "\n" + "Send me your current time using format HH:MM",
-            "منطقه زمانی را تنظیم کنید"),
+            "Установите часовой пояс " + Emoji.EARTH_GLOBE_EUROPE_AFRICA + "\n" + "Для этого отправьте мне текущее время" + "\n" + "Формат: <strong>HH:MM</strong>",
+            "Set timezone " + Emoji.EARTH_GLOBE_EUROPE_AFRICA + "\n" + "Send me your current time" + "\n" + "Format: <strong>HH:MM</strong>",
+            "منطقه زمانی را تنظیم کنید" + "\n" + "زمان فعلی من را به من بدهید" + "\n" + "فرمت: <strong>HH:MM</strong>"),
 
     NOTIFICATION_IS_POSTPONED(
             "Напоминание отложено",
