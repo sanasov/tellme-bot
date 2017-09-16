@@ -30,15 +30,15 @@ public class TelegramUserService {
             telegramUserRepository.save(result);
             logger.info("created user " + result);
         }
-        Localization.set(result.getLanguageCode());
+        Localization.set(result.localization());
         return result;
     }
 
     public String usersStatistic() {
         List<TelegramUser> users = telegramUserRepository.findAll();
         return "users count: " + users.size()
-                + "\n categories count: " + users.stream().map(TelegramUser::getCategories).flatMap(Collection::stream).count()
-                + "\n notes count: " + users.stream().map(TelegramUser::getCategories).flatMap(Collection::stream).map(Category::getNotes).flatMap(Collection::stream).count();
+                + "\ncategories count: " + users.stream().map(TelegramUser::getCategories).flatMap(Collection::stream).count()
+                + "\nnotes count: " + users.stream().map(TelegramUser::getCategories).flatMap(Collection::stream).map(Category::getNotes).flatMap(Collection::stream).count();
     }
 
     public void save(TelegramUser telegramUser) {

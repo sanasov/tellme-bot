@@ -22,7 +22,7 @@ public class BackToCategoryViewHandler implements ButtonHandler {
         BeanConfig.tellMeBot().editMessage(
                 chatId,
                 query.getMessage().getMessageId(),
-                AnswerMessageText.IN_WHICH_CATEGORY.text(),
+                AnswerMessageText.PICK_CATEGORY_TO_VIEW_NOTES.text(),
                 ReplyKeyboard.buttonsForPickingCategoryForViewNotes(telegramUser.getCategories())
         );
         return "";

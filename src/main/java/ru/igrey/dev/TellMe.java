@@ -2,6 +2,7 @@ package ru.igrey.dev;
 
 
 import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.lang3.StringUtils;
 import org.quartz.Scheduler;
 import org.quartz.SchedulerException;
 import org.telegram.telegrambots.api.methods.AnswerCallbackQuery;
@@ -27,12 +28,12 @@ import ru.igrey.dev.domain.TelegramUser;
 import ru.igrey.dev.domain.UserStatus;
 import ru.igrey.dev.handler.button.ButtonHandler;
 import ru.igrey.dev.handler.button.ButtonHandlerFactory;
+import ru.igrey.dev.parse.ParsedTimeZone;
 import ru.igrey.dev.scheduler.JobFactory;
 import ru.igrey.dev.scheduler.TriggerFactory;
 import ru.igrey.dev.service.TelegramUserService;
 
 import java.util.Arrays;
-import java.util.List;
 
 /**
  * Created by sanasov on 01.04.2017.
@@ -170,10 +171,16 @@ public class TellMe extends TelegramLongPollingBot {
             if (telegramUser.getCategories().isEmpty()) {
                 telegramUser.setCategories(Arrays.asList(categoryRepository.createCategoryIfNotExist(chatId, NamedCategory.COMMON)));
             }
+            if (StringUtils.isBlank(telegramUser.getLanguage())) {
+                sendButtonMessage(chatId, AnswerMessageText.PICK_LANGUAGE.text(), ReplyKeyboard.buttonsForPickingLanguage());
+                return;
+            }
             onShowCategories(telegramUser, chatId);
         } else if (incomingMessageText.equals(KeyboardCommand.HELP)) {
             sendTextMessage(chatId, AnswerMessageText.ADD_NOTE_AND_PICK_CATEGORY.text(), null);
         } else if (incomingMessageText.equals(KeyboardCommand.VIEW)) {
+            onShowCategories(telegramUser, chatId);
+        } else if (incomingMessageText.equals(KeyboardCommand.SETTINGS)) {
             onShowCategories(telegramUser, chatId);
         } else if (incomingMessageText.equals(KeyboardCommand.RATE)) {
             sendTextMessage(chatId, AnswerMessageText.RATE.text(), null);
@@ -188,6 +195,27 @@ public class TellMe extends TelegramLongPollingBot {
                     AnswerMessageText.CATEGORY_IS_ADDED.text(),
                     ReplyKeyboard.buttonsForPickingCategoryForViewNotes(categoryRepository.findCategoryByUserId(chatId))
             );
+        } else if (telegramUser.getStatus().equals(UserStatus.SET_TIMEZONE)) {
+            telegramUser.setStatus(UserStatus.NEW);
+            Integer timeZone = 0;
+            try {
+                timeZone = new ParsedTimeZone(incomingMessageText).totalDiffInMinutes();
+                telegramUser.setTimezone(timeZone);
+                sendTextMessage(
+                        chatId,
+                        "Timezone is setted",
+                        null
+                );
+                telegramUserService.save(telegramUser);
+            } catch (Exception e) {
+                log.info("Wrong number format");
+                sendTextMessage(
+                        chatId,
+                        AnswerMessageText.WRONG_FORMAT.text(),
+                        null
+                );
+            }
+
         } else {// create new note
             Note newNote = noteRepository.saveNote(Note.createNewNote(incomingMessageText, null, null, null, chatId));
             sendButtonMessage(chatId, AnswerMessageText.PICK_CATEGORY_FOR_YOUR_NOTE.text(), ReplyKeyboard.buttonsForPickingCategoryAfterCreateNote(telegramUser.getCategories(), newNote.getId()));
@@ -222,12 +250,12 @@ public class TellMe extends TelegramLongPollingBot {
         }
     }
 
-    private void onShowCategories(TelegramUser telegramUser, Long chatId) {
+    public void onShowCategories(TelegramUser telegramUser, Long chatId) {
         if (telegramUser.getCategories() == null || telegramUser.getCategories().isEmpty()) {
             sendButtonMessage(chatId, AnswerMessageText.NO_CATEGORIES_NO_NOTES.text(), null);
             return;
         }
-        sendButtonMessage(chatId, AnswerMessageText.IN_WHICH_CATEGORY.text(), ReplyKeyboard.buttonsForPickingCategoryForViewNotes(telegramUser.getCategories()));
+        sendButtonMessage(chatId, AnswerMessageText.PICK_CATEGORY_TO_VIEW_NOTES.text(), ReplyKeyboard.buttonsForPickingCategoryForViewNotes(telegramUser.getCategories()));
     }
 
     public void sendTextMessage(Long chatId, String responseMessage, ReplyKeyboardMarkup keyboardMarkup) {
@@ -276,12 +304,12 @@ public class TellMe extends TelegramLongPollingBot {
 
     @Override
     public String getBotUsername() {
-        return "@MindkeeperBot";
+        return "@sergiseyBot";
     }
 
     @Override
     public String getBotToken() {
-        return "254626232:AAEO0aaj6ddVIfrPsOCEIkDa8i0y0rcc3k0";
+        return "298962706:AAFJMqitHXvDNWT1Bw4N-ebU2u0Ny9GBSZU";
     }
 
 }

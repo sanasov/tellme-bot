@@ -1,4 +1,4 @@
-package ru.igrey.dev.notifyrule;
+package ru.igrey.dev.domain.notifyrule;
 
 class RepeatPeriod {
     private PeriodType periodType;

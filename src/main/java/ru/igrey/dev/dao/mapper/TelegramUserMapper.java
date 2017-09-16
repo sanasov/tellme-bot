@@ -1,5 +1,6 @@
 package ru.igrey.dev.dao.mapper;
 
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.jdbc.core.RowMapper;
 import ru.igrey.dev.entity.TelegramUserEntity;
 
@@ -21,6 +22,8 @@ public class TelegramUserMapper implements RowMapper {
         user.setStatus(rs.getString("STATUS"));
         user.setActive(rs.getInt("IS_ACTIVE"));
         user.setLanguageCode(rs.getString("LANGUAGE_CODE"));
+        user.setLanguage(rs.getString("LANGUAGE"));
+        user.setTimezone(StringUtils.isNotBlank(rs.getString("TIMEZONE")) ? rs.getInt("TIMEZONE") : null);
         user.setCreateDate(LocalDateTime.parse(rs.getString("CREATE_DATE"), DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss")));
         return user;
     }

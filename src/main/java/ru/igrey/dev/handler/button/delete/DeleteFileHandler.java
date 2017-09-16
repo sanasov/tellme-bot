@@ -1,8 +1,9 @@
-package ru.igrey.dev.handler.button;
+package ru.igrey.dev.handler.button.delete;
 
 import org.telegram.telegrambots.api.objects.CallbackQuery;
 import ru.igrey.dev.constant.AnswerMessageText;
 import ru.igrey.dev.dao.repository.NoteRepository;
+import ru.igrey.dev.handler.button.ButtonHandler;
 
 import static ru.igrey.dev.constant.Delimiter.BUTTON_DELIMITER;
 

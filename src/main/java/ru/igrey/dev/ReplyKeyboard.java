@@ -144,6 +144,22 @@ public class ReplyKeyboard {
         return markup;
     }
 
+    public static InlineKeyboardMarkup buttonsForPickingLanguage() {
+        InlineKeyboardMarkup markup = new InlineKeyboardMarkup();
+        List<List<InlineKeyboardButton>> keyboard = new ArrayList<>();
+        List<InlineKeyboardButton> englishButtonRow = new ArrayList<>();
+        List<InlineKeyboardButton> russianButtonRow = new ArrayList<>();
+        List<InlineKeyboardButton> persButtonRow = new ArrayList<>();
+        englishButtonRow.add(createInlineKeyboardButton(ButtonCommandName.PICK_LANGUAGE + BUTTON_DELIMITER + Language.ENGLISH.name(), Language.ENGLISH.title()));
+        russianButtonRow.add(createInlineKeyboardButton(ButtonCommandName.PICK_LANGUAGE + BUTTON_DELIMITER + Language.RUSSIAN.name(), Language.RUSSIAN.title()));
+        persButtonRow.add(createInlineKeyboardButton(ButtonCommandName.PICK_LANGUAGE + BUTTON_DELIMITER + Language.PERSIAN.name(), Language.PERSIAN.title()));
+        keyboard.add(englishButtonRow);
+        keyboard.add(russianButtonRow);
+        keyboard.add(persButtonRow);
+        markup.setKeyboard(keyboard);
+        return markup;
+    }
+
     private static InlineKeyboardButton createInlineKeyboardButton(String buttonId, String label) {
         InlineKeyboardButton btn = new InlineKeyboardButton();
         btn.setText(label);

@@ -25,7 +25,7 @@ public class BackToViewCategoriesHandler implements ButtonHandler {
         if (telegramUser.getCategories() == null || telegramUser.getCategories().isEmpty()) {
             BeanConfig.tellMeBot().editMessage(chatId, messageId, AnswerMessageText.NO_CATEGORIES_NO_NOTES.text(), null);
         } else {
-            BeanConfig.tellMeBot().editMessage(chatId, messageId, AnswerMessageText.IN_WHICH_CATEGORY.text(), ReplyKeyboard.buttonsForPickingCategoryForViewNotes(telegramUser.getCategories()));
+            BeanConfig.tellMeBot().editMessage(chatId, messageId, AnswerMessageText.PICK_CATEGORY_TO_VIEW_NOTES.text(), ReplyKeyboard.buttonsForPickingCategoryForViewNotes(telegramUser.getCategories()));
         }
         return AnswerMessageText.BACK_TO_CATEGORY_VIEW.text();
     }

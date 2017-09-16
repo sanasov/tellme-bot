@@ -20,8 +20,10 @@ public class TelegramUserEntity {
     private String status;
     private LocalDateTime createDate;
     private String languageCode;
+    private String language;
+    private Integer timezone;
 
-    public TelegramUserEntity(Long userId, String firstName, String lastName, String userName, String status, LocalDateTime createDate, Integer isActive, String languageCode) {
+    public TelegramUserEntity(Long userId, String firstName, String lastName, String userName, String status, LocalDateTime createDate, Integer isActive, String languageCode, String language, Integer timezone) {
         this.userId = userId;
         this.firstName = firstName;
         this.lastName = lastName;
@@ -30,6 +32,8 @@ public class TelegramUserEntity {
         this.createDate = createDate;
         this.isActive = isActive;
         this.languageCode = languageCode;
+        this.language = language;
+        this.timezone = timezone;
     }
 
     public TelegramUserEntity() {
@@ -97,5 +101,21 @@ public class TelegramUserEntity {
 
     public String getLanguageCode() {
         return StringUtils.isNotBlank(languageCode) ? languageCode : "";
+    }
+
+    public String getLanguage() {
+        return language;
+    }
+
+    public void setLanguage(String language) {
+        this.language = language;
+    }
+
+    public Integer getTimezone() {
+        return timezone;
+    }
+
+    public void setTimezone(Integer timezone) {
+        this.timezone = timezone;
     }
 }

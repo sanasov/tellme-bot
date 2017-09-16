@@ -1,4 +1,4 @@
-package ru.igrey.dev.handler.button;
+package ru.igrey.dev.handler.button.delete;
 
 import org.telegram.telegrambots.api.objects.CallbackQuery;
 import ru.igrey.dev.ReplyKeyboard;
@@ -6,6 +6,7 @@ import ru.igrey.dev.config.BeanConfig;
 import ru.igrey.dev.constant.AnswerMessageText;
 import ru.igrey.dev.dao.repository.CategoryRepository;
 import ru.igrey.dev.domain.TelegramUser;
+import ru.igrey.dev.handler.button.ButtonHandler;
 import ru.igrey.dev.service.TelegramUserService;
 
 import static ru.igrey.dev.constant.Delimiter.BUTTON_DELIMITER;
@@ -39,7 +40,7 @@ public class DeleteCategoryHandler implements ButtonHandler {
         if (telegramUser.getCategories() == null || telegramUser.getCategories().isEmpty()) {
             BeanConfig.tellMeBot().editMessage(chatId, messageId, AnswerMessageText.NO_CATEGORIES_NO_NOTES.text(), null);
         } else {
-            BeanConfig.tellMeBot().editMessage(chatId, messageId, AnswerMessageText.IN_WHICH_CATEGORY.text(), ReplyKeyboard.buttonsForPickingCategoryForViewNotes(telegramUser.getCategories()));
+            BeanConfig.tellMeBot().editMessage(chatId, messageId, AnswerMessageText.PICK_CATEGORY_TO_VIEW_NOTES.text(), ReplyKeyboard.buttonsForPickingCategoryForViewNotes(telegramUser.getCategories()));
         }
     }
 

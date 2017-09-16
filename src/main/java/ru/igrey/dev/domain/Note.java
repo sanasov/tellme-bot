@@ -5,7 +5,7 @@ import ru.igrey.dev.HtmlWrapper;
 import ru.igrey.dev.constant.Delimiter;
 import ru.igrey.dev.constant.Emoji;
 import ru.igrey.dev.entity.NoteEntity;
-import ru.igrey.dev.notifyrule.NotifyRule;
+import ru.igrey.dev.domain.notifyrule.NotifyRule;
 
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;

@@ -31,4 +31,6 @@ public class ButtonCommandName {
     public final static String REMIND_AGAIN_IN_1H = "HOUR";
     public final static String REMIND_AGAIN_IN_3H = "HOUR_3";
     public final static String REMIND_AGAIN_IN_1D = "DAY";
+
+    public final static String PICK_LANGUAGE = "PICK_LANGUAGE";
 }

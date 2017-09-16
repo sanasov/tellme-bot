@@ -1,8 +1,8 @@
-package ru.igrey.dev.notifyrule;
+package ru.igrey.dev.domain.notifyrule;
 
 import lombok.ToString;
 import org.apache.commons.lang3.StringUtils;
-import ru.igrey.dev.notifyrule.parse.NotifyRuleParser;
+import ru.igrey.dev.parse.NotifyRuleParser;
 
 import java.time.DayOfWeek;
 import java.time.LocalDate;

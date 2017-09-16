@@ -3,9 +3,12 @@ package ru.igrey.dev.domain;
 import lombok.ToString;
 import org.apache.commons.lang3.StringUtils;
 import org.telegram.telegrambots.api.objects.User;
+import ru.igrey.dev.constant.Language;
 import ru.igrey.dev.entity.TelegramUserEntity;
 
 import java.time.LocalDateTime;
+import java.time.ZoneOffset;
+import java.time.ZonedDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -20,8 +23,10 @@ public class TelegramUser {
     private LocalDateTime createDate;
     private List<Category> categories;
     private String languageCode;
+    private String language;
+    private Integer timezone;
 
-    public TelegramUser(Long userId, String firstName, String lastName, String userName, Boolean isActive, UserStatus status, LocalDateTime createDate, List<Category> categories, String languageCode) {
+    public TelegramUser(Long userId, String firstName, String lastName, String userName, Boolean isActive, UserStatus status, LocalDateTime createDate, List<Category> categories, String languageCode, String language, Integer timezone) {
         this.userId = userId;
         this.firstName = firstName;
         this.lastName = lastName;
@@ -31,6 +36,8 @@ public class TelegramUser {
         this.createDate = createDate;
         this.categories = categories;
         this.languageCode = languageCode;
+        this.language = language;
+        this.timezone = timezone;
     }
 
     public static TelegramUser createNewUser(User user) {
@@ -42,7 +49,9 @@ public class TelegramUser {
                 UserStatus.NEW,
                 null,
                 null,
-                user.getLanguageCode());
+                user.getLanguageCode(),
+                null,
+                null);
     }
 
 
@@ -55,6 +64,8 @@ public class TelegramUser {
         this.createDate = userEntity.getCreateDate();
         this.categories = categories;
         this.languageCode = userEntity.getLanguageCode();
+        this.language = userEntity.getLanguage();
+        this.timezone = userEntity.getTimezone();
     }
 
     public TelegramUserEntity toEntity() {
@@ -66,7 +77,9 @@ public class TelegramUser {
                 status.name(),
                 createDate,
                 null,
-                languageCode
+                languageCode,
+                language,
+                timezone
         );
     }
 
@@ -142,7 +155,49 @@ public class TelegramUser {
         return languageCode;
     }
 
+    public Language localization() {
+        if (StringUtils.isNotBlank(language)) {
+            return Language.valueOf(language);
+        }
+        if (StringUtils.isBlank(languageCode)) {
+            return Language.ENGLISH;
+        }
+        if (languageCode.startsWith("ru")) {
+            return Language.RUSSIAN;
+        }
+        if (languageCode.equals("fa-IR")) {
+            return Language.PERSIAN;
+        }
+        return Language.ENGLISH;
+
+    }
+
     public void setLanguageCode(String languageCode) {
         this.languageCode = languageCode;
+    }
+
+    public String getLanguage() {
+        return language;
+    }
+
+    public void setLanguage(String language) {
+        this.language = language;
+    }
+
+    public Integer getTimezone() {
+        return timezone;
+    }
+
+    public void setTimezone(Integer timezone) {
+        this.timezone = timezone;
+    }
+
+    public static void main(String[] args) {
+        System.out.println(LocalDateTime.now());
+        ZonedDateTime utc = ZonedDateTime.now(ZoneOffset.UTC);
+        System.out.println(LocalDateTime.now(utc.getZone()));
+        System.out.println(utc.toLocalDateTime());
+        System.out.println(LocalDateTime.now(ZoneOffset.UTC));
+
     }
 }

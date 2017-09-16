@@ -1,4 +1,4 @@
-package ru.igrey.dev.notifyrule.parse;
+package ru.igrey.dev.parse;
 
 import java.time.DayOfWeek;
 import java.util.ArrayList;

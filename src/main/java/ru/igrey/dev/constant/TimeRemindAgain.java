@@ -22,7 +22,7 @@ public enum TimeRemindAgain {
     String en;
 
     public String text() {
-        if (Localization.get().startsWith("ru")) {
+        if (Localization.get() == Language.RUSSIAN) {
             return ru;
         }
         return en;

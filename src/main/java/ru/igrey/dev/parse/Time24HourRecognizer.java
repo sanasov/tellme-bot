@@ -1,4 +1,4 @@
-package ru.igrey.dev.notifyrule.parse;
+package ru.igrey.dev.parse;
 
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;

@@ -1,17 +1,17 @@
 package ru.igrey.dev;
 
-import org.apache.commons.lang3.StringUtils;
+import ru.igrey.dev.constant.Language;
 
 public class Localization {
 
-    private static String lang;
+    private static Language lang;
 
-    public static String get() {
-        return StringUtils.isNotBlank(lang) ? lang : "en";
+    public static Language get() {
+        return lang;
     }
 
-    public static void set(String languageCode) {
-        lang = languageCode;
+    public static void set(Language language) {
+        lang = language;
     }
 
 }

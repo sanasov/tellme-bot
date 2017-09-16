@@ -7,6 +7,7 @@ import ru.igrey.dev.dao.repository.CategoryRepository;
 import ru.igrey.dev.dao.repository.NoteRepository;
 import ru.igrey.dev.dao.repository.NotificationRepository;
 import ru.igrey.dev.domain.TelegramUser;
+import ru.igrey.dev.handler.button.delete.*;
 import ru.igrey.dev.service.TelegramUserService;
 
 import static ru.igrey.dev.constant.Delimiter.BUTTON_DELIMITER;
@@ -74,6 +75,8 @@ public class ButtonHandlerFactory {
                 return new RemindAgainInHandler(query, noteRepository);
             case ButtonCommandName.REMOVE_NOTIFICATION:
                 return new DeleteNotificationHandler(query, notificationRepository, noteRepository);
+            case ButtonCommandName.PICK_LANGUAGE:
+                return new LanguageHandler(query, telegramUserService, telegramUser);
         }
         throw new RuntimeException("There is no button handler for command: " + buttonCommand);
     }

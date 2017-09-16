@@ -1,7 +1,7 @@
-package ru.igrey.dev.notifyrule.parse;
+package ru.igrey.dev.parse;
 
 import org.apache.commons.lang3.StringUtils;
-import ru.igrey.dev.notifyrule.NotifyRule;
+import ru.igrey.dev.domain.notifyrule.NotifyRule;
 
 public class NotifyRuleParser {
     private String rule;
