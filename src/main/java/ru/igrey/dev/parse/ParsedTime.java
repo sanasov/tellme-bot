@@ -15,7 +15,7 @@ public class ParsedTime {
     }
 
     public LocalTime get() {
-        String time = new Time24HourRecognizer().find(rule);
+        String time = new Time24HourRecognizer(rule).find();
         if (time == null) {
             return getDefaultTimeByDayPart();
         }

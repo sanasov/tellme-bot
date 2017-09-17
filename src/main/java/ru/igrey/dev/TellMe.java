@@ -199,7 +199,7 @@ public class TellMe extends TelegramLongPollingBot {
             telegramUser.setStatus(UserStatus.NEW);
             Integer timeZone = 0;
             try {
-                timeZone = new ParsedTimeZone(incomingMessageText).totalDiffInMinutes();
+                timeZone = new ParsedTimeZone(incomingMessageText).diffInMinutes();
                 telegramUser.setTimezone(timeZone);
                 sendTextMessage(
                         chatId,

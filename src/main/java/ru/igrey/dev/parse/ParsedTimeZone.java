@@ -1,46 +1,67 @@
 package ru.igrey.dev.parse;
 
-import java.time.LocalTime;
-import java.time.ZoneOffset;
+import org.apache.commons.lang3.StringUtils;
+import ru.igrey.dev.exception.DateTimeFormatException;
 
+import java.time.*;
+import java.time.format.DateTimeFormatter;
+import java.util.Comparator;
+import java.util.Map;
+import java.util.TimeZone;
+import java.util.concurrent.ConcurrentHashMap;
+import java.util.function.Function;
+import java.util.function.Predicate;
+import java.util.stream.Stream;
+
+/**
+ * Возвращает разницу по времени в минутах между UTC и часовым поясом пользователя
+ */
 public class ParsedTimeZone {
+    private String currentDateTime;
+    private LocalDateTime localDateTime;
 
-    String currentTime;
-    Boolean hasPm;
-    private final static String DELIMITER = ":";
-
-    public ParsedTimeZone(String currentTime) {
-        this.currentTime = currentTime.toLowerCase().replaceAll("[^\\d:]", "");
-        this.hasPm = currentTime.toLowerCase().contains("pm");
-    }
-
-    public Integer totalDiffInMinutes() {
-        return sign() * (60 * (hours() - LocalTime.now(ZoneOffset.UTC).getHour()) + minutes() - LocalTime.now(ZoneOffset.UTC).getMinute());
-    }
-
-
-    private Integer hours() {
-        String hours = currentTime.split(DELIMITER)[0];
-        if (hasPm) {
-            return Integer.valueOf(hours) + 12;
+    public Integer diffInMinutes() {
+        Duration diff = Duration.between(LocalDateTime.now(ZoneOffset.UTC), localDateTime);
+        if (diff.toHours() > 14 || diff.toHours() < -11) {
+            throw new DateTimeFormatException();
         }
-        return Integer.valueOf(hours);
+        return (int) Duration.between(LocalDateTime.now(ZoneOffset.UTC), userRealCurrentDateTime()).toMinutes();
     }
 
-    private Integer sign() {
-        if (LocalTime.now(ZoneOffset.UTC).plusHours(12).getHour() - hours() > 0) {
-            return 1;
+    public ParsedTimeZone(String currentDateTime) {
+        this.currentDateTime = currentDateTime;
+        this.localDateTime = LocalDateTime.of(date(), time());
+    }
+
+    private LocalDate date() {
+        LocalDate date = new DateRecognizer(currentDateTime).find();
+        if (date == null) {
+            return LocalDate.now();
         }
-        return -1;
+        return date;
     }
 
-    private Integer minutes() {
-        Integer minutes = Integer.valueOf(currentTime.split(DELIMITER)[1]);
-        return minutes;
+    private LocalTime time() {
+        String timeString = new Time24HourRecognizer(currentDateTime).find();
+        if (StringUtils.isBlank(timeString)) {
+            throw new DateTimeFormatException();
+        }
+        LocalTime time = LocalTime.parse(timeString, DateTimeFormatter.ofPattern("H:mm"));
+        return time;
     }
 
 
-    public static void main(String[] args) {
-        System.out.println(LocalTime.now(ZoneOffset.UTC).plusHours(4));
+    private LocalDateTime userRealCurrentDateTime() {
+        TimeZone timeZone = Stream.of(TimeZone.getAvailableIDs())
+                .map(id -> TimeZone.getTimeZone(id))
+                .min(Comparator.comparing(tz -> Math.abs(Duration.between(LocalDateTime.now(tz.toZoneId()), localDateTime).toMillis())))
+                .orElse(null);
+        return LocalDateTime.now(timeZone.toZoneId());
+    }
+
+
+    public static <T> Predicate<T> distinctByKey(Function<? super T, ?> keyExtractor) {
+        Map<Object, Boolean> seen = new ConcurrentHashMap<>();
+        return t -> seen.putIfAbsent(keyExtractor.apply(t), Boolean.TRUE) == null;
     }
 }

@@ -2,6 +2,9 @@ package ru.igrey.dev.constant;
 
 import ru.igrey.dev.Localization;
 
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+
 public enum AnswerMessageText {
 
     ADD_NOTE_AND_PICK_CATEGORY(
@@ -90,9 +93,9 @@ public enum AnswerMessageText {
             "زبان خود را انتخاب کنید"),
 
     SET_TIMEZONE(
-            "Установите часовой пояс " + Emoji.EARTH_GLOBE_EUROPE_AFRICA + "\n" + "Для этого отправьте мне текущее время" + "\n" + "Формат: <strong>HH:MM</strong>",
-            "Set timezone " + Emoji.EARTH_GLOBE_EUROPE_AFRICA + "\n" + "Send me your current time" + "\n" + "Format: <strong>HH:MM</strong>",
-            "منطقه زمانی را تنظیم کنید" + "\n" + "زمان فعلی من را به من بدهید" + "\n" + "فرمت: <strong>HH:MM</strong>"),
+            "Установите часовой пояс " + Emoji.EARTH_GLOBE_EUROPE_AFRICA + "\n" + "Для этого отправьте мне текущую дату и время" + "\n" + "Формат: <strong>dd.MM HH:mm</strong>" + "\nПример: " + LocalDateTime.now().format(DateTimeFormatter.ofPattern("dd.MM HH:mm")),
+            "Set timezone " + Emoji.EARTH_GLOBE_EUROPE_AFRICA + "\n" + "Send me your current time" + "\n" + "Format: <strong>dd.MM HH:mm</strong>\nExample: " + LocalDateTime.now().format(DateTimeFormatter.ofPattern("dd.MM HH:mm")),
+            "منطقه زمانی را تنظیم کنید" + "\n" + "زمان فعلی من را به من بدهید" + "\n" + "فرمت: <strong>dd.MM HH:mm</strong>" + "\n" + LocalDateTime.now().format(DateTimeFormatter.ofPattern("dd.MM HH:mm")) + "فرمت صحیح:"),
 
     NOTIFICATION_IS_POSTPONED(
             "Напоминание отложено",
@@ -100,9 +103,10 @@ public enum AnswerMessageText {
             "یادآوری تاخیر"),
 
     WRONG_FORMAT(
-            "Неверынй формат времени. Правильный формат: <strong>HH:MM</strong> \n" + "Пример: 18:32",
-            "Invalid time format. Correct format: <strong>HH:MM</strong> \n Example: 18:32",
-            "فرمت زمان نامعتبر\nفرمت صحیح:<strong>HH:MM</strong>");
+            "Неверынй формат даты и времени. Правильный формат: <strong>dd.MM HH:mm</strong> \n" + "Пример: " + LocalDateTime.now().format(DateTimeFormatter.ofPattern("dd.MM HH:mm")),
+            "Invalid time format. Correct format: <strong>HH:MM</strong> \n Example:" + LocalDateTime.now().format(DateTimeFormatter.ofPattern("dd.MM HH:mm")),
+            LocalDateTime.now().format(DateTimeFormatter.ofPattern("dd.MM HH:mm")) + "فرمت زمان نامعتبر\nفرمت صحیح: ");
+
 
 
     AnswerMessageText(String ru, String eng, String per) {
