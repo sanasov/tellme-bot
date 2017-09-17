@@ -4,7 +4,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.telegram.telegrambots.api.methods.send.SendPhoto;
 import org.telegram.telegrambots.api.objects.CallbackQuery;
 import org.telegram.telegrambots.exceptions.TelegramApiException;
-import ru.igrey.dev.ReplyKeyboard;
+import ru.igrey.dev.keyboard.ReplyKeyboard;
 import ru.igrey.dev.config.BeanConfig;
 import ru.igrey.dev.dao.repository.NoteRepository;
 import ru.igrey.dev.domain.Note;

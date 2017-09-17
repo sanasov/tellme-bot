@@ -105,8 +105,12 @@ public enum AnswerMessageText {
     WRONG_FORMAT(
             "Неверынй формат даты и времени. Правильный формат: <strong>dd.MM HH:mm</strong> \n" + "Пример: " + LocalDateTime.now().format(DateTimeFormatter.ofPattern("dd.MM HH:mm")),
             "Invalid time format. Correct format: <strong>HH:MM</strong> \n Example:" + LocalDateTime.now().format(DateTimeFormatter.ofPattern("dd.MM HH:mm")),
-            LocalDateTime.now().format(DateTimeFormatter.ofPattern("dd.MM HH:mm")) + "فرمت زمان نامعتبر\nفرمت صحیح: ");
-
+            LocalDateTime.now().format(DateTimeFormatter.ofPattern("dd.MM HH:mm")) + "فرمت زمان نامعتبر\nفرمت صحیح: "),
+    MENU(
+            "Меню",
+            "Menu",
+            "فهرست"
+    );
 
 
     AnswerMessageText(String ru, String eng, String per) {

@@ -4,7 +4,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.quartz.Job;
 import org.quartz.JobExecutionContext;
 import org.quartz.JobExecutionException;
-import ru.igrey.dev.ReplyKeyboard;
+import ru.igrey.dev.keyboard.ReplyKeyboard;
 import ru.igrey.dev.config.BeanConfig;
 import ru.igrey.dev.constant.AnswerMessageText;
 import ru.igrey.dev.constant.Emoji;

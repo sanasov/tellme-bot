@@ -1,7 +1,7 @@
 package ru.igrey.dev.handler.button;
 
 import org.telegram.telegrambots.api.objects.CallbackQuery;
-import ru.igrey.dev.ReplyKeyboard;
+import ru.igrey.dev.keyboard.ReplyKeyboard;
 import ru.igrey.dev.config.BeanConfig;
 import ru.igrey.dev.constant.AnswerMessageText;
 import ru.igrey.dev.dao.repository.CategoryRepository;

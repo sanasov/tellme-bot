@@ -28,6 +28,7 @@ import ru.igrey.dev.domain.TelegramUser;
 import ru.igrey.dev.domain.UserStatus;
 import ru.igrey.dev.handler.button.ButtonHandler;
 import ru.igrey.dev.handler.button.ButtonHandlerFactory;
+import ru.igrey.dev.keyboard.ReplyKeyboard;
 import ru.igrey.dev.parse.ParsedTimeZone;
 import ru.igrey.dev.scheduler.JobFactory;
 import ru.igrey.dev.scheduler.TriggerFactory;
@@ -176,6 +177,12 @@ public class TellMe extends TelegramLongPollingBot {
                 return;
             }
             onShowCategories(telegramUser, chatId);
+        } else if (incomingMessageText.equals(KeyboardCommand.MENU)) {
+            sendButtonMessage(
+                    chatId,
+                    AnswerMessageText.MENU.text(),
+                    ReplyKeyboard.menuButtons()
+            );
         } else if (incomingMessageText.equals(KeyboardCommand.HELP)) {
             sendTextMessage(chatId, AnswerMessageText.ADD_NOTE_AND_PICK_CATEGORY.text(), null);
         } else if (incomingMessageText.equals(KeyboardCommand.VIEW)) {

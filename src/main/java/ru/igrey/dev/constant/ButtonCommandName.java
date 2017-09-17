@@ -33,4 +33,12 @@ public class ButtonCommandName {
     public final static String REMIND_AGAIN_IN_1D = "DAY";
 
     public final static String PICK_LANGUAGE = "PICK_LANGUAGE";
+
+    //Menu
+    public final static String CATEGORIES = "CATEGORIES";
+    public final static String SETTINGS = "SETTINGS";
+    public final static String HELP = "HELP";
+    public final static String RATE = "RATE";
+    public final static String DONATE = "DONATE";
+
 }

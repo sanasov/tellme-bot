@@ -82,7 +82,7 @@ public enum Emoji {
     SPARKLE(null, '\u2747'),
     CROSS_MARK(null, '\u274C'),
     NEGATIVE_SQUARED_CROSS_MARK(null, '\u274E'),
-    BLACK_QUESTION_MARK_ORNAMENT(null, '\u2753'),
+
     WHITE_QUESTION_MARK_ORNAMENT(null, '\u2754'),
     WHITE_EXCLAMATION_MARK_ORNAMENT(null, '\u2755'),
     HEAVY_EXCLAMATION_MARK_SYMBOL(null, '\u2757'),
@@ -152,7 +152,6 @@ public enum Emoji {
     BACK_WITH_LEFTWARDS_ARROW_ABOVE('\uD83D', '\uDD19'),
     WRENCH('\uD83D', '\uDD27'),
     DIGIT_THREE(null, '\u0033'),
-    CLIPBOARD('\uD83D', '\uDCCB'),
     THUMBS_UP_SIGN('\uD83D', '\uDC4D'),
     WHITE_RIGHT_POINTING_BACKHAND_INDEX('\uD83D', '\uDC49'),
     TEAR_OFF_CALENDAR('\uD83D', '\uDCC6'),
@@ -178,7 +177,11 @@ public enum Emoji {
     MICROPHONE('\uD83C', '\uDF99'),
     DOCUMENT('\uD83D', '\uDDC2'),
     VIDEO('\uD83C', '\uDFAC'),
-    NOTE_WITH_PEN('\uD83D', '\uDCDD');
+    NOTE_WITH_PEN('\uD83D', '\uDCDD'),
+    SETTINGS('\u2699', null),
+    BLACK_QUESTION_MARK_ORNAMENT(null, '\u2753'),
+    CLIPBOARD('\uD83D', '\uDCCB'),
+    DONATE('\uD83D', '\uDCB0');
     Character firstChar;
     Character secondChar;
 
@@ -222,6 +225,10 @@ public enum Emoji {
         System.out.println(DOCUMENT);
         System.out.println(VIDEO);
         System.out.println(NOTE_WITH_PEN);
+        System.out.println(SETTINGS);
+        System.out.println(BLACK_QUESTION_MARK_ORNAMENT);
+        System.out.println(CLIPBOARD);
+        System.out.println(DONATE);
     }
 }
 

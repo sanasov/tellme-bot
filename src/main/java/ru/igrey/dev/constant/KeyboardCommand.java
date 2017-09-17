@@ -9,4 +9,5 @@ public class KeyboardCommand {
     public static final String RATE = "/rate";
     public static final String SETTINGS = "/settings";
     public static final String COMMAND_START = "/start";
+    public static final String MENU = "/menu";
 }

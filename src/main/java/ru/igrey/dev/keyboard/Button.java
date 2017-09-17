@@ -1,0 +1,14 @@
+package ru.igrey.dev.keyboard;
+
+import org.telegram.telegrambots.api.objects.replykeyboard.buttons.InlineKeyboardButton;
+
+public class Button {
+    public static InlineKeyboardButton create(String buttonId, String label) {
+        InlineKeyboardButton btn = new InlineKeyboardButton();
+        btn.setText(label);
+        btn.setSwitchInlineQuery("setSwitchInlineQuery");
+        btn.setSwitchInlineQueryCurrentChat("setSwitchInlineQueryCurrentChat");
+        btn.setCallbackData(buttonId);
+        return btn;
+    }
+}

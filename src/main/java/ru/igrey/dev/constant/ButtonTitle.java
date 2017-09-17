@@ -36,7 +36,28 @@ public enum ButtonTitle {
     CREATE_CATEGORY(
             "Создать категорию",
             "Create category",
-            "ایجاد دسته");
+            "ایجاد دسته"),
+    //Menu
+    VIEW_CATEGORIES(
+            Emoji.CLIPBOARD + " Категории",
+            Emoji.CLIPBOARD + " Categories",
+            Emoji.CLIPBOARD + "دسته بندی ها "),
+    SETTINGS(
+            Emoji.SETTINGS + " Настройки",
+            Emoji.SETTINGS + " Settings",
+            Emoji.SETTINGS + "تنظیمات "),
+    HELP(
+            Emoji.BLACK_QUESTION_MARK_ORNAMENT + " Справка",
+            Emoji.BLACK_QUESTION_MARK_ORNAMENT + " Help",
+            Emoji.BLACK_QUESTION_MARK_ORNAMENT + "کمک "),
+    RATE(
+            Emoji.STAR + " Поставить мне оценку",
+            Emoji.STAR + " Rate me",
+            Emoji.STAR + "به من امتیاز بدهید "),
+    DONATE(
+            Emoji.DONATE + " Поддержать меня",
+            Emoji.DONATE + " Support me",
+            Emoji.DONATE + "به توسعه دهندگان کمک کنید ");
 
     ButtonTitle(String ru, String en, String per) {
         this.ru = ru;
