@@ -23,6 +23,7 @@ public class DonateHandler implements ButtonHandler {
     public String onClick() {
         Long chatId = query.getMessage().getChatId();
         SendPhoto photo = new SendPhoto();
+        photo.setChatId(chatId);
         photo.setPhoto(catPhotoId);
         try {
             BeanConfig.tellMeBot().sendPhoto(photo);
