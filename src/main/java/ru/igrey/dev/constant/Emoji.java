@@ -66,7 +66,6 @@ public enum Emoji {
 
     // Dingbats group
     BLACK_SCISSORS(null, '\u2702'),
-    WHITE_HEAVY_CHECK_MARK(null, '\u2705'),
     AIRPLANE(null, '\u2708'),
     ENVELOPE(null, '\u2709'),
     RAISED_FIST(null, '\u270A'),
@@ -80,7 +79,6 @@ public enum Emoji {
     EIGHT_POINTED_BLACK_STAR(null, '\u2734'),
     SNOWFLAKE(null, '\u2744'),
     SPARKLE(null, '\u2747'),
-    CROSS_MARK(null, '\u274C'),
     NEGATIVE_SQUARED_CROSS_MARK(null, '\u274E'),
 
     WHITE_QUESTION_MARK_ORNAMENT(null, '\u2754'),
@@ -90,6 +88,8 @@ public enum Emoji {
     HEAVY_PLUS_SIGN(null, '\u2795'),
     HEAVY_MINUS_SIGN(null, '\u2796'),
     HEAVY_DIVISION_SIGN(null, '\u2797'),
+    CROSS_MARK(null, '\u274C'),
+    WHITE_HEAVY_CHECK_MARK(null, '\u2705'),
     BLACK_RIGHTWARDS_ARROW(null, '\u27A1'),
     CURLY_LOOP(null, '\u27B0'),
 

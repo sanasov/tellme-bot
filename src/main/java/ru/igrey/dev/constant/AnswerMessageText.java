@@ -128,6 +128,11 @@ public enum AnswerMessageText {
             "Поддержите меня небольшим взносом для оплаты серверов.\n" + Emoji.BLACK_RIGHTWARDS_ARROW + "<a href = http://yasobe.ru/na/notes_bot>YandexMoney</a> ",
             "Donate some money, so i can pay for servers. Thank you.\n" + Emoji.BLACK_RIGHTWARDS_ARROW + "<a href = http://yasobe.ru/na/notes_bot>YandexMoney</a>",
             "اهدای مقداری پول برای پرداخت سرور\n" + Emoji.BLACK_RIGHTWARDS_ARROW + "<a href = http://yasobe.ru/na/notes_bot>YandexMoney</a>"
+    ),
+    TIMEZONE_IS_SET(
+            Emoji.WHITE_HEAVY_CHECK_MARK + " Часовой пояс установлен",
+            Emoji.WHITE_HEAVY_CHECK_MARK + " Time zone is set",
+            " منطقه زمانی تنظیم شده است" + Emoji.WHITE_HEAVY_CHECK_MARK
     );
 
 

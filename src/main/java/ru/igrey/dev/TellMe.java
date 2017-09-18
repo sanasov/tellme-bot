@@ -187,8 +187,6 @@ public class TellMe extends TelegramLongPollingBot {
             sendTextMessage(chatId, AnswerMessageText.ADD_NOTE_AND_PICK_CATEGORY.text(), null);
         } else if (incomingMessageText.equals(KeyboardCommand.VIEW)) {
             onShowCategories(telegramUser, chatId);
-        } else if (incomingMessageText.equals(KeyboardCommand.SETTINGS)) {
-            onShowCategories(telegramUser, chatId);
         } else if (incomingMessageText.equals(KeyboardCommand.RATE)) {
             sendTextMessage(chatId, AnswerMessageText.RATE.text(), null);
         } else if (telegramUser.getStatus().equals(UserStatus.CREATE_CATEGORY)) {
@@ -208,12 +206,12 @@ public class TellMe extends TelegramLongPollingBot {
             try {
                 timeZone = new ParsedTimeZone(incomingMessageText).diffInMinutes();
                 telegramUser.setTimezone(timeZone);
-                sendTextMessage(
-                        chatId,
-                        "Timezone is setted",
-                        null
-                );
                 telegramUserService.save(telegramUser);
+                sendButtonMessage(
+                        chatId,
+                        AnswerMessageText.TIMEZONE_IS_SET.text() + "\n" + telegramUser.settings(),
+                        ReplyKeyboard.settingsButtons()
+                );
             } catch (Exception e) {
                 log.info("Wrong number format");
                 sendTextMessage(

@@ -91,6 +91,10 @@ public class ButtonHandlerFactory {
                 return new DonateHandler(query);
             case ButtonCommandName.BACK_TO_MENU:
                 return new BackToMenuHandler(query);
+            case ButtonCommandName.SETTINGS_LANGUAGE:
+                return new SettingsLanguageHandler(query);
+            case ButtonCommandName.SETTINGS_TIMEZONE:
+                return new SettingsTimezoneHandler(query,telegramUser, telegramUserService);
         }
         throw new RuntimeException("There is no button handler for command: " + buttonCommand);
     }

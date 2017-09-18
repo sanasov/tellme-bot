@@ -51,7 +51,7 @@ public enum ButtonTitle {
             Emoji.BLACK_QUESTION_MARK_ORNAMENT + " Help",
             Emoji.BLACK_QUESTION_MARK_ORNAMENT + "کمک "),
     RATE(
-            Emoji.STAR + " Поставить мне оценку",
+            Emoji.STAR + "Оценить меня",
             Emoji.STAR + " Rate me",
             Emoji.STAR + "به من امتیاز بدهید "),
     DONATE(

@@ -198,8 +198,8 @@ public class ReplyKeyboard {
         List<InlineKeyboardButton> language = new ArrayList<>();
         List<InlineKeyboardButton> localTime = new ArrayList<>();
         List<InlineKeyboardButton> backToMenu = new ArrayList<>();
-        language.add(Button.create(ButtonCommandName.LANGUAGE, ButtonTitle.PICK_LANGUAGE.text()));
-        localTime.add(Button.create(ButtonCommandName.LOCAL_TIME, ButtonTitle.TIME_ZONE.text()));
+        language.add(Button.create(ButtonCommandName.SETTINGS_LANGUAGE, ButtonTitle.PICK_LANGUAGE.text()));
+        localTime.add(Button.create(ButtonCommandName.SETTINGS_TIMEZONE, ButtonTitle.TIME_ZONE.text()));
         backToMenu.add(Button.create(ButtonCommandName.BACK_TO_MENU, ButtonTitle.BACK_TO_MENU.text()));
         keyboard.add(language);
         keyboard.add(localTime);

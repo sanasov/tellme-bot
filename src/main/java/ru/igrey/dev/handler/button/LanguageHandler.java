@@ -2,16 +2,13 @@ package ru.igrey.dev.handler.button;
 
 import org.telegram.telegrambots.api.objects.CallbackQuery;
 import ru.igrey.dev.Localization;
-import ru.igrey.dev.keyboard.ReplyKeyboard;
 import ru.igrey.dev.config.BeanConfig;
 import ru.igrey.dev.constant.AnswerMessageText;
 import ru.igrey.dev.constant.Language;
-import ru.igrey.dev.domain.Category;
 import ru.igrey.dev.domain.TelegramUser;
 import ru.igrey.dev.domain.UserStatus;
+import ru.igrey.dev.keyboard.ReplyKeyboard;
 import ru.igrey.dev.service.TelegramUserService;
-
-import java.util.List;
 
 import static ru.igrey.dev.constant.Delimiter.BUTTON_DELIMITER;
 
@@ -38,18 +35,19 @@ public class LanguageHandler implements ButtonHandler {
             telegramUser.setStatus(UserStatus.SET_TIMEZONE);
             BeanConfig.tellMeBot().editMessage(chatId, messageId, AnswerMessageText.SET_TIMEZONE.text(), null);
         } else {
-            onShowCategories(telegramUser.getCategories(), chatId, messageId);
+            showMenu(chatId, messageId);
         }
         telegramUserService.save(telegramUser);
         return language.title();
     }
 
-    public void onShowCategories(List<Category> categories, Long chatId, Integer messageId) {
-        if (categories == null || categories.isEmpty()) {
-            BeanConfig.tellMeBot().editMessage(chatId, messageId, AnswerMessageText.NO_CATEGORIES_NO_NOTES.text(), null);
-            return;
-        }
-        BeanConfig.tellMeBot().editMessage(chatId, messageId, AnswerMessageText.PICK_CATEGORY_TO_VIEW_NOTES.text(), ReplyKeyboard.buttonsForPickingCategoryForViewNotes(telegramUser.getCategories()));
+    private void showMenu(Long chatId, Integer messageId) {
+        BeanConfig.tellMeBot().editMessage(
+                chatId,
+                messageId,
+                AnswerMessageText.MENU.text(),
+                ReplyKeyboard.menuButtons()
+        );
     }
 
 }

@@ -43,7 +43,7 @@ public class ButtonCommandName {
 
     public final static String BACK_TO_MENU = "BACK_TO_MENU";
         //Settings
-    public final static String LANGUAGE = "LANGUAGE";
-    public final static String LOCAL_TIME = "LOCAL_TIME";
+    public final static String SETTINGS_TIMEZONE = "SETTINGS_TIMEZONE";
+    public final static String SETTINGS_LANGUAGE = "SETTINGS_LANGUAGE";
 
 }

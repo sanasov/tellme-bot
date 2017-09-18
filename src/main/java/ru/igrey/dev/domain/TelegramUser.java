@@ -90,7 +90,7 @@ public class TelegramUser {
     }
 
     public String settings() {
-        String currentTime = timezone != null ? LocalDateTime.now().plusMinutes(timezone).format(DateTimeFormatter.ofPattern("HH:mm")) : "-";
+        String currentTime = timezone != null ? LocalDateTime.now(ZoneOffset.UTC).plusMinutes(timezone).format(DateTimeFormatter.ofPattern("HH:mm")) : "-";
 
         if (Language.valueOf(language) == Language.PERSIAN) {
             return AnswerMessageText.LANGUAGE.text() + "\n"
