@@ -21,7 +21,8 @@ public class NoteMapper implements RowMapper {
                 rs.getLong("USER_ID"),
                 rs.getString("NOTIFY_RULE"),
                 rs.getString("FILE_NAME"),
-                rs.getString("CAPTION")
+                rs.getString("CAPTION"),
+                rs.getInt("TIMEZONE_MINUTES")
         );
     }
 }

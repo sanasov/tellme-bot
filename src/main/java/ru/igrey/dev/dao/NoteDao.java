@@ -25,15 +25,16 @@ public class NoteDao {
     }
 
     public NoteEntity insert(NoteEntity entity) {
-        String sqlInsert = "INSERT INTO note (category_id, user_id, txt, notify_rule, file_name, caption)"
-                + " VALUES (?, ?, ?, ?, ?, ?)";
+        String sqlInsert = "INSERT INTO note (category_id, user_id, txt, notify_rule, file_name, caption, timezone_minutes)"
+                + " VALUES (?, ?, ?, ?, ?, ?, ?)";
         jdbcTemplate.update(sqlInsert, new Object[]{
                 entity.getCategoryId(),
                 entity.getUserId(),
                 entity.getText(),
                 entity.getNotifyRule(),
                 entity.getFileName(),
-                entity.getCaption()
+                entity.getCaption(),
+                entity.getTimezoneInMinutes()
         });
         entity.setId(jdbcTemplate.queryForLong("SELECT seq from sqlite_sequence WHERE name = 'note'"));
         return entity;
@@ -46,7 +47,8 @@ public class NoteDao {
                 " txt = ?," +
                 " notify_rule = ?," +
                 " file_name = ?," +
-                " caption = ?" +
+                " caption = ?," +
+                " timezone_minutes = ?" +
                 " where id = ?";
         jdbcTemplate.update(sqlUpdate, new Object[]{
                 entity.getCategoryId(),
@@ -55,6 +57,7 @@ public class NoteDao {
                 entity.getNotifyRule(),
                 entity.getFileName(),
                 entity.getCaption(),
+                entity.getTimezoneInMinutes(),
                 entity.getId()
         });
         return entity;

@@ -4,10 +4,11 @@ import org.apache.commons.lang3.StringUtils;
 import ru.igrey.dev.HtmlWrapper;
 import ru.igrey.dev.constant.Delimiter;
 import ru.igrey.dev.constant.Emoji;
-import ru.igrey.dev.entity.NoteEntity;
 import ru.igrey.dev.domain.notifyrule.NotifyRule;
+import ru.igrey.dev.entity.NoteEntity;
 
 import java.time.LocalDateTime;
+import java.time.ZoneOffset;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
@@ -23,8 +24,9 @@ public class Note {
     private String notifyRule;
     private String fileName;
     private String caption;
+    private Integer timezoneInMinutes;
 
-    public Note(Long id, Long categoryId, Long userId, LocalDateTime createDate, String text, String notifyRule, String fileName, String capture) {
+    public Note(Long id, Long categoryId, Long userId, LocalDateTime createDate, String text, String notifyRule, String fileName, String capture, Integer timezoneInMinutes) {
         this.id = id;
         this.categoryId = categoryId;
         this.userId = userId;
@@ -33,6 +35,7 @@ public class Note {
         this.notifyRule = notifyRule;
         this.fileName = fileName;
         this.caption = capture;
+        this.timezoneInMinutes = timezoneInMinutes;
     }
 
     public Note(NoteEntity entity) {
@@ -44,14 +47,15 @@ public class Note {
         this.notifyRule = entity.getNotifyRule();
         this.fileName = entity.getFileName();
         this.caption = entity.getCaption();
+        this.timezoneInMinutes = entity.getTimezoneInMinutes();
     }
 
-    public static Note createNewNote(String text, String fileName, String capture, Long categoryId, Long userId) {
+    public static Note createNewNote(String text, String fileName, String capture, Long categoryId, Long userId, Integer timezoneInMinutes) {
         String[] notifyRuleAndNoteName = text.split(Delimiter.NOTIFY_DELIMITER);
         if (notifyRuleAndNoteName.length == 2) {
-            return new Note(null, categoryId, userId, null, notifyRuleAndNoteName[1].trim(), notifyRuleAndNoteName[0].trim(), fileName, capture);
+            return new Note(null, categoryId, userId, null, notifyRuleAndNoteName[1].trim(), notifyRuleAndNoteName[0].trim(), fileName, capture, timezoneInMinutes);
         }
-        return new Note(null, categoryId, userId, null, text, null, fileName, capture);
+        return new Note(null, categoryId, userId, null, text, null, fileName, capture, timezoneInMinutes);
     }
 
     public List<Notification> createNotifications() {
@@ -62,15 +66,14 @@ public class Note {
         return Optional.ofNullable(rule.getNotifyDates()).orElse(new ArrayList<>())
                 .stream()
                 .map(notificationDate -> new Notification(this.text,
-                        LocalDateTime.of(notificationDate, rule.getTime()),
+                        LocalDateTime.of(notificationDate, rule.getTime()).minusMinutes(timezoneInMinutes),
                         this.userId,
                         this.id))
                 .collect(Collectors.toList());
     }
 
-
     public NoteEntity toEntity() {
-        return new NoteEntity(id, createDate, text, categoryId, userId, notifyRule, fileName, caption);
+        return new NoteEntity(id, createDate, text, categoryId, userId, notifyRule, fileName, caption, timezoneInMinutes);
     }
 
     public Long getId() {
@@ -169,8 +172,8 @@ public class Note {
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd.MM.YYYY HH:mm");
         return Optional.ofNullable(notifications).orElse(new ArrayList<>())
                 .stream()
-                .filter(notification -> notification.getNotifyDate().isAfter(LocalDateTime.now()))
-                .map(notification -> notification.getNotifyDate().format(formatter))
+                .filter(notification -> notification.getNotifyDate().isAfter(LocalDateTime.now(ZoneOffset.UTC)))
+                .map(notification -> notification.getNotifyDate().plusMinutes(timezoneInMinutes).format(formatter))
                 .reduce((total, curr) -> total + ", " + curr)
                 .orElse(notifications != null && notifications.size() > 0 ? "expired" : "");
     }

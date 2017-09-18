@@ -87,7 +87,8 @@ public class TellMe extends TelegramLongPollingBot {
                         message.getPhoto().get(0).hasFilePath() ? message.getPhoto().get(0).getFilePath() : NamedCategory.PHOTO + message.getPhoto().get(0).getFileSize(),
                         message.getCaption(),
                         photoCategory.getId(),
-                        chatId)
+                        chatId,
+                        null)
         );
         TelegramUser telegramUser = telegramUserService.getOrCreateTelegramUserByUserId(message.getFrom());
         onShowCategories(telegramUser, chatId);
@@ -105,7 +106,8 @@ public class TellMe extends TelegramLongPollingBot {
                         message.getVoice().getMimeType() + ", " + message.getVoice().getDuration() + ", " + message.getVoice().getFileSize(),
                         message.getCaption(),
                         photoCategory.getId(),
-                        chatId)
+                        chatId,
+                        null)
         );
         TelegramUser telegramUser = telegramUserService.getOrCreateTelegramUserByUserId(message.getFrom());
         onShowCategories(telegramUser, chatId);
@@ -123,7 +125,8 @@ public class TellMe extends TelegramLongPollingBot {
                         message.getVideo().getMimeType() + ", " + message.getVideo().getDuration() + ", " + message.getVideo().getThumb(),
                         message.getCaption(),
                         videoCategory.getId(),
-                        chatId)
+                        chatId,
+                        null)
         );
         TelegramUser telegramUser = telegramUserService.getOrCreateTelegramUserByUserId(message.getFrom());
         onShowCategories(telegramUser, chatId);
@@ -141,7 +144,8 @@ public class TellMe extends TelegramLongPollingBot {
                         message.getDocument().getFileName(),
                         message.getCaption(),
                         photoCategory.getId(),
-                        chatId)
+                        chatId,
+                        null)
         );
         TelegramUser telegramUser = telegramUserService.getOrCreateTelegramUserByUserId(message.getFrom());
         onShowCategories(telegramUser, chatId);
@@ -222,7 +226,7 @@ public class TellMe extends TelegramLongPollingBot {
             }
 
         } else {// create new note
-            Note newNote = noteRepository.saveNote(Note.createNewNote(incomingMessageText, null, null, null, chatId));
+            Note newNote = noteRepository.saveNote(Note.createNewNote(incomingMessageText, null, null, null, chatId, telegramUser.getTimezone()));
             sendButtonMessage(chatId, AnswerMessageText.PICK_CATEGORY_FOR_YOUR_NOTE.text(), ReplyKeyboard.buttonsForPickingCategoryAfterCreateNote(telegramUser.getCategories(), newNote.getId()));
         }
 

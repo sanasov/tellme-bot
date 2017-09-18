@@ -4,14 +4,15 @@ import lombok.extern.slf4j.Slf4j;
 import org.quartz.Job;
 import org.quartz.JobExecutionContext;
 import org.quartz.JobExecutionException;
-import ru.igrey.dev.keyboard.ReplyKeyboard;
 import ru.igrey.dev.config.BeanConfig;
 import ru.igrey.dev.constant.AnswerMessageText;
 import ru.igrey.dev.constant.Emoji;
 import ru.igrey.dev.dao.repository.NotificationRepository;
 import ru.igrey.dev.domain.Notification;
+import ru.igrey.dev.keyboard.ReplyKeyboard;
 
 import java.time.LocalDateTime;
+import java.time.ZoneOffset;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -27,7 +28,7 @@ public class UserNotificationJob implements Job {
     @Override
     public void execute(JobExecutionContext context) throws JobExecutionException {
         List<Notification> expiredNotifications = notificationRepository.findAll().stream()
-                .filter(notification -> notification.getNotifyDate().isBefore(LocalDateTime.now()))
+                .filter(notification -> notification.getNotifyDate().isBefore(LocalDateTime.now(ZoneOffset.UTC)))
                 .collect(Collectors.toList());
         for (Notification notification : expiredNotifications) {
             sendNotification(notification);
