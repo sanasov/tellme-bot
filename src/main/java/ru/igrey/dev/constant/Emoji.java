@@ -229,6 +229,7 @@ public enum Emoji {
         System.out.println(BLACK_QUESTION_MARK_ORNAMENT);
         System.out.println(CLIPBOARD);
         System.out.println(DONATE);
+        System.out.println(BLACK_RIGHTWARDS_ARROW);
     }
 }
 

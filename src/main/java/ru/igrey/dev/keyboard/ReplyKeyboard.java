@@ -182,5 +182,16 @@ public class ReplyKeyboard {
         return markup;
     }
 
+    public static InlineKeyboardMarkup backToMenuButton() {
+        InlineKeyboardMarkup markup = new InlineKeyboardMarkup();
+        List<List<InlineKeyboardButton>> keyboard = new ArrayList<>();
+        List<InlineKeyboardButton> categories = new ArrayList<>();
+        categories.add(Button.create(ButtonCommandName.BACK_TO_MENU, ButtonTitle.BACK_TO_MENU.text()));
+        keyboard.add(categories);
+        markup.setKeyboard(keyboard);
+        return markup;
+    }
+
+
 
 }

@@ -110,6 +110,11 @@ public enum AnswerMessageText {
             "Меню",
             "Menu",
             "فهرست"
+    ),
+    DONATE(
+            "Поддержите меня небольшим взносом для оплаты серверов.\n" + Emoji.BLACK_RIGHTWARDS_ARROW + "<a href = 'http://yasobe.ru/na/notes_bot'>YandexMoney</a> ",
+            "Donate some money, so i can pay for servers. Thank you.\n" + Emoji.BLACK_RIGHTWARDS_ARROW + "<a href = 'http://yasobe.ru/na/notes_bot'>YandexMoney</a>",
+            "اهدای مقداری پول برای پرداخت سرور\n" + Emoji.BLACK_RIGHTWARDS_ARROW + "<a href = 'http://yasobe.ru/na/notes_bot'>YandexMoney</a>"
     );
 
 

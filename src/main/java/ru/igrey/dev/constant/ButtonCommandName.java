@@ -41,4 +41,6 @@ public class ButtonCommandName {
     public final static String RATE = "RATE";
     public final static String DONATE = "DONATE";
 
+    public final static String BACK_TO_MENU = "BACK_TO_MENU";
+
 }

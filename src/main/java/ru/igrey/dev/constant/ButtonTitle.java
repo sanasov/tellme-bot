@@ -57,7 +57,14 @@ public enum ButtonTitle {
     DONATE(
             Emoji.DONATE + " Поддержать меня",
             Emoji.DONATE + " Support me",
-            Emoji.DONATE + "به توسعه دهندگان کمک کنید ");
+            Emoji.DONATE + "به توسعه دهندگان کمک کنید "),
+
+
+    BACK_TO_MENU(
+            Emoji.LEFT_ARROW + " Назад к меню",
+            Emoji.LEFT_ARROW + " Back to menu",
+            Emoji.LEFT_ARROW + "بازگشت به فهرست ");
+
 
     ButtonTitle(String ru, String en, String per) {
         this.ru = ru;
