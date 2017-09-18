@@ -63,7 +63,19 @@ public enum ButtonTitle {
     BACK_TO_MENU(
             Emoji.LEFT_ARROW + " Назад к меню",
             Emoji.LEFT_ARROW + " Back to menu",
-            Emoji.LEFT_ARROW + "بازگشت به فهرست ");
+            Emoji.LEFT_ARROW + "بازگشت به فهرست "),
+
+
+    PICK_LANGUAGE(
+            "Выберите язык",
+            "Сhoose language",
+            "زبان را انتخاب کنید"),
+
+    TIME_ZONE(
+            "Часовой пояс",
+            "Time Zone",
+            "منطقه زمانی"
+    );
 
 
     ButtonTitle(String ru, String en, String per) {

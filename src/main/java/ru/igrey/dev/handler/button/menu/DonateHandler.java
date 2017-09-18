@@ -6,6 +6,7 @@ import org.telegram.telegrambots.api.objects.CallbackQuery;
 import org.telegram.telegrambots.exceptions.TelegramApiException;
 import ru.igrey.dev.config.BeanConfig;
 import ru.igrey.dev.constant.AnswerMessageText;
+import ru.igrey.dev.constant.Emoji;
 import ru.igrey.dev.handler.button.ButtonHandler;
 import ru.igrey.dev.keyboard.ReplyKeyboard;
 
@@ -33,6 +34,11 @@ public class DonateHandler implements ButtonHandler {
         BeanConfig.tellMeBot().editMessage(
                 chatId,
                 query.getMessage().getMessageId(),
+                Emoji.DONATE.toString(),
+                null
+        );
+        BeanConfig.tellMeBot().sendButtonMessage(
+                chatId,
                 AnswerMessageText.DONATE.text(),
                 ReplyKeyboard.backToMenuButton()
         );

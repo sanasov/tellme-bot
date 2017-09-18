@@ -42,5 +42,8 @@ public class ButtonCommandName {
     public final static String DONATE = "DONATE";
 
     public final static String BACK_TO_MENU = "BACK_TO_MENU";
+        //Settings
+    public final static String LANGUAGE = "LANGUAGE";
+    public final static String LOCAL_TIME = "LOCAL_TIME";
 
 }

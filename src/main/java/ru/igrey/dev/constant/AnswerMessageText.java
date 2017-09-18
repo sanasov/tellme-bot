@@ -90,7 +90,20 @@ public enum AnswerMessageText {
     PICK_LANGUAGE(
             "Выберите язык:",
             "Сhoose language:",
-            "زبان خود را انتخاب کنید"),
+            "زبان را انتخاب کنید"),
+
+    LANGUAGE(
+            "Язык: " + Language.RUSSIAN.title(),
+            "Language: " + Language.ENGLISH.title(),
+            Language.PERSIAN.title() + "زبان: "),
+
+
+    LOCAL_TIME(
+            "Локальное время: ",
+            "Local time: ",
+            "زمان محلی:"
+    ),
+
 
     SET_TIMEZONE(
             "Установите часовой пояс " + Emoji.EARTH_GLOBE_EUROPE_AFRICA + "\n" + "Для этого отправьте мне текущую дату и время" + "\n" + "Формат: <strong>dd.MM HH:mm</strong>" + "\nПример: " + LocalDateTime.now().format(DateTimeFormatter.ofPattern("dd.MM HH:mm")),
@@ -112,9 +125,9 @@ public enum AnswerMessageText {
             "فهرست"
     ),
     DONATE(
-            "Поддержите меня небольшим взносом для оплаты серверов.\n" + Emoji.BLACK_RIGHTWARDS_ARROW + "<a href = 'http://yasobe.ru/na/notes_bot'>YandexMoney</a> ",
-            "Donate some money, so i can pay for servers. Thank you.\n" + Emoji.BLACK_RIGHTWARDS_ARROW + "<a href = 'http://yasobe.ru/na/notes_bot'>YandexMoney</a>",
-            "اهدای مقداری پول برای پرداخت سرور\n" + Emoji.BLACK_RIGHTWARDS_ARROW + "<a href = 'http://yasobe.ru/na/notes_bot'>YandexMoney</a>"
+            "Поддержите меня небольшим взносом для оплаты серверов.\n" + Emoji.BLACK_RIGHTWARDS_ARROW + "<a href = http://yasobe.ru/na/notes_bot>YandexMoney</a> ",
+            "Donate some money, so i can pay for servers. Thank you.\n" + Emoji.BLACK_RIGHTWARDS_ARROW + "<a href = http://yasobe.ru/na/notes_bot>YandexMoney</a>",
+            "اهدای مقداری پول برای پرداخت سرور\n" + Emoji.BLACK_RIGHTWARDS_ARROW + "<a href = http://yasobe.ru/na/notes_bot>YandexMoney</a>"
     );
 
 

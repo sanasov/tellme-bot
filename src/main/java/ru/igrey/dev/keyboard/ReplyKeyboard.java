@@ -185,13 +185,28 @@ public class ReplyKeyboard {
     public static InlineKeyboardMarkup backToMenuButton() {
         InlineKeyboardMarkup markup = new InlineKeyboardMarkup();
         List<List<InlineKeyboardButton>> keyboard = new ArrayList<>();
-        List<InlineKeyboardButton> categories = new ArrayList<>();
-        categories.add(Button.create(ButtonCommandName.BACK_TO_MENU, ButtonTitle.BACK_TO_MENU.text()));
-        keyboard.add(categories);
+        List<InlineKeyboardButton> backToMenu = new ArrayList<>();
+        backToMenu.add(Button.create(ButtonCommandName.BACK_TO_MENU, ButtonTitle.BACK_TO_MENU.text()));
+        keyboard.add(backToMenu);
         markup.setKeyboard(keyboard);
         return markup;
     }
 
+    public static InlineKeyboardMarkup settingsButtons() {
+        InlineKeyboardMarkup markup = new InlineKeyboardMarkup();
+        List<List<InlineKeyboardButton>> keyboard = new ArrayList<>();
+        List<InlineKeyboardButton> language = new ArrayList<>();
+        List<InlineKeyboardButton> localTime = new ArrayList<>();
+        List<InlineKeyboardButton> backToMenu = new ArrayList<>();
+        language.add(Button.create(ButtonCommandName.LANGUAGE, ButtonTitle.PICK_LANGUAGE.text()));
+        localTime.add(Button.create(ButtonCommandName.LOCAL_TIME, ButtonTitle.TIME_ZONE.text()));
+        backToMenu.add(Button.create(ButtonCommandName.BACK_TO_MENU, ButtonTitle.BACK_TO_MENU.text()));
+        keyboard.add(language);
+        keyboard.add(localTime);
+        keyboard.add(backToMenu);
+        markup.setKeyboard(keyboard);
+        return markup;
+    }
 
 
 }

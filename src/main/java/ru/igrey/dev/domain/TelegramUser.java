@@ -3,12 +3,14 @@ package ru.igrey.dev.domain;
 import lombok.ToString;
 import org.apache.commons.lang3.StringUtils;
 import org.telegram.telegrambots.api.objects.User;
+import ru.igrey.dev.constant.AnswerMessageText;
 import ru.igrey.dev.constant.Language;
 import ru.igrey.dev.entity.TelegramUserEntity;
 
 import java.time.LocalDateTime;
 import java.time.ZoneOffset;
 import java.time.ZonedDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -85,6 +87,16 @@ public class TelegramUser {
 
     public String toView() {
         return userId + " fullName: " + firstName + " " + lastName + " userName: " + getUserName();
+    }
+
+    public String settings() {
+        String currentTime = timezone != null ? LocalDateTime.now().plusMinutes(timezone).format(DateTimeFormatter.ofPattern("HH:mm")) : "-";
+
+        if (Language.valueOf(language) == Language.PERSIAN) {
+            return AnswerMessageText.LANGUAGE.text() + "\n"
+                    + currentTime + AnswerMessageText.LOCAL_TIME.text();
+        }
+        return AnswerMessageText.LANGUAGE.text() + "\n" + AnswerMessageText.LOCAL_TIME.text() + " " + currentTime;
     }
 
     public Long getUserId() {

@@ -82,7 +82,7 @@ public class ButtonHandlerFactory {
             case ButtonCommandName.CATEGORIES:
                 return new BackToViewCategoriesHandler(query, telegramUserService);
             case ButtonCommandName.SETTINGS:
-                return new SettingsHandler(query);
+                return new SettingsHandler(query, telegramUser);
             case ButtonCommandName.HELP:
                 return new HelpHandler(query);
             case ButtonCommandName.RATE:
