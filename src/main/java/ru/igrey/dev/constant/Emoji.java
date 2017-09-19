@@ -182,7 +182,9 @@ public enum Emoji {
     BLACK_QUESTION_MARK_ORNAMENT(null, '\u2753'),
     CLIPBOARD('\uD83D', '\uDCCB'),
     DONATE('\uD83D', '\uDCB0'),
-    CREDIT_CARD('\uD83D', '\uDCB3');
+    CREDIT_CARD('\uD83D', '\uDCB3'),
+    NEW_WATCH(null, '\u231A'),
+    EARTH_GLOBE_AMERICAS('\uD83C', '\uDF0E');
     Character firstChar;
     Character secondChar;
 
@@ -219,6 +221,7 @@ public enum Emoji {
         System.out.println(LEFT_ARROW);
         System.out.println(TRASH);
         System.out.println(WATCH);
+        System.out.println(NEW_WATCH);
         System.out.println(BELL);
         System.out.println(STAR);
         System.out.println(PICTURE);

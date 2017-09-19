@@ -71,14 +71,14 @@ public enum ButtonTitle {
 
 
     PICK_LANGUAGE(
-            "Выберите язык",
-            "Сhoose language",
-            "زبان را انتخاب کنید"),
+            Emoji.EARTH_GLOBE_EUROPE_AFRICA + " Выберите язык",
+            Emoji.EARTH_GLOBE_AMERICAS + " Сhoose language",
+            " زبان را انتخاب کنید" + Emoji.EARTH_GLOBE_EUROPE_AFRICA),
 
     TIME_ZONE(
-            "Часовой пояс",
-            "Time Zone",
-            "منطقه زمانی"
+            Emoji.NEW_WATCH + " Часовой пояс",
+            Emoji.NEW_WATCH + " Time Zone",
+            " منطقه زمانی" + Emoji.NEW_WATCH
     );
 
 
