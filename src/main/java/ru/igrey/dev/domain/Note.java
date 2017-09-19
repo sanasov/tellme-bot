@@ -51,11 +51,21 @@ public class Note {
     }
 
     public static Note createNewNote(String text, String fileName, String capture, Long categoryId, Long userId, Integer timezoneInMinutes) {
-        String[] notifyRuleAndNoteName = text.split(Delimiter.NOTIFY_DELIMITER);
-        if (notifyRuleAndNoteName.length == 2) {
-            return new Note(null, categoryId, userId, null, notifyRuleAndNoteName[1].trim(), notifyRuleAndNoteName[0].trim(), fileName, capture, timezoneInMinutes);
+        return new Note(null, categoryId, userId, null, retrieveText(text), retrieveNotifyRule(text), fileName, capture, timezoneInMinutes);
+    }
+
+    private static String retrieveNotifyRule(String text) {
+        if (!text.contains(Delimiter.NOTIFY_DELIMITER)) {
+            return null;
         }
-        return new Note(null, categoryId, userId, null, text, null, fileName, capture, timezoneInMinutes);
+        return text.substring(text.lastIndexOf(Delimiter.NOTIFY_DELIMITER) + 1).trim().toLowerCase();
+    }
+
+    private static String retrieveText(String text) {
+        if (!text.contains("/")) {
+            return text;
+        }
+        return text.substring(0, text.lastIndexOf(Delimiter.NOTIFY_DELIMITER)).trim().toLowerCase();
     }
 
     public List<Notification> createNotifications() {
