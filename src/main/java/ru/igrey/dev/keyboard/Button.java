@@ -11,4 +11,8 @@ public class Button {
         btn.setCallbackData(buttonId);
         return btn;
     }
+
+    public static InlineKeyboardButton createLink(String buttonId, String label, String url) {
+        return create(buttonId, label).setUrl(url);
+    }
 }

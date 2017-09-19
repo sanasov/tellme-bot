@@ -21,6 +21,9 @@ import static ru.igrey.dev.constant.Delimiter.BUTTON_DELIMITER;
 public class ReplyKeyboard {
 
 
+    private final static String storebotUrl = "https://telegram.me/storebot?start=mindkeeperbot";
+    private final static String donateUrl = "http://yasobe.ru/na/notes_bot";
+
     public static InlineKeyboardMarkup buttonsForPickingCategoryAfterCreateNote(List<Category> categories, Long noteId) {
         InlineKeyboardMarkup markup = new InlineKeyboardMarkup();
         List<List<InlineKeyboardButton>> keyboard = new ArrayList<>();
@@ -171,7 +174,7 @@ public class ReplyKeyboard {
         categories.add(Button.create(ButtonCommandName.CATEGORIES, ButtonTitle.VIEW_CATEGORIES.text()));
         settings.add(Button.create(ButtonCommandName.SETTINGS, ButtonTitle.SETTINGS.text()));
         help.add(Button.create(ButtonCommandName.HELP, ButtonTitle.HELP.text()));
-        rate.add(Button.create(ButtonCommandName.RATE, ButtonTitle.RATE.text()));
+        rate.add(Button.createLink(ButtonCommandName.RATE, ButtonTitle.RATE.text(), storebotUrl));
         donate.add(Button.create(ButtonCommandName.DONATE, ButtonTitle.DONATE.text()));
         keyboard.add(categories);
         keyboard.add(settings);
@@ -187,6 +190,19 @@ public class ReplyKeyboard {
         List<List<InlineKeyboardButton>> keyboard = new ArrayList<>();
         List<InlineKeyboardButton> backToMenu = new ArrayList<>();
         backToMenu.add(Button.create(ButtonCommandName.BACK_TO_MENU, ButtonTitle.BACK_TO_MENU.text()));
+        keyboard.add(backToMenu);
+        markup.setKeyboard(keyboard);
+        return markup;
+    }
+
+    public static InlineKeyboardMarkup donateLinkAndBackToMenuButtons() {
+        InlineKeyboardMarkup markup = new InlineKeyboardMarkup();
+        List<List<InlineKeyboardButton>> keyboard = new ArrayList<>();
+        List<InlineKeyboardButton> donateLink = new ArrayList<>();
+        List<InlineKeyboardButton> backToMenu = new ArrayList<>();
+        donateLink.add(Button.createLink(ButtonCommandName.DONATE_LINK, ButtonTitle.DONATE_LINK.text(), donateUrl));
+        backToMenu.add(Button.create(ButtonCommandName.BACK_TO_MENU, ButtonTitle.BACK_TO_MENU.text()));
+        keyboard.add(donateLink);
         keyboard.add(backToMenu);
         markup.setKeyboard(keyboard);
         return markup;

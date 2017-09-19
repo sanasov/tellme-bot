@@ -42,6 +42,7 @@ public class ButtonCommandName {
     public final static String DONATE = "DONATE";
 
     public final static String BACK_TO_MENU = "BACK_TO_MENU";
+    public final static String DONATE_LINK = "DONATE_LINK";
         //Settings
     public final static String SETTINGS_TIMEZONE = "SETTINGS_TIMEZONE";
     public final static String SETTINGS_LANGUAGE = "SETTINGS_LANGUAGE";

@@ -40,7 +40,7 @@ public class DonateHandler implements ButtonHandler {
         BeanConfig.tellMeBot().sendButtonMessage(
                 chatId,
                 AnswerMessageText.DONATE.text(),
-                ReplyKeyboard.backToMenuButton()
+                ReplyKeyboard.donateLinkAndBackToMenuButtons()
         );
         return "";
     }

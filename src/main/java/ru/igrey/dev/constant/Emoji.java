@@ -181,7 +181,8 @@ public enum Emoji {
     SETTINGS('\u2699', null),
     BLACK_QUESTION_MARK_ORNAMENT(null, '\u2753'),
     CLIPBOARD('\uD83D', '\uDCCB'),
-    DONATE('\uD83D', '\uDCB0');
+    DONATE('\uD83D', '\uDCB0'),
+    CREDIT_CARD('\uD83D', '\uDCB3');
     Character firstChar;
     Character secondChar;
 

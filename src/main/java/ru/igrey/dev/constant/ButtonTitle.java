@@ -58,6 +58,10 @@ public enum ButtonTitle {
             Emoji.DONATE + " Поддержать меня",
             Emoji.DONATE + " Support me",
             Emoji.DONATE + "به توسعه دهندگان کمک کنید "),
+    DONATE_LINK(
+            Emoji.CREDIT_CARD + "YandexMoney",
+            Emoji.CREDIT_CARD + "YandexMoney",
+            Emoji.CREDIT_CARD + "YandexMoney"),
 
 
     BACK_TO_MENU(
