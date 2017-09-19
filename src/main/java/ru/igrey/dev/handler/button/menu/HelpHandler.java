@@ -4,7 +4,6 @@ import org.telegram.telegrambots.api.objects.CallbackQuery;
 import ru.igrey.dev.config.BeanConfig;
 import ru.igrey.dev.constant.AnswerMessageText;
 import ru.igrey.dev.handler.button.ButtonHandler;
-import ru.igrey.dev.keyboard.ReplyKeyboard;
 
 public class HelpHandler implements ButtonHandler {
 
@@ -20,9 +19,10 @@ public class HelpHandler implements ButtonHandler {
         BeanConfig.tellMeBot().editMessage(
                 chatId,
                 query.getMessage().getMessageId(),
-                AnswerMessageText.MENU.text(),
-                ReplyKeyboard.menuButtons()
+                AnswerMessageText.ADD_NOTE_AND_PICK_CATEGORY.text() + "\n" + AnswerMessageText.NOTIFICATION_INSTRUCTION.text() + "\n\n" + AnswerMessageText.FORMAT.text(),
+                null
         );
+        BeanConfig.tellMeBot().sendInstruction(chatId);
         return "";
     }
 

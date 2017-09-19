@@ -6,8 +6,8 @@ import org.apache.commons.lang3.StringUtils;
 import org.quartz.Scheduler;
 import org.quartz.SchedulerException;
 import org.telegram.telegrambots.api.methods.AnswerCallbackQuery;
-import org.telegram.telegrambots.api.methods.send.SendDocument;
 import org.telegram.telegrambots.api.methods.send.SendMessage;
+import org.telegram.telegrambots.api.methods.send.SendVideo;
 import org.telegram.telegrambots.api.methods.updatingmessages.EditMessageText;
 import org.telegram.telegrambots.api.objects.CallbackQuery;
 import org.telegram.telegrambots.api.objects.Message;
@@ -232,15 +232,16 @@ public class TellMe extends TelegramLongPollingBot {
 
     }
 
-    private void sendInstruction(Long chatId) {
-        SendDocument instruction = new SendDocument();
+    public void sendInstruction(Long chatId) {
+        String videoInstructionId = "BAADAgAD5AADTzsRSjhXK6WVti-8Ag";
+        SendVideo instruction = new SendVideo();
+        instruction.setVideo(videoInstructionId);
+        instruction.setCaption("Let's create notes!");
         instruction.setChatId(chatId);
-        instruction.setCaption("Download video instruction");
-        instruction.setDocument("BQADAgAD_gADDiVoScMwzxMcfVuQAg");
         try {
-            sendDocument(instruction);
+            sendVideo(instruction);
         } catch (TelegramApiException e) {
-            log.error(e.getMessage(), e);
+            log.error("Could not send video instruction\n" + e.getMessage(), e);
         }
     }
 

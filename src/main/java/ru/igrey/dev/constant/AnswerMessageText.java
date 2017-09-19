@@ -8,9 +8,9 @@ import java.time.format.DateTimeFormatter;
 public enum AnswerMessageText {
 
     ADD_NOTE_AND_PICK_CATEGORY(
-            "Отправьте мне заметку и выберите для нее категорию",
-            "Send me a note and select a category for it",
-            "یک یادداشت به من بدهید و بخشی را برای آن انتخاب کنید"
+            "Отправьте мне заметку и выберите для нее категорию.\n<strong>Используйте команду:</strong> /menu\n",
+            "Send me a note and select a category for it.\n<strong>Use command:</strong> /menu\n",
+            "یک یادداشت به من بدهید و بخشی را برای آن انتخاب کنید" + "\n/menu <strong>:استفاده از دستور</strong>\n"
     ),
 
     CATEGORY_IS_ADDED(
@@ -101,7 +101,7 @@ public enum AnswerMessageText {
     LOCAL_TIME(
             "Локальное время: ",
             "Local time: ",
-            "زمان محلی:"
+            "زمان محلی: "
     ),
 
 
@@ -124,11 +124,28 @@ public enum AnswerMessageText {
             "Menu",
             "فهرست"
     ),
+    NOTIFICATION_INSTRUCTION(
+            Emoji.BELL + " Вы можете указать в заметке дату и время уведомления.\nИспользуйте разделитель /\nПример: Забронировать столик / 23:30 28.02.2018",
+            Emoji.BELL + " You can specify date and time of notification in your note.\nUse the separator /\nExample: Book a table / 23:30 02.28.2018",
+            Emoji.BELL + "تاریخ و زمان یادداشت خود را برای اطلاع دادن مشخص کنید\nاستفاده از جدا کننده / \nمثال: Book a table / 23:30 02.28.2018"),
+
+    FORMAT(
+            "<strong>Формат для нотификации:</strong>\n/ 12.08 18:45\n/ 12.08.2022 15:00\n/ завтра утром\n/ во вторник 20:00 \n/ понедельник среда пятница в обед\n и многое другое...",
+            "<strong>Format for notification:</strong>\n/ 12.08 18:45\n/ 12.08.2022 15:00\n/ tomorrow morning\n/ on Tuesday 20:00 \n/ Monday Wednesday Friday at lunch\n and others...",
+            "<strong>:فرمت برای اطلاع رسانی</strong>\n/ 12.08 18:45\n/ 12.08.2022 15:00\n/ tomorrow morning\n/ on Tuesday 20:00 \n/ Monday Wednesday Friday at lunch\n...و دیگران"
+    ),
+
+    //    COMMON_INSTRUCTION(
+//            "COMMON_INSTRUCTION",
+//            "COMMON_INSTRUCTION",
+//            "COMMON_INSTRUCTION"
+//    ),
     DONATE(
             "Поддержите меня небольшим взносом для оплаты серверов.",
             "Donate some money, so i can pay for servers. Thank you.",
             "اهدای مقداری پول برای پرداخت سرور"
     ),
+
     TIMEZONE_IS_SET(
             Emoji.WHITE_HEAVY_CHECK_MARK + " Часовой пояс установлен",
             Emoji.WHITE_HEAVY_CHECK_MARK + " Time zone is set",
