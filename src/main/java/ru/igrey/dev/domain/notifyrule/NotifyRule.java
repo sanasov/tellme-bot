@@ -17,6 +17,7 @@ public class NotifyRule {
     private List<DayOfWeek> dayOfWeeks;
     private Boolean isPeriodical;
     private RepeatPeriod period;
+    private String notifyRule;
 
     public NotifyRule(List<LocalDate> notifyDates, Long intervalSeconds, LocalTime time, List<DayOfWeek> dayOfWeeks, Boolean isPeriodical, RepeatPeriod period) {
         this.notifyDates = notifyDates;
@@ -27,7 +28,11 @@ public class NotifyRule {
         this.period = period;
     }
 
-    public static NotifyRule buildNotifyRule(String notifyRule) {
+    public NotifyRule(String notifyRule) {
+        this.notifyRule = notifyRule;
+    }
+
+    public NotifyRule build() {
         if (StringUtils.isBlank(notifyRule)) {
             return null;
         }
@@ -35,15 +40,18 @@ public class NotifyRule {
     }
 
     public boolean isValid() {
-        return true;
+        if (StringUtils.isBlank(notifyRule)) {
+            return false;
+        }
+        return new NotifyRuleParser(notifyRule).parse() != null;
     }
 
 
-    public List<LocalDate>  getNotifyDates() {
+    public List<LocalDate> getNotifyDates() {
         return notifyDates;
     }
 
-    public void setNotifyDates(List<LocalDate>  notifyDates) {
+    public void setNotifyDates(List<LocalDate> notifyDates) {
         this.notifyDates = notifyDates;
     }
 

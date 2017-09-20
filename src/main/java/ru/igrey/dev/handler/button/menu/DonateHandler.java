@@ -14,7 +14,7 @@ import ru.igrey.dev.keyboard.ReplyKeyboard;
 public class DonateHandler implements ButtonHandler {
 
     private CallbackQuery query;
-    private static String catPhotoId = "AgADAgADNqgxG087AUoTQCqp0qNISJs2Sw0ABKqE_vjU0wMJ2dIPAAEC";
+    private static String catPhotoId = "AgADAgADDagxG38LEEr98DmE7kONXJsSSw0ABIaQrqaaH1BDQsMPAAEC";
 
     public DonateHandler(CallbackQuery query) {
         this.query = query;

@@ -233,7 +233,7 @@ public class TellMe extends TelegramLongPollingBot {
     }
 
     public void sendInstruction(Long chatId) {
-        String videoInstructionId = "BAADAgAD5AADTzsRSjhXK6WVti-8Ag";
+        String videoInstructionId = "BAADAgADtwADfwsQSjsjq9hpvhj4Ag";
         SendVideo instruction = new SendVideo();
         instruction.setVideo(videoInstructionId);
         instruction.setCaption("Let's create notes!");
@@ -314,12 +314,12 @@ public class TellMe extends TelegramLongPollingBot {
 
     @Override
     public String getBotUsername() {
-        return "@MindkeeperBot";
+        return "@sergiseyBot";
     }
 
     @Override
     public String getBotToken() {
-        return "254626232:AAEO0aaj6ddVIfrPsOCEIkDa8i0y0rcc3k0";
+        return "298962706:AAFJMqitHXvDNWT1Bw4N-ebU2u0Ny9GBSZU";
     }
 
 }

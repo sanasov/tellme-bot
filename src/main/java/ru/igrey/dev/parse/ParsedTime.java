@@ -53,7 +53,7 @@ public class ParsedTime {
                 ) {
             return defaultNightTime;
         }
-        return defaultMorningTime;
+        return null;
     }
 
 }

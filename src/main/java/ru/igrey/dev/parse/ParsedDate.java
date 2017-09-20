@@ -39,7 +39,7 @@ public class ParsedDate {
                     .map(dayOfWeek -> getNearestLocalDateByDayOfWeek(dayOfWeek))
                     .collect(Collectors.toList());
         }
-        return Arrays.asList(LocalDate.now());
+        return null;
     }
 
     private LocalDate getNearestLocalDateByDayOfWeek(DayOfWeek dayOfWeek) {

@@ -3,6 +3,10 @@ package ru.igrey.dev.parse;
 import org.apache.commons.lang3.StringUtils;
 import ru.igrey.dev.domain.notifyrule.NotifyRule;
 
+import java.time.LocalDate;
+import java.time.LocalTime;
+import java.util.List;
+
 public class NotifyRuleParser {
     private String rule;
 
@@ -14,10 +18,15 @@ public class NotifyRuleParser {
         if (StringUtils.isBlank(rule)) {
             return null;
         }
+        List<LocalDate> dates = new ParsedDate(rule).get();
+        LocalTime time = new ParsedTime(rule).get();
+        if (dates == null && time == null) {
+            return null;
+        }
         return new NotifyRule(
-                new ParsedDate(rule).get(),
+                dates,
                 null,
-                new ParsedTime(rule).get(),
+                time,
                 null,
                 false,
                 null

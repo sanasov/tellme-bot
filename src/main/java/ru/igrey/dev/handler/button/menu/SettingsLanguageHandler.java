@@ -16,7 +16,7 @@ public class SettingsLanguageHandler implements ButtonHandler {
 
     @Override
     public String onClick() {
-        BeanConfig.tellMeBot().sendButtonMessage(query.getMessage().getChatId(), AnswerMessageText.PICK_LANGUAGE.text(), ReplyKeyboard.buttonsForPickingLanguage());
+        BeanConfig.tellMeBot().editMessage(query.getMessage().getChatId(), query.getMessage().getMessageId(), AnswerMessageText.PICK_LANGUAGE.text(), ReplyKeyboard.buttonsForPickingLanguage());
         return "";
     }
 

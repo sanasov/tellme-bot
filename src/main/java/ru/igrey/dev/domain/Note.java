@@ -51,14 +51,20 @@ public class Note {
     }
 
     public static Note createNewNote(String text, String fileName, String capture, Long categoryId, Long userId, Integer timezoneInMinutes) {
-        return new Note(null, categoryId, userId, null, retrieveText(text), retrieveNotifyRule(text), fileName, capture, timezoneInMinutes);
+        String notifyRule = retrieveNotifyRule(text);
+        String notifyText = StringUtils.isBlank(notifyRule) ? text : retrieveText(text);
+        return new Note(null, categoryId, userId, null, notifyText, notifyRule, fileName, capture, timezoneInMinutes);
     }
 
     private static String retrieveNotifyRule(String text) {
         if (!text.contains(Delimiter.NOTIFY_DELIMITER)) {
             return null;
         }
-        return text.substring(text.lastIndexOf(Delimiter.NOTIFY_DELIMITER) + 1).trim().toLowerCase();
+        String notifyRule = text.substring(text.lastIndexOf(Delimiter.NOTIFY_DELIMITER) + 1).trim().toLowerCase();
+        if (new NotifyRule(notifyRule).isValid()) {
+            return notifyRule;
+        }
+        return null;
     }
 
     private static String retrieveText(String text) {
@@ -69,7 +75,7 @@ public class Note {
     }
 
     public List<Notification> createNotifications() {
-        NotifyRule rule = NotifyRule.buildNotifyRule(this.notifyRule);
+        NotifyRule rule = new NotifyRule(notifyRule).build();
         if (rule == null || rule.getPeriodical()) {
             return new ArrayList<>();
         }
