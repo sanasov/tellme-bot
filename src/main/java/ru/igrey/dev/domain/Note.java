@@ -156,6 +156,14 @@ public class Note {
         this.caption = caption;
     }
 
+    public Integer getTimezoneInMinutes() {
+        return timezoneInMinutes;
+    }
+
+    public void setTimezoneInMinutes(Integer timezoneInMinutes) {
+        this.timezoneInMinutes = timezoneInMinutes;
+    }
+
     public String toView() {
         List<Notification> notifications = createNotifications();
         String notificationDates = notificationDatesView(notifications);

@@ -28,9 +28,9 @@ public class Notification {
         return new Notification(entity.getNote(), entity.getNotifyDate(), entity.getUserId(), entity.getNoteId());
     }
 
-    public String toView() {
+    public String toView(Integer timezoneInMinutes) {
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd.MM.YYYY HH:mm");
-        return Emoji.BELL + note + " " + HtmlWrapper.toInlineFixedWidthCode("(" + notifyDate.format(formatter) + ")");
+        return Emoji.BELL + note + " " + HtmlWrapper.toInlineFixedWidthCode("(" + notifyDate.plusMinutes(timezoneInMinutes).format(formatter) + ")");
     }
 
     public String getNote() {

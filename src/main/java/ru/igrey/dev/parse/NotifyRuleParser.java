@@ -5,6 +5,7 @@ import ru.igrey.dev.domain.notifyrule.NotifyRule;
 
 import java.time.LocalDate;
 import java.time.LocalTime;
+import java.util.Arrays;
 import java.util.List;
 
 public class NotifyRuleParser {
@@ -24,9 +25,9 @@ public class NotifyRuleParser {
             return null;
         }
         return new NotifyRule(
-                dates,
+                dates != null ? dates : Arrays.asList(LocalDate.now()),
                 null,
-                time,
+                time != null ? time : LocalTime.of(9, 0),
                 null,
                 false,
                 null

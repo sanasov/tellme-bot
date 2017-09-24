@@ -3,6 +3,7 @@ package ru.igrey.dev.constant;
 import ru.igrey.dev.Localization;
 
 import java.time.LocalDateTime;
+import java.time.ZoneOffset;
 
 public enum TimeRemindAgain {
 
@@ -28,18 +29,18 @@ public enum TimeRemindAgain {
         return en;
     }
 
-    public LocalDateTime notificationDate() {
+    public LocalDateTime notificationDate(Integer timezoneInMinutes) {
         switch (this) {
             case MINUTES_15:
-                return LocalDateTime.now().plusMinutes(15);
+                return LocalDateTime.now(ZoneOffset.UTC).plusMinutes(timezoneInMinutes).plusMinutes(15);
             case MINUTES_30:
-                return LocalDateTime.now().plusMinutes(30);
+                return LocalDateTime.now(ZoneOffset.UTC).plusMinutes(timezoneInMinutes).plusMinutes(30);
             case HOUR:
-                return LocalDateTime.now().plusHours(1);
+                return LocalDateTime.now(ZoneOffset.UTC).plusMinutes(timezoneInMinutes).plusHours(1);
             case HOUR_3:
-                return LocalDateTime.now().plusHours(3);
+                return LocalDateTime.now(ZoneOffset.UTC).plusMinutes(timezoneInMinutes).plusHours(3);
             case DAY:
-                return LocalDateTime.now().plusDays(1);
+                return LocalDateTime.now(ZoneOffset.UTC).plusMinutes(timezoneInMinutes).plusDays(1);
         }
         throw new RuntimeException("Could not find enum to create notification date: " + this.text());
     }

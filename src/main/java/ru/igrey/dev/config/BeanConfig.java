@@ -93,7 +93,7 @@ public class BeanConfig {
 
     public static JdbcTemplate jdbcTemplate() {
         if (jdbcTemplate == null) {
-            jdbcTemplate = new JdbcTemplateFactory().create2();
+            jdbcTemplate = new JdbcTemplateFactory().create();
         }
         return jdbcTemplate;
     }

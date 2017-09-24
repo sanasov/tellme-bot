@@ -314,12 +314,12 @@ public class TellMe extends TelegramLongPollingBot {
 
     @Override
     public String getBotUsername() {
-        return "@sergiseyBot";
+        return "@MindkeeperBot";
     }
 
     @Override
     public String getBotToken() {
-        return "298962706:AAFJMqitHXvDNWT1Bw4N-ebU2u0Ny9GBSZU";
+        return "254626232:AAEO0aaj6ddVIfrPsOCEIkDa8i0y0rcc3k0";
     }
 
 }
